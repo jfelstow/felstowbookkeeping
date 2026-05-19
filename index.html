@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Felstow Bookkeeping &amp; Consulting</title>
+<meta name="description" content="Felstow Bookkeeping &amp; Consulting — flat-fee monthly bookkeeping in QuickBooks Online. Accurate numbers you can actually use to run your business.">
+<style>
+  :root {
+    --navy:#1F3A5F;
+    --amber:#E0922F;
+    --ink:#23262B;
+    --grey:#6B7280;
+    --faded:#C3CCDA;
+    --hair:#DDE1E7;
+    --bg:#FFFFFF;
+    --bg-soft:#F7F8FA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:"Helvetica Neue", Arial, system-ui, sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a { color:inherit; }
+  img { max-width:100%; }
+
+  /* ---- layout ---- */
+  .wrap { max-width:1080px; margin:0 auto; padding:0 32px; }
+  section { padding:88px 0; border-top:1px solid var(--hair); }
+  section:first-of-type { border-top:0; }
+
+  /* ---- nav ---- */
+  header {
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.96);
+    backdrop-filter:saturate(180%) blur(8px);
+    border-bottom:1px solid var(--hair);
+  }
+  .nav {
+    display:flex; align-items:center; justify-content:space-between;
+    height:72px;
+  }
+  .brand {
+    font-size:18px; font-weight:700; color:var(--navy);
+    letter-spacing:-0.2px; text-decoration:none; line-height:1.15;
+  }
+  .brand span { display:block; font-size:10px; font-weight:400;
+    letter-spacing:1.4px; text-transform:uppercase; color:var(--grey); margin-top:2px; }
+  .nav-links { display:flex; align-items:center; gap:30px; }
+  .nav-links a {
+    font-size:13px; letter-spacing:0.6px; text-transform:uppercase;
+    color:var(--grey); text-decoration:none; font-weight:600;
+    transition:color .15s;
+  }
+  .nav-links a:hover { color:var(--navy); }
+  .btn {
+    display:inline-block; background:var(--amber); color:#fff;
+    font-size:13px; font-weight:700; letter-spacing:0.4px;
+    padding:12px 22px; border-radius:4px; text-decoration:none;
+    border:none; cursor:pointer; transition:background .15s, transform .05s;
+  }
+  .btn:hover { background:#c97f23; }
+  .btn:active { transform:translateY(1px); }
+  .btn-nav { padding:10px 18px; }
+  .nav-toggle { display:none; background:none; border:0; cursor:pointer;
+    width:30px; height:30px; }
+  .nav-toggle span { display:block; height:2px; background:var(--navy);
+    margin:6px 0; border-radius:2px; }
+
+  /* ---- hero ---- */
+  .hero { padding:118px 0 104px; border-top:0; }
+  .hero .eyebrow {
+    font-size:12px; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; color:var(--amber); margin-bottom:20px;
+  }
+  .hero h1 {
+    font-size:52px; line-height:1.12; color:var(--navy);
+    font-weight:700; letter-spacing:-0.8px; max-width:18ch;
+  }
+  .accent-bar { width:78px; height:5px; background:var(--amber); margin:26px 0; }
+  .hero p.lead { font-size:19px; color:var(--grey); max-width:54ch; }
+  .hero-cta { margin-top:36px; display:flex; gap:16px; flex-wrap:wrap; align-items:center; }
+  .btn-ghost {
+    font-size:14px; font-weight:700; color:var(--navy);
+    text-decoration:none; letter-spacing:0.3px;
+    border-bottom:2px solid var(--amber); padding-bottom:3px;
+  }
+
+  /* ---- section heading ---- */
+  .sec-head { margin-bottom:34px; position:relative; }
+  .sec-num {
+    font-size:108px; font-weight:700; color:var(--faded);
+    line-height:0.8; letter-spacing:-2px; user-select:none;
+  }
+  .sec-label {
+    font-size:13px; font-weight:700; color:var(--navy);
+    letter-spacing:2px; text-transform:uppercase;
+    display:inline-block; padding-bottom:6px;
+    border-bottom:2px solid var(--amber); margin-top:14px;
+  }
+  .sec-head.center { text-align:center; }
+  .sec-head.center .sec-label { margin-left:auto; margin-right:auto; }
+
+  /* ---- about ---- */
+  .about-grid { display:grid; grid-template-columns:1.3fr 1fr; gap:56px; align-items:start; }
+  .about-grid p { font-size:17px; margin-bottom:18px; }
+  .about-grid p:last-child { margin-bottom:0; }
+  .about-card {
+    background:var(--bg-soft); border:1px solid var(--hair);
+    border-radius:6px; padding:30px;
+  }
+  .about-card .ac-title {
+    font-size:12px; font-weight:700; letter-spacing:1.6px;
+    text-transform:uppercase; color:var(--navy); margin-bottom:16px;
+  }
+  .about-card ul { list-style:none; }
+  .about-card li {
+    font-size:14.5px; padding:9px 0 9px 20px; position:relative;
+    border-top:1px solid var(--hair);
+  }
+  .about-card li:first-child { border-top:0; }
+  .about-card li::before {
+    content:"▪"; color:var(--amber); position:absolute; left:0; top:9px;
+  }
+
+  /* ---- steps ---- */
+  .steps { display:grid; grid-template-columns:1fr 1fr; gap:36px 56px; }
+  .step .num {
+    font-size:46px; font-weight:700; color:var(--faded); line-height:1;
+  }
+  .step .st-title {
+    font-size:19px; font-weight:700; color:var(--navy); margin:10px 0 8px;
+  }
+  .step .st-title::after {
+    content:""; display:block; width:34px; height:3px;
+    background:var(--amber); margin-top:10px;
+  }
+  .step .st-desc { font-size:15.5px; color:var(--ink); }
+
+  /* ---- services ---- */
+  .help { display:grid; grid-template-columns:1fr 1fr; gap:0 56px; }
+  .help li {
+    list-style:none; font-size:17px; padding:18px 0 18px 24px;
+    position:relative; border-top:1px solid var(--hair);
+  }
+  .help li::before {
+    content:"▪"; color:var(--amber); position:absolute; left:0; top:18px;
+  }
+
+  /* ---- pricing ---- */
+  .price-intro {
+    font-size:18px; color:var(--ink); max-width:62ch;
+    margin:0 auto 44px; text-align:center;
+  }
+  .tiers { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .tier {
+    border:1px solid var(--hair); border-radius:6px;
+    padding:32px 28px; display:flex; flex-direction:column;
+    background:var(--bg);
+  }
+  .tier.featured {
+    border-color:var(--amber); border-width:2px;
+    box-shadow:0 14px 40px -22px rgba(31,58,95,0.4);
+  }
+  .tier .t-tag {
+    align-self:flex-start; font-size:10px; font-weight:700;
+    letter-spacing:1.2px; text-transform:uppercase; color:#fff;
+    background:var(--amber); padding:4px 9px; border-radius:3px;
+    margin-bottom:14px;
+  }
+  .tier .t-name {
+    font-size:13px; font-weight:700; color:var(--navy);
+    letter-spacing:1.6px; text-transform:uppercase; margin-bottom:10px;
+  }
+  .tier .t-price { font-size:30px; font-weight:700; color:var(--amber); line-height:1; }
+  .tier .t-per { font-size:14px; color:var(--grey); font-weight:400; }
+  .tier .t-desc { font-size:15px; color:var(--ink); margin-top:16px; }
+  .price-note {
+    font-size:15px; color:var(--ink); max-width:70ch;
+    margin:38px auto 0; text-align:center;
+  }
+  .price-note em { color:var(--grey); font-style:italic; }
+
+  /* ---- why ---- */
+  .why { display:grid; grid-template-columns:repeat(3,1fr); gap:0; }
+  .why .col { padding:0 32px; }
+  .why .col:first-child { padding-left:0; }
+  .why .col:last-child { padding-right:0; }
+  .why .col + .col { border-left:1px solid var(--hair); }
+  .why .w-title {
+    font-size:21px; font-weight:700; color:var(--amber); margin-bottom:12px;
+  }
+  .why .w-title::after {
+    content:""; display:block; width:34px; height:3px;
+    background:var(--navy); margin-top:12px;
+  }
+  .why .w-desc { font-size:15.5px; color:var(--ink); }
+
+  /* ---- contact ---- */
+  #contact { background:var(--navy); border-top:0; color:#fff; }
+  #contact .sec-num { color:#33517a; }
+  #contact .sec-label { color:#fff; }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
+  .contact-grid h2 {
+    font-size:34px; font-weight:700; letter-spacing:-0.4px;
+    line-height:1.18; margin-bottom:18px;
+  }
+  .contact-grid .c-lead { font-size:17px; color:#c5d0e0; margin-bottom:30px; max-width:42ch; }
+  .c-detail { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+  .c-detail .c-ico {
+    width:38px; height:38px; flex:none; border-radius:50%;
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .c-detail a, .c-detail span { font-size:16px; color:#fff; text-decoration:none; }
+  .c-detail a:hover { color:var(--amber); }
+  .c-detail small { display:block; font-size:11px; letter-spacing:1.2px;
+    text-transform:uppercase; color:#8fa3bf; }
+
+  form { display:grid; gap:16px;
+    background:#fff; border-radius:8px; padding:32px; }
+  .field label {
+    display:block; font-size:12px; font-weight:700; color:var(--navy);
+    letter-spacing:0.8px; text-transform:uppercase; margin-bottom:6px;
+  }
+  .field input, .field textarea {
+    width:100%; font-family:inherit; font-size:15px; color:var(--ink);
+    border:1px solid var(--hair); border-radius:4px; padding:11px 13px;
+    background:var(--bg-soft); transition:border-color .15s, background .15s;
+  }
+  .field input:focus, .field textarea:focus {
+    outline:none; border-color:var(--amber); background:#fff;
+  }
+  .field textarea { resize:vertical; min-height:104px; }
+  form .btn { width:100%; padding:14px; font-size:14px; }
+  .form-note { font-size:12.5px; color:var(--grey); text-align:center; }
+
+  /* ---- footer ---- */
+  footer {
+    background:var(--ink); color:#9aa1ab; padding:30px 0;
+    font-size:13px;
+  }
+  footer .wrap { display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:10px; }
+  footer .f-brand { color:#fff; font-weight:700; }
+  footer .dot { color:var(--amber); padding:0 8px; }
+
+  /* ---- responsive ---- */
+  @media (max-width:760px) {
+    .wrap { padding:0 22px; }
+    section { padding:60px 0; }
+    .nav-links {
+      position:absolute; top:72px; left:0; right:0;
+      background:#fff; border-bottom:1px solid var(--hair);
+      flex-direction:column; align-items:flex-start; gap:0;
+      padding:8px 22px 20px; display:none;
+    }
+    .nav-links.open { display:flex; }
+    .nav-links a { padding:13px 0; width:100%; border-bottom:1px solid var(--hair); }
+    .nav-links .btn-nav { margin-top:14px; width:100%; text-align:center; }
+    .nav-toggle { display:block; }
+    .hero { padding:64px 0 56px; }
+    .hero h1 { font-size:34px; }
+    .hero p.lead { font-size:17px; }
+    .sec-num { font-size:74px; }
+    .about-grid, .steps, .help, .contact-grid { grid-template-columns:1fr; gap:30px; }
+    .tiers { grid-template-columns:1fr; }
+    .why { grid-template-columns:1fr; }
+    .why .col { padding:24px 0; border-left:0 !important; border-top:1px solid var(--hair); }
+    .why .col:first-child { border-top:0; padding-top:0; }
+    .contact-grid h2 { font-size:26px; }
+    form { padding:24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand">Felstow Bookkeeping &amp; Consulting
+      <span>QuickBooks Online Specialist</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#process">How I Work</a>
+      <a href="#services">Services</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact" class="btn btn-nav">Book a Call</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Felstow Bookkeeping &amp; Consulting</div>
+    <h1>Simplifying your numbers so you can focus on the business.</h1>
+    <div class="accent-bar"></div>
+    <p class="lead">Flat-fee monthly bookkeeping in QuickBooks Online &mdash; accurate, reliable numbers you can actually use to run your business. Whether your books are current or years behind, you work directly with me.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn">Let&rsquo;s set up a quick call</a>
+      <a href="#services" class="btn-ghost">See what I help with</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">01</div>
+      <div class="sec-label">About</div>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I&rsquo;m Jake Felstow &mdash; a business owner first, and a bookkeeper because I&rsquo;ve seen firsthand the difference that organized finances make. For the past five years I&rsquo;ve worked across a wide range of industries &mdash; I&rsquo;ve seen how very different businesses actually run, and I bring that perspective to every set of books I manage.</p>
+        <p>I work exclusively in QuickBooks Online and am comfortable with businesses of every type and stage. Whether your books are current or years behind, my goal is the same &mdash; accurate numbers you can actually use to run your business.</p>
+      </div>
+      <div class="about-card">
+        <div class="ac-title">At a glance</div>
+        <ul>
+          <li>Sole operator &mdash; you work directly with me</li>
+          <li>5 years of bookkeeping experience</li>
+          <li>QuickBooks Online, exclusively</li>
+          <li>Generalist across many industries</li>
+          <li>Current books or years behind &mdash; both welcome</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOW I WORK ================= -->
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">02</div>
+      <div class="sec-label">How I Work</div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <div class="st-title">We talk first</div>
+        <div class="st-desc">A short, no-pressure discovery call. I learn about your business, your current setup, and what&rsquo;s getting in the way &mdash; no commitment, just seeing if it&rsquo;s a fit.</div>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <div class="st-title">I send a tailored plan</div>
+        <div class="st-desc">After the call I put together a clear proposal &mdash; exact scope, pricing, and any cleanup needed up front. No surprises, nothing you didn&rsquo;t ask for.</div>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <div class="st-title">Smooth onboarding</div>
+        <div class="st-desc">I set up secure access, connect your accounts, and handle any catch-up work so we start from a clean, reconciled baseline.</div>
+      </div>
+      <div class="step">
+        <div class="num">04</div>
+        <div class="st-title">Monthly rhythm</div>
+        <div class="st-desc">Each month I categorize, reconcile, close the books, and deliver financials you can read &mdash; plus a check-in so the numbers actually mean something to you.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">03</div>
+      <div class="sec-label">What I Help With</div>
+    </div>
+    <ul class="help">
+      <li>Monthly bookkeeping &amp; reconciliations</li>
+      <li>Accounts payable &amp; receivable support</li>
+      <li>Catch-up &amp; cleanup of behind books</li>
+      <li>Cash flow reporting &amp; forecasting</li>
+      <li>Financial statements you can actually use</li>
+      <li>Payroll &amp; sales tax coordination</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head center">
+      <div class="sec-label">Pricing</div>
+    </div>
+    <p class="price-intro">Ongoing bookkeeping is a flat monthly fee &mdash; no hourly billing, no surprise invoices. Most clients land in one of three tiers:</p>
+    <div class="tiers">
+      <div class="tier">
+        <div class="t-name">Essentials</div>
+        <div><span class="t-price">$250&ndash;$450</span><span class="t-per"> /mo</span></div>
+        <div class="t-desc">Sole proprietors and simple setups &mdash; a few accounts and straightforward monthly books.</div>
+      </div>
+      <div class="tier featured">
+        <div class="t-tag">Most common</div>
+        <div class="t-name">Standard</div>
+        <div><span class="t-price">$450&ndash;$800</span><span class="t-per"> /mo</span></div>
+        <div class="t-desc">Established businesses with multiple accounts and light accounts payable / receivable.</div>
+      </div>
+      <div class="tier">
+        <div class="t-name">Growth</div>
+        <div><span class="t-price">$800&ndash;$1,500</span><span class="t-per"> /mo</span></div>
+        <div class="t-desc">Higher volume, payroll, job or class costing, or multiple entities.</div>
+      </div>
+    </div>
+    <p class="price-note">One-time cleanup or catch-up work is quoted as a separate project, billed at $52/hour. <em>Every engagement is scoped to your business &mdash; we&rsquo;ll confirm exact pricing together after our call.</em></p>
+  </div>
+</section>
+
+<!-- ================= WHY ME ================= -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">04</div>
+      <div class="sec-label">Why Clients Work With Me</div>
+    </div>
+    <div class="why">
+      <div class="col">
+        <div class="w-title">Trustworthy</div>
+        <div class="w-desc">Your financials are in careful, dependable hands &mdash; handled accurately, kept confidential, and never cut corners.</div>
+      </div>
+      <div class="col">
+        <div class="w-title">Responsive</div>
+        <div class="w-desc">I answer questions in plain English, usually within a day. You&rsquo;re never left guessing about your numbers.</div>
+      </div>
+      <div class="col">
+        <div class="w-title">Invested in You</div>
+        <div class="w-desc">Your success is the goal. I treat every client&rsquo;s books like they matter &mdash; because they do.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-num">05</div>
+      <div class="sec-label">Get Started</div>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <h2>Let&rsquo;s set up a quick call.</h2>
+        <p class="c-lead">Send a note below or reach out directly. We&rsquo;ll have a short, no-pressure discovery call &mdash; then I&rsquo;ll send a tailored plan.</p>
+        <div class="c-detail">
+          <div class="c-ico">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#E0922F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div>
+            <small>Phone</small>
+            <a href="tel:+15867137783">586-713-7783</a>
+          </div>
+        </div>
+        <div class="c-detail">
+          <div class="c-ico">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#E0922F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          </div>
+          <div>
+            <small>Email</small>
+            <a href="mailto:jake.felstow@gmail.com">jake.felstow@gmail.com</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submissions are emailed to you via Web3Forms. Paste your access key below. -->
+      <form id="contactForm">
+        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY">
+        <input type="hidden" name="subject" value="New website inquiry — Felstow Bookkeeping">
+        <input type="hidden" name="from_name" value="Felstow Bookkeeping Website">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="business">Business name</label>
+          <input type="text" id="business" name="business">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone <span style="color:#6B7280;font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+        <div class="field">
+          <label for="message">How can I help?</label>
+          <textarea id="message" name="message" placeholder="A little about your business and what you're looking for..." required></textarea>
+        </div>
+        <button type="submit" class="btn">Request my discovery call</button>
+        <p class="form-note" id="formNote">I&rsquo;ll get back to you within one business day.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div><span class="f-brand">Felstow Bookkeeping &amp; Consulting</span><span class="dot">&bull;</span>Simplifying your numbers so you can focus on the business.</div>
+    <div>&copy; <span id="year"></span> Jake Felstow</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var toggle = document.getElementById('navToggle');
+  var links = document.getElementById('navLinks');
+  toggle.addEventListener('click', function () { links.classList.toggle('open'); });
+  links.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') links.classList.remove('open');
+  });
+
+  var form = document.getElementById('contactForm');
+  var note = document.getElementById('formNote');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      if (data.success) {
+        form.innerHTML = '<p style="font-size:17px;color:#1F3A5F;font-weight:700;text-align:center;padding:18px 0;">Thanks &mdash; your message is on its way.</p>' +
+          '<p style="font-size:14px;color:#6B7280;text-align:center;">I&rsquo;ll get back to you within one business day.</p>';
+      } else {
+        btn.disabled = false; btn.textContent = 'Request my discovery call';
+        note.textContent = 'Something went wrong — please call or email me directly.';
+        note.style.color = '#c0392b';
+      }
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = 'Request my discovery call';
+      note.textContent = 'Something went wrong — please call or email me directly.';
+      note.style.color = '#c0392b';
+    });
+  });
+</script>
+
+</body>
+</html>
