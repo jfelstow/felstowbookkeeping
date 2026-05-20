@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Client Onboarding — Felstow Bookkeeping &amp; Consulting</title>
+<meta name="description" content="New client onboarding form for Felstow Bookkeeping &amp; Consulting clients.">
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --navy:#1F3A5F;
+    --amber:#E0922F;
+    --ink:#23262B;
+    --grey:#6B7280;
+    --faded:#C3CCDA;
+    --hair:#DDE1E7;
+    --bg:#FFFFFF;
+    --bg-soft:#F7F8FA;
+    --green:#1f7a4d;
+    --warn:#a85b00;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:"Helvetica Neue", Arial, system-ui, sans-serif;
+    color:var(--ink);
+    background:var(--bg-soft);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a { color:var(--navy); }
+  .wrap { max-width:880px; margin:0 auto; padding:0 28px; }
+
+  /* ---- header ---- */
+  header {
+    background:#fff;
+    border-bottom:1px solid var(--hair);
+  }
+  .nav {
+    display:flex; align-items:center; justify-content:space-between;
+    height:72px;
+  }
+  .brand {
+    font-size:18px; font-weight:700; color:var(--navy);
+    letter-spacing:-0.2px; text-decoration:none; line-height:1.15;
+  }
+  .brand span { display:block; font-size:10px; font-weight:400;
+    letter-spacing:1.4px; text-transform:uppercase; color:var(--grey); margin-top:2px; }
+  .home-link {
+    font-size:13px; letter-spacing:0.6px; text-transform:uppercase;
+    color:var(--grey); text-decoration:none; font-weight:600;
+  }
+  .home-link:hover { color:var(--navy); }
+
+  /* ---- intro ---- */
+  .intro { padding:56px 0 28px; background:#fff; border-bottom:1px solid var(--hair); }
+  .eyebrow {
+    font-size:12px; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; color:var(--amber); margin-bottom:14px;
+  }
+  .intro h1 {
+    font-size:36px; line-height:1.18; color:var(--navy);
+    font-weight:700; letter-spacing:-0.4px; max-width:22ch;
+  }
+  .accent-bar { width:64px; height:4px; background:var(--amber); margin:20px 0; }
+  .intro p { font-size:16px; color:var(--ink); max-width:62ch; margin-bottom:10px; }
+  .intro p.note { color:var(--grey); font-size:14.5px; }
+
+  /* ---- form ---- */
+  main { padding:36px 0 80px; }
+  form {
+    background:#fff; border:1px solid var(--hair); border-radius:8px;
+    padding:14px 30px 30px;
+  }
+  fieldset { border:0; padding:26px 0; border-top:1px solid var(--hair); }
+  fieldset:first-of-type { border-top:0; }
+  legend {
+    font-size:11px; font-weight:700; letter-spacing:1.8px;
+    text-transform:uppercase; color:var(--navy);
+    padding:6px 0 16px; display:block; width:100%;
+  }
+  legend .step {
+    display:inline-block; color:var(--amber); margin-right:10px;
+  }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .row.three { grid-template-columns:1fr 1fr 1fr; }
+  .field { margin-bottom:16px; }
+  .field:last-child { margin-bottom:0; }
+  .field label {
+    display:block; font-size:13px; font-weight:600; color:var(--ink);
+    margin-bottom:6px;
+  }
+  .field .hint {
+    display:block; font-size:12.5px; color:var(--grey); font-weight:400;
+    margin-top:4px; line-height:1.45;
+  }
+  .field input[type=text],
+  .field input[type=email],
+  .field input[type=tel],
+  .field input[type=number],
+  .field input[type=date],
+  .field input[type=url],
+  .field select,
+  .field textarea {
+    width:100%; font-family:inherit; font-size:15px; color:var(--ink);
+    border:1px solid var(--hair); border-radius:4px; padding:10px 12px;
+    background:#fff; transition:border-color .15s, background .15s;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline:none; border-color:var(--amber);
+  }
+  .field textarea { resize:vertical; min-height:96px; line-height:1.5; }
+  .field textarea.tall { min-height:140px; }
+
+  .check-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:8px 18px;
+    margin-top:4px;
+  }
+  .check {
+    display:flex; align-items:flex-start; gap:8px;
+    font-size:14.5px; color:var(--ink); cursor:pointer;
+    padding:6px 0;
+  }
+  .check input { margin-top:3px; flex:none; accent-color:var(--amber); }
+
+  .radio-row { display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:4px; }
+  .radio-row label {
+    display:inline-flex; align-items:center; gap:7px;
+    font-size:14.5px; font-weight:400; color:var(--ink); cursor:pointer;
+  }
+  .radio-row input { accent-color:var(--amber); }
+
+  /* ---- security callout ---- */
+  .callout {
+    background:#fffaf2; border:1px solid #f3d6a6; border-left:4px solid var(--amber);
+    border-radius:4px; padding:16px 18px; margin-bottom:18px;
+    font-size:14px; color:var(--ink); line-height:1.55;
+  }
+  .callout strong { color:var(--warn); }
+  .callout ul { margin:8px 0 0 20px; }
+  .callout li { margin-bottom:4px; }
+
+  .secure-note {
+    background:#f1f8f3; border:1px solid #c7e2d0; border-left:4px solid var(--green);
+    border-radius:4px; padding:12px 16px; margin-top:10px;
+    font-size:13.5px; color:var(--ink);
+  }
+
+  /* ---- submit ---- */
+  .btn {
+    display:inline-block; background:var(--amber); color:#fff;
+    font-size:14px; font-weight:700; letter-spacing:0.4px;
+    padding:14px 26px; border-radius:4px; text-decoration:none;
+    border:none; cursor:pointer; transition:background .15s, transform .05s;
+    width:100%;
+  }
+  .btn:hover { background:#c97f23; }
+  .btn:active { transform:translateY(1px); }
+  .btn:disabled { opacity:0.6; cursor:wait; }
+  .form-note { font-size:12.5px; color:var(--grey); text-align:center; margin-top:14px; }
+
+  /* ---- footer ---- */
+  footer {
+    background:var(--ink); color:#9aa1ab; padding:24px 0; font-size:13px;
+  }
+  footer .wrap { display:flex; justify-content:space-between;
+    align-items:center; flex-wrap:wrap; gap:10px; }
+  footer .f-brand { color:#fff; font-weight:700; }
+  footer .dot { color:var(--amber); padding:0 8px; }
+  footer a { color:#9aa1ab; }
+
+  @media (max-width:680px) {
+    .wrap { padding:0 18px; }
+    .intro { padding:40px 0 24px; }
+    .intro h1 { font-size:26px; }
+    form { padding:8px 18px 22px; }
+    .row, .row.three, .check-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="brand">Felstow Bookkeeping &amp; Consulting
+      <span>QuickBooks Online Specialist</span>
+    </a>
+    <a href="index.html" class="home-link">&larr; Back to site</a>
+  </div>
+</header>
+
+<!-- ================= INTRO ================= -->
+<section class="intro">
+  <div class="wrap">
+    <div class="eyebrow">New Client Onboarding</div>
+    <h1>Welcome aboard — let's get the basics on file.</h1>
+    <div class="accent-bar"></div>
+    <p>This form gathers everything I need to set up your books correctly from day one. It should take about 10&ndash;15 minutes. You don't have to fill it out in one sitting — anything you don't know offhand, just write "TBD" and we can grab it on our next call.</p>
+    <p class="note">Everything you enter is sent directly to me (Jake) and treated as confidential. <strong>Please do not enter any passwords on this form</strong> — the Access section below explains the secure way to share logins.</p>
+  </div>
+</section>
+
+<!-- ================= FORM ================= -->
+<main>
+  <div class="wrap">
+    <form id="onboardForm">
+      <input type="hidden" name="access_key" value="f0d68464-e985-4a14-bf0f-d702a97f3703">
+      <input type="hidden" name="subject" value="New client onboarding submission — Felstow Bookkeeping">
+      <input type="hidden" name="from_name" value="Felstow Bookkeeping — Onboarding Form">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
+      <!-- ===== 1. BUSINESS BASICS ===== -->
+      <fieldset>
+        <legend><span class="step">01</span>Business basics</legend>
+
+        <div class="row">
+          <div class="field">
+            <label for="legal_name">Legal business name</label>
+            <input type="text" id="legal_name" name="legal_name" required>
+          </div>
+          <div class="field">
+            <label for="dba">DBA / "doing business as" (if different)</label>
+            <input type="text" id="dba" name="dba">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="entity_type">Business type</label>
+            <select id="entity_type" name="entity_type" required>
+              <option value="">Select one&hellip;</option>
+              <option>Sole Proprietorship</option>
+              <option>Single-Member LLC</option>
+              <option>Multi-Member LLC</option>
+              <option>LLC taxed as S-Corp</option>
+              <option>S-Corporation</option>
+              <option>C-Corporation</option>
+              <option>Partnership</option>
+              <option>Nonprofit</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ein">EIN <span style="color:var(--grey);font-weight:400;">(leave blank if sole prop using SSN)</span></label>
+            <input type="text" id="ein" name="ein" placeholder="XX-XXXXXXX">
+            <span class="hint">Used only for tax-related reporting; never shared.</span>
+          </div>
+        </div>
+
+        <div class="row three">
+          <div class="field">
+            <label for="state_formed">State of formation</label>
+            <input type="text" id="state_formed" name="state_formed">
+          </div>
+          <div class="field">
+            <label for="date_started">Date business started</label>
+            <input type="date" id="date_started" name="date_started">
+          </div>
+          <div class="field">
+            <label for="fiscal_year">Fiscal year</label>
+            <select id="fiscal_year" name="fiscal_year">
+              <option>Calendar year (Jan&ndash;Dec)</option>
+              <option>Other / not sure</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="biz_address">Business address</label>
+          <input type="text" id="biz_address" name="biz_address" placeholder="Street, City, State, ZIP">
+        </div>
+
+        <div class="field">
+          <label for="industry">Industry / what the business does</label>
+          <textarea id="industry" name="industry" placeholder="Short description — e.g. residential construction, e-commerce supplements, coffee shop, IT consulting&hellip;"></textarea>
+        </div>
+      </fieldset>
+
+      <!-- ===== 2. OWNERSHIP & CONTACT ===== -->
+      <fieldset>
+        <legend><span class="step">02</span>Ownership &amp; primary contact</legend>
+
+        <div class="field">
+          <label for="owners">Owner(s) and ownership %</label>
+          <textarea id="owners" name="owners" placeholder="e.g. Jane Doe — 100%&#10;John Smith — 50%, Mary Smith — 50%"></textarea>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="contact_name">Primary contact name</label>
+            <input type="text" id="contact_name" name="contact_name" required>
+          </div>
+          <div class="field">
+            <label for="contact_role">Their role</label>
+            <input type="text" id="contact_role" name="contact_role" placeholder="Owner, Office Manager, etc.">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="contact_email">Email</label>
+            <input type="email" id="contact_email" name="contact_email" required>
+          </div>
+          <div class="field">
+            <label for="contact_phone">Phone</label>
+            <input type="tel" id="contact_phone" name="contact_phone" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Best way to reach you</label>
+          <div class="radio-row">
+            <label><input type="radio" name="contact_pref" value="Email"> Email</label>
+            <label><input type="radio" name="contact_pref" value="Text"> Text</label>
+            <label><input type="radio" name="contact_pref" value="Phone call"> Phone call</label>
+            <label><input type="radio" name="contact_pref" value="No preference"> No preference</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ===== 3. PEOPLE & PAYROLL ===== -->
+      <fieldset>
+        <legend><span class="step">03</span>People &amp; payroll</legend>
+
+        <div class="row">
+          <div class="field">
+            <label for="num_employees"># of W-2 employees</label>
+            <input type="number" id="num_employees" name="num_employees" min="0" value="0">
+          </div>
+          <div class="field">
+            <label for="num_contractors"># of 1099 contractors</label>
+            <input type="number" id="num_contractors" name="num_contractors" min="0" value="0">
+            <span class="hint">Anyone you pay regularly who isn't on payroll.</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="payroll_provider">Payroll provider (if any)</label>
+            <input type="text" id="payroll_provider" name="payroll_provider" placeholder="Gusto, ADP, QBO Payroll, Paychex, none&hellip;">
+          </div>
+          <div class="field">
+            <label for="payroll_frequency">Payroll frequency</label>
+            <select id="payroll_frequency" name="payroll_frequency">
+              <option value="">N/A</option>
+              <option>Weekly</option>
+              <option>Bi-weekly</option>
+              <option>Semi-monthly</option>
+              <option>Monthly</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="owner_pay">How do owners take money out?</label>
+          <textarea id="owner_pay" name="owner_pay" placeholder="e.g. Owner draws monthly, W-2 salary through payroll, mix of both&hellip;"></textarea>
+        </div>
+      </fieldset>
+
+      <!-- ===== 4. BANK & CREDIT ===== -->
+      <fieldset>
+        <legend><span class="step">04</span>Bank accounts &amp; credit cards</legend>
+
+        <div class="field">
+          <label for="bank_accounts">Active business bank accounts</label>
+          <textarea id="bank_accounts" name="bank_accounts" class="tall" placeholder="One per line — Bank, account type, last 4 digits, what it's used for. Example:&#10;Chase Business Checking — ****1234 — primary operating&#10;Chase Business Savings — ****5678 — tax savings&#10;Bluevine Checking — ****9012 — secondary"></textarea>
+          <span class="hint">Last 4 digits only — never the full account number.</span>
+        </div>
+
+        <div class="field">
+          <label for="credit_cards">Active business credit cards</label>
+          <textarea id="credit_cards" name="credit_cards" placeholder="One per line — Issuer / card name, last 4, what it's used for. Example:&#10;Amex Business Platinum — ****1001 — travel + software&#10;Capital One Spark — ****2002 — general expenses"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="personal_mixing">Are any personal accounts used for business expenses (or vice versa)?</label>
+          <textarea id="personal_mixing" name="personal_mixing" placeholder="Be honest — this is very common, especially early on. Tell me which accounts and roughly how often."></textarea>
+          <span class="hint">No judgment — I just need to know so I can categorize correctly and untangle anything mixed.</span>
+        </div>
+      </fieldset>
+
+      <!-- ===== 5. LOANS & FINANCING ===== -->
+      <fieldset>
+        <legend><span class="step">05</span>Loans &amp; financing</legend>
+
+        <div class="field">
+          <label for="loans">Active loans &amp; lines of credit</label>
+          <textarea id="loans" name="loans" class="tall" placeholder="One per line — Lender, type, original amount, current balance, monthly payment, start date. Example:&#10;SBA EIDL — $150,000 original, ~$142,000 balance, $731/mo, started 6/2021&#10;Ford Credit (F-250) — $48,000 original, ~$31,000 balance, $720/mo, started 3/2023&#10;Amex Business LOC — $25,000 limit, ~$8,000 drawn"></textarea>
+          <span class="hint">Include SBA loans, vehicle/equipment financing, lines of credit, SBA EIDL, owner loans to the business, etc.</span>
+        </div>
+      </fieldset>
+
+      <!-- ===== 6. ASSETS ===== -->
+      <fieldset>
+        <legend><span class="step">06</span>Business assets</legend>
+
+        <div class="field">
+          <label for="vehicles">Business vehicles</label>
+          <textarea id="vehicles" name="vehicles" placeholder="One per line — Year/Make/Model, purchase date, purchase price, financed or paid cash, % business use. Example:&#10;2022 Ford F-250 — bought 3/2023, $54,000, financed, 100% business use"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="other_assets">Other major assets purchased in the last ~3 years</label>
+          <textarea id="other_assets" name="other_assets" placeholder="Equipment, machinery, furniture, computers, real estate, leasehold improvements — anything &gt;$2,500. One per line with purchase date &amp; cost."></textarea>
+          <span class="hint">These affect depreciation on your tax return — important to capture.</span>
+        </div>
+      </fieldset>
+
+      <!-- ===== 7. PAYMENT PLATFORMS ===== -->
+      <fieldset>
+        <legend><span class="step">07</span>Payment platforms</legend>
+
+        <div class="field">
+          <label>Which of these do you use for business? (check all that apply)</label>
+          <div class="check-grid">
+            <label class="check"><input type="checkbox" name="platforms" value="Stripe"> Stripe</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Square"> Square</label>
+            <label class="check"><input type="checkbox" name="platforms" value="PayPal"> PayPal</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Venmo"> Venmo</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Cash App"> Cash App</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Zelle"> Zelle</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Shopify Payments"> Shopify Payments</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Apple Pay / Google Pay"> Apple Pay / Google Pay</label>
+            <label class="check"><input type="checkbox" name="platforms" value="ACH (direct bank)"> ACH / direct bank</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Checks"> Paper checks</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Cash"> Cash</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Other merchant processor"> Other merchant processor</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="venmo_paypal_detail">If you use Venmo or PayPal for business — personal account or business account?</label>
+          <textarea id="venmo_paypal_detail" name="venmo_paypal_detail" placeholder="e.g. Venmo: personal account @janedoe, occasional client payments. PayPal: dedicated business account."></textarea>
+          <span class="hint">Mixing personal Venmo with business is fixable — I just need to know.</span>
+        </div>
+      </fieldset>
+
+      <!-- ===== 8. SOFTWARE & TOOLS ===== -->
+      <fieldset>
+        <legend><span class="step">08</span>Software &amp; tools you already use</legend>
+
+        <div class="row">
+          <div class="field">
+            <label for="has_qbo">Do you already have QuickBooks Online?</label>
+            <select id="has_qbo" name="has_qbo">
+              <option>No / not sure</option>
+              <option>Yes — I have a subscription</option>
+              <option>Yes — but it's been unused</option>
+              <option>I have QuickBooks Desktop (not Online)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="qbo_level">QBO subscription level (if known)</label>
+            <input type="text" id="qbo_level" name="qbo_level" placeholder="Simple Start / Essentials / Plus / Advanced">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="other_tools">Other tools you use for the business</label>
+          <textarea id="other_tools" name="other_tools" placeholder="e.g. Buildertrend, Bill.com, Dext / Hubdoc, Expensify, Gusto, Shopify, Square POS, custom CRM&hellip;"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="receipts_now">How do you currently handle receipts?</label>
+          <textarea id="receipts_now" name="receipts_now" placeholder="e.g. Shoebox, paper folder, photos in my phone, attached to QBO already, dedicated receipt app&hellip;"></textarea>
+        </div>
+      </fieldset>
+
+      <!-- ===== 9. ACCESS & SECURE CREDENTIAL SHARING ===== -->
+      <fieldset>
+        <legend><span class="step">09</span>Access &amp; secure credential sharing</legend>
+
+        <div class="callout">
+          <strong>Please do not type passwords into this form.</strong> This form sends submissions via email, which is not safe for credentials. Here's how I handle access securely:
+          <ul>
+            <li><strong>QuickBooks Online:</strong> Invite me as your Accountant User (no password needed) — I'll send simple instructions.</li>
+            <li><strong>Banks &amp; credit cards:</strong> Most banks let you add me as a read-only user. Where that isn't possible, we'll handle credentials separately (see below).</li>
+            <li><strong>Payroll &amp; other tools:</strong> Almost all have an "add accountant / bookkeeper" option that doesn't require sharing your password.</li>
+            <li><strong>When a password really is the only option:</strong> share it via <a href="https://send.bitwarden.com" target="_blank" rel="noopener">Bitwarden Send</a> (free, expiring, encrypted link) or by phone call. Never email it.</li>
+          </ul>
+        </div>
+
+        <div class="field">
+          <label>Which logins will I eventually need access to? (check all that apply)</label>
+          <div class="check-grid">
+            <label class="check"><input type="checkbox" name="access" value="QuickBooks Online"> QuickBooks Online</label>
+            <label class="check"><input type="checkbox" name="access" value="Business bank(s)"> Business bank(s)</label>
+            <label class="check"><input type="checkbox" name="access" value="Business credit card(s)"> Business credit card(s)</label>
+            <label class="check"><input type="checkbox" name="access" value="Payroll provider"> Payroll provider</label>
+            <label class="check"><input type="checkbox" name="access" value="PayPal / Venmo"> PayPal / Venmo</label>
+            <label class="check"><input type="checkbox" name="access" value="Stripe / Square / Shopify"> Stripe / Square / Shopify</label>
+            <label class="check"><input type="checkbox" name="access" value="Bill.com / AP tool"> Bill.com / AP tool</label>
+            <label class="check"><input type="checkbox" name="access" value="Receipt app (Dext/Hubdoc/etc.)"> Receipt app</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Preferred way to share any credentials that require a password</label>
+          <div class="radio-row">
+            <label><input type="radio" name="cred_method" value="Bitwarden Send"> Bitwarden Send (recommended)</label>
+            <label><input type="radio" name="cred_method" value="1Password Share"> 1Password share link</label>
+            <label><input type="radio" name="cred_method" value="Phone call"> Phone call</label>
+            <label><input type="radio" name="cred_method" value="In person"> In person</label>
+            <label><input type="radio" name="cred_method" value="Not sure"> Not sure — walk me through it</label>
+          </div>
+          <div class="secure-note">After you submit this form I'll follow up with the exact secure link / steps for whichever method you pick.</div>
+        </div>
+      </fieldset>
+
+      <!-- ===== 10. CURRENT STATE ===== -->
+      <fieldset>
+        <legend><span class="step">10</span>Current state of the books</legend>
+
+        <div class="field">
+          <label for="books_status">How current are your books?</label>
+          <select id="books_status" name="books_status">
+            <option value="">Select one&hellip;</option>
+            <option>Up to date — closed through last month</option>
+            <option>1&ndash;3 months behind</option>
+            <option>3&ndash;12 months behind</option>
+            <option>More than a year behind</option>
+            <option>Never been set up</option>
+            <option>Not sure</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="last_reconciled">Approximate last reconciled date (if known)</label>
+            <input type="text" id="last_reconciled" name="last_reconciled" placeholder="e.g. March 2025, or 'never'">
+          </div>
+          <div class="field">
+            <label for="last_tax_year">Most recent tax return filed (year)</label>
+            <input type="text" id="last_tax_year" name="last_tax_year" placeholder="e.g. 2024">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="cpa_info">Do you have a CPA or tax preparer?</label>
+          <textarea id="cpa_info" name="cpa_info" placeholder="Name, firm, email or phone if you have it handy. I'll coordinate directly with them when needed."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="prior_bookkeeper">Previous bookkeeper (if any) — and what wasn't working?</label>
+          <textarea id="prior_bookkeeper" name="prior_bookkeeper" placeholder="Helps me avoid repeating the same friction. Be candid."></textarea>
+        </div>
+      </fieldset>
+
+      <!-- ===== 11. SALES TAX ===== -->
+      <fieldset>
+        <legend><span class="step">11</span>Sales tax</legend>
+
+        <div class="field">
+          <label for="sales_tax">Do you collect sales tax?</label>
+          <select id="sales_tax" name="sales_tax">
+            <option>No</option>
+            <option>Yes — one state</option>
+            <option>Yes — multiple states</option>
+            <option>Not sure / probably should be</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="sales_tax_detail">If yes — which states, and who currently files the returns?</label>
+          <textarea id="sales_tax_detail" name="sales_tax_detail" placeholder="e.g. Minnesota — I file monthly through MN DOR. Also Wisconsin via Avalara."></textarea>
+        </div>
+      </fieldset>
+
+      <!-- ===== 12. GOALS ===== -->
+      <fieldset>
+        <legend><span class="step">12</span>Goals &amp; anything else</legend>
+
+        <div class="field">
+          <label for="top_goals">Top 2&ndash;3 things you want out of working together</label>
+          <textarea id="top_goals" name="top_goals" placeholder="e.g. Stop stressing about taxes. Actually understand my P&amp;L. Know how much I can pay myself."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="pain_points">What hurts the most right now?</label>
+          <textarea id="pain_points" name="pain_points" placeholder="The thing that made you reach out."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="anything_else">Anything else I should know?</label>
+          <textarea id="anything_else" name="anything_else" placeholder="Special situations, upcoming events, weird historical stuff, deadlines, partners I should know about — anything that would save us a back-and-forth later."></textarea>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn">Submit onboarding info</button>
+      <p class="form-note" id="formNote">I'll review and reach out within one business day to set up secure access and our kickoff.</p>
+    </form>
+  </div>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div><span class="f-brand">Felstow Bookkeeping &amp; Consulting</span><span class="dot">&bull;</span>Simplifying your numbers so you can focus on the business.</div>
+    <div><a href="privacy.html">Privacy</a><span class="dot">&bull;</span><a href="terms.html">Terms</a><span class="dot">&bull;</span>&copy; <span id="year"></span> Jake Felstow</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  var form = document.getElementById('onboardForm');
+  var note = document.getElementById('formNote');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      if (data.success) {
+        form.innerHTML =
+          '<div style="text-align:center;padding:40px 10px;">' +
+          '<p style="font-size:22px;color:#1F3A5F;font-weight:700;margin-bottom:14px;">Thanks &mdash; your info is on its way.</p>' +
+          '<p style="font-size:15.5px;color:#23262B;max-width:48ch;margin:0 auto 12px;">I&rsquo;ll review everything and reach out within one business day with next steps &mdash; including the secure way to share any logins.</p>' +
+          '<p style="font-size:14px;color:#6B7280;">Need to add something? Just email me at <a href="mailto:jake.felstow@gmail.com" style="color:#1F3A5F;">jake.felstow@gmail.com</a>.</p>' +
+          '</div>';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        btn.disabled = false; btn.textContent = 'Submit onboarding info';
+        note.textContent = 'Something went wrong — please email me directly at jake.felstow@gmail.com.';
+        note.style.color = '#c0392b';
+      }
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = 'Submit onboarding info';
+      note.textContent = 'Something went wrong — please email me directly at jake.felstow@gmail.com.';
+      note.style.color = '#c0392b';
+    });
+  });
+</script>
+
+</body>
+</html>
