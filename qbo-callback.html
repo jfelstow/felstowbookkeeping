@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>QuickBooks Authorization &mdash; Felstow Bookkeeping</title>
+  <style>
+    :root {
+      --ink: #1f2a37;
+      --muted: #5b6770;
+      --accent: #1f6feb;
+      --ok: #1a7f4b;
+      --err: #b42318;
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --line: #e3e8ef;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 32px;
+      box-shadow: 0 8px 30px rgba(31, 42, 55, 0.06);
+    }
+    h1 { font-size: 20px; margin: 0 0 6px; }
+    .sub { color: var(--muted); margin: 0 0 24px; font-size: 14px; line-height: 1.5; }
+    .status { font-weight: 600; margin: 0 0 20px; }
+    .status.ok { color: var(--ok); }
+    .status.err { color: var(--err); }
+    .field { margin-bottom: 16px; }
+    .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .row { display: flex; gap: 8px; }
+    input[type=text] {
+      flex: 1;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+      color: var(--ink);
+      overflow-x: auto;
+    }
+    button {
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 0 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    button:active { transform: translateY(1px); }
+    button.copied { background: var(--ok); border-color: var(--ok); }
+    .hint {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    code { background: #f0f3f7; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>QuickBooks Authorization</h1>
+    <p class="sub">Felstow Bookkeeping &mdash; internal connection step. This page just captures the
+      authorization values QuickBooks sent back. Copy them and return to your setup session.</p>
+
+    <p id="status" class="status">Reading authorization response&hellip;</p>
+
+    <div id="fields"></div>
+
+    <div class="hint" id="hint" hidden>
+      Copy the <strong>Authorization code</strong> and <strong>Realm ID</strong> above and paste them
+      back into your terminal / Claude session. The code is single-use and expires in about 10 minutes,
+      so finish the exchange promptly. You can close this tab afterward.
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var error = params.get("error");
+      var code = params.get("code");
+      var realmId = params.get("realmId");
+      var state = params.get("state");
+
+      var statusEl = document.getElementById("status");
+      var fieldsEl = document.getElementById("fields");
+      var hintEl = document.getElementById("hint");
+
+      function field(labelText, value) {
+        var wrap = document.createElement("div");
+        wrap.className = "field";
+
+        var label = document.createElement("span");
+        label.className = "label";
+        label.textContent = labelText;
+        wrap.appendChild(label);
+
+        var row = document.createElement("div");
+        row.className = "row";
+
+        var input = document.createElement("input");
+        input.type = "text";
+        input.readOnly = true;
+        input.value = value || "";
+        row.appendChild(input);
+
+        var btn = document.createElement("button");
+        btn.textContent = "Copy";
+        btn.addEventListener("click", function () {
+          input.select();
+          input.setSelectionRange(0, 99999);
+          var done = function () {
+            btn.textContent = "Copied";
+            btn.classList.add("copied");
+            setTimeout(function () {
+              btn.textContent = "Copy";
+              btn.classList.remove("copied");
+            }, 1500);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(input.value).then(done, function () {
+              document.execCommand("copy"); done();
+            });
+          } else {
+            document.execCommand("copy"); done();
+          }
+        });
+        row.appendChild(btn);
+
+        wrap.appendChild(row);
+        fieldsEl.appendChild(wrap);
+      }
+
+      if (error) {
+        statusEl.textContent = "Authorization failed: " + error;
+        statusEl.className = "status err";
+        return;
+      }
+
+      if (!code) {
+        statusEl.textContent = "No authorization code found in the URL. Re-run the authorization step.";
+        statusEl.className = "status err";
+        return;
+      }
+
+      statusEl.textContent = "Authorization received — copy the values below.";
+      statusEl.className = "status ok";
+
+      field("Authorization code", code);
+      field("Realm ID (company ID)", realmId);
+      if (state) { field("State", state); }
+      hintEl.hidden = false;
+    })();
+  </script>
+</body>
+</html>
