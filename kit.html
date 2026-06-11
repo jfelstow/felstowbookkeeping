@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Cash Flow Dashboard Kit — for Bookkeepers | Felstow Bookkeeping &amp; Consulting</title>
+<meta name="description" content="The exact system a working bookkeeping practice uses to sell $300–500/mo cash flow advisory: a weekly-updating, password-protected, client-branded dashboard on free infrastructure. Scripts, guides, demo, and pricing playbook included.">
+<style>
+  :root {
+    --navy:#1F3A5F;
+    --amber:#E0922F;
+    --ink:#23262B;
+    --grey:#6B7280;
+    --faded:#C3CCDA;
+    --hair:#DDE1E7;
+    --bg:#FFFFFF;
+    --bg-soft:#F7F8FA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:"Helvetica Neue", Arial, system-ui, sans-serif; color:var(--ink);
+    background:var(--bg); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 32px; }
+  section { padding:72px 0; border-top:1px solid var(--hair); }
+  header { position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.96);
+    backdrop-filter:saturate(180%) blur(8px); border-bottom:1px solid var(--hair); }
+  .nav { display:flex; align-items:center; justify-content:space-between; height:72px; }
+  .brand { font-size:18px; font-weight:700; color:var(--navy); letter-spacing:-0.2px;
+    text-decoration:none; line-height:1.15; }
+  .brand span { display:block; font-size:10px; font-weight:400; letter-spacing:1.4px;
+    text-transform:uppercase; color:var(--grey); margin-top:2px; }
+  .nav-cta { display:flex; gap:22px; align-items:center; }
+  .nav-cta a.plain { font-size:13px; letter-spacing:0.6px; text-transform:uppercase;
+    color:var(--grey); text-decoration:none; font-weight:600; }
+  .nav-cta a.plain:hover { color:var(--navy); }
+  .btn { display:inline-block; background:var(--amber); color:#fff; font-size:13px;
+    font-weight:700; letter-spacing:0.4px; padding:12px 22px; border-radius:4px;
+    text-decoration:none; border:none; cursor:pointer; transition:background .15s; }
+  .btn:hover { background:#c97f23; }
+  .btn-ghost { font-size:14px; font-weight:700; color:var(--navy); text-decoration:none;
+    letter-spacing:0.3px; border-bottom:2px solid var(--amber); padding-bottom:3px; }
+  .hero { padding:96px 0 84px; border-top:0; }
+  .eyebrow { font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    color:var(--amber); margin-bottom:20px; }
+  .hero h1 { font-size:46px; line-height:1.12; color:var(--navy); font-weight:700;
+    letter-spacing:-0.8px; max-width:22ch; }
+  .accent-bar { width:78px; height:5px; background:var(--amber); margin:26px 0; }
+  .hero p.lead { font-size:19px; color:var(--grey); max-width:58ch; }
+  .hero-cta { margin-top:36px; display:flex; gap:18px; flex-wrap:wrap; align-items:center; }
+  .sec-label { font-size:13px; font-weight:700; color:var(--navy); letter-spacing:2px;
+    text-transform:uppercase; display:inline-block; padding-bottom:6px;
+    border-bottom:2px solid var(--amber); margin-bottom:28px; }
+  h2 { font-size:30px; color:var(--navy); letter-spacing:-0.4px; margin-bottom:16px; }
+  .grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:30px; }
+  .card { background:var(--bg-soft); border:1px solid var(--hair); border-radius:6px; padding:26px; }
+  .card h3 { font-size:16px; color:var(--navy); margin-bottom:8px; }
+  .card p { font-size:14.5px; color:var(--grey); }
+  .list-tight { list-style:none; margin-top:14px; }
+  .list-tight li { padding:9px 0 9px 28px; position:relative; font-size:15.5px; border-bottom:1px solid var(--hair); }
+  .list-tight li:last-child { border-bottom:0; }
+  .list-tight li::before { content:""; position:absolute; left:2px; top:16px; width:9px; height:9px;
+    background:var(--amber); border-radius:2px; }
+  .price-box { background:var(--navy); color:#fff; border-radius:8px; padding:44px;
+    display:grid; grid-template-columns:1.2fr 1fr; gap:40px; align-items:center; }
+  .price-box h2 { color:#fff; }
+  .price-box .big { font-size:54px; font-weight:700; letter-spacing:-1px; }
+  .price-box .big small { font-size:16px; font-weight:400; color:var(--faded); letter-spacing:0; }
+  .price-box p { color:var(--faded); font-size:15px; }
+  .faq dt { font-weight:700; color:var(--navy); margin-top:22px; font-size:16.5px; }
+  .faq dd { margin-top:6px; color:var(--grey); font-size:15.5px; max-width:72ch; }
+  form { background:var(--bg-soft); border:1px solid var(--hair); border-radius:6px; padding:30px; max-width:560px; }
+  .field { margin-bottom:16px; }
+  .field label { display:block; font-size:12px; font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; color:var(--navy); margin-bottom:6px; }
+  .field input, .field textarea { width:100%; padding:11px 12px; font-size:15px;
+    font-family:inherit; border:1px solid var(--hair); border-radius:4px; background:#fff; }
+  .field textarea { min-height:90px; resize:vertical; }
+  .form-note { font-size:13px; color:var(--grey); margin-top:12px; }
+  footer { padding:34px 0; border-top:1px solid var(--hair); font-size:13px; color:var(--grey); }
+  footer .wrap { display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+  .f-brand { font-weight:700; color:var(--navy); }
+  .dot { margin:0 8px; color:var(--faded); }
+  footer a { text-decoration:none; }
+  footer a:hover { color:var(--navy); }
+  .nav-cta .btn { white-space:nowrap; }
+  @media (max-width:860px) {
+    .nav-cta a.plain { display:none; }
+    .hero h1 { font-size:34px; }
+    .grid3 { grid-template-columns:1fr; }
+    .price-box { grid-template-columns:1fr; padding:32px; }
+    section { padding:56px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="brand">Felstow Bookkeeping &amp; Consulting
+      <span>The Cash Flow Dashboard Kit</span>
+    </a>
+    <nav class="nav-cta">
+      <a class="plain" href="#whats-inside">What&rsquo;s Inside</a>
+      <a class="plain" href="#pricing">Pricing</a>
+      <a href="#buy" class="btn">Get the Kit</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">For bookkeepers &amp; accountants</div>
+    <h1>Sell $300&ndash;500/mo cash flow advisory &mdash; with a dashboard system that runs itself.</h1>
+    <div class="accent-bar"></div>
+    <p class="lead">The Cash Flow Dashboard Kit is the exact system my bookkeeping practice uses with paying clients: a weekly-updating, password-protected, client-branded 13-week cash flow dashboard &mdash; built on free infrastructure, refreshed by a Monday cron job, and packaged with the pricing and sales playbook to land your first advisory client.</p>
+    <div class="hero-cta">
+      <a href="#buy" class="btn">Get the Kit</a>
+      <a href="https://jfelstow.github.io/cashflowdemo/" target="_blank" rel="noopener" class="btn-ghost">See a live sample dashboard &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="sec-label">Why this exists</div>
+    <h2>Hourly bookkeeping doesn&rsquo;t scale. Advisory does.</h2>
+    <p style="max-width:68ch; font-size:17px;">Every bookkeeper is told to &ldquo;move upmarket into advisory&rdquo; &mdash; but nobody hands you the delivery system. This kit is that system. Your client opens one link every Monday morning and sees exactly where cash stands for the next 13 weeks: runway, burn, the week that gets tight, and whether they can afford the thing they&rsquo;re about to buy. You deliver it in about an hour a week per client.</p>
+    <div class="grid3">
+      <div class="card"><h3>Recurring revenue</h3><p>Ten advisory clients at $450/mo is $54K/yr of predictable income on roughly ten focused hours a week.</p></div>
+      <div class="card"><h3>$0 infrastructure</h3><p>GitHub Pages hosting, open-source AES-256 password protection, Python, and a Mac you already own. No SaaS fees eating your margin.</p></div>
+      <div class="card"><h3>Actually automated</h3><p>A Monday cron rolls the forecast window, archives the closed week, recomputes, encrypts, and publishes. You read the result and advise.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="whats-inside">
+  <div class="wrap">
+    <div class="sec-label">What&rsquo;s inside</div>
+    <h2>Everything from first install to first invoice.</h2>
+    <ul class="list-tight" style="max-width:760px;">
+      <li><strong>The Blueprint</strong> &mdash; full system architecture plus the ten design rules learned the hard way on live client work (the Excel formula-cache trap, the encryption mojibake bug, the 3-part iOS mobile fix&hellip;).</li>
+      <li><strong>Setup Guide</strong> &mdash; zero to live client dashboard in an afternoon, including copy-paste AI prompts for the two genuinely custom files. You don&rsquo;t need to be a programmer.</li>
+      <li><strong>The deploy pipeline</strong> &mdash; production Python scripts: one-command deploy (compute &rarr; inject &rarr; encrypt &rarr; publish), weekly window-roll with automatic archiving, cron wrapper, and the macOS scheduler config.</li>
+      <li><strong>A complete working demo dashboard</strong> &mdash; fictional client, realistic data, fully responsive. Your reference implementation <em>and</em> your sales demo.</li>
+      <li><strong>Pricing &amp; Selling Guide</strong> &mdash; packages and price points that work, the 15-minute demo-first sales motion, discovery questions, objection handling, and the &ldquo;can I afford X?&rdquo; decision-check framework that makes advisory sticky.</li>
+      <li><strong>Weekly Workflow</strong> &mdash; the Monday routine, the 3-sentence client email template that drives retention, and a troubleshooting table for every failure mode I&rsquo;ve hit.</li>
+      <li><strong>Client-facing materials</strong> &mdash; a rebrandable &ldquo;Understanding Your Cash Flow&rdquo; explainer to hand every new dashboard client.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-label">How it works</div>
+    <h2>Your Monday, per client: about 15 minutes.</h2>
+    <div class="grid3">
+      <div class="card"><h3>1. Bank balance in</h3><p>The client texts you their Monday bank balance. You drop it in a one-line text file (or pre-stage it and let the 8 AM cron handle everything).</p></div>
+      <div class="card"><h3>2. The system publishes</h3><p>The pipeline rolls the 13-week window, recomputes every total in Python, encrypts the dashboard, and pushes it live &mdash; in about 60 seconds.</p></div>
+      <div class="card"><h3>3. You advise</h3><p>You read the dashboard before they do and send three sentences: the verdict, the number that matters, the thing you&rsquo;re watching. That email is the retention engine.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="price-box">
+      <div>
+        <h2>The Cash Flow Dashboard Kit</h2>
+        <p>Guides, production scripts, working demo dashboard, client materials, and the pricing playbook. Single-practice license &mdash; use it with unlimited clients of your own. Email support from me, a working bookkeeper, not a course-seller.</p>
+      </div>
+      <div>
+        <div class="big">$249 <small>one-time</small></div>
+        <p style="margin:10px 0 20px;">Pays for itself in week one of your first advisory client.</p>
+        <a href="#buy" class="btn">Get the Kit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-label">FAQ</div>
+    <dl class="faq">
+      <dt>Do I need to know how to code?</dt>
+      <dd>No. The pipeline scripts work as-is after filling in a clearly marked config block. The two files that are custom per client (the spreadsheet math and the dashboard branding) come with copy-paste AI prompts that do the translation for you &mdash; plus a verification step so you know the math is right.</dd>
+      <dt>What do I need?</dt>
+      <dd>A Mac, Python 3, Node.js, and a free GitHub account. Total infrastructure cost: $0/month.</dd>
+      <dt>Is this a course?</dt>
+      <dd>No. It&rsquo;s a working system &mdash; the same scripts and playbook running for real clients today &mdash; with documentation written so you can run it too.</dd>
+      <dt>Why is the hosting free if the data is sensitive?</dt>
+      <dd>The published file is AES-256 encrypted ciphertext; the password your client enters decrypts it in their browser. Nothing readable ever sits on the host.</dd>
+      <dt>Does it work with QuickBooks?</dt>
+      <dd>The system runs from a 13-week cash flow spreadsheet (included structure), which you update from any source &mdash; QBO, bank feeds, or the client&rsquo;s Monday text. The bank balance, not the book balance, drives it: that&rsquo;s rule #7 in the Blueprint.</dd>
+    </dl>
+  </div>
+</section>
+
+<section id="buy">
+  <div class="wrap">
+    <div class="sec-label">Get the Kit</div>
+    <h2>Order the Kit &mdash; $249</h2>
+    <p style="max-width:62ch; margin-bottom:26px;">Launch period: orders are handled personally. Send this form and within one business day you&rsquo;ll get a secure card payment link and the Kit delivered to your inbox.</p>
+    <!-- SWAP-POINT: when the Gumroad/Lemon Squeezy product is live, replace this form
+         with a single <a class="btn" href="PRODUCT_URL">Buy now — instant download</a> -->
+    <form id="kitForm">
+      <input type="hidden" name="access_key" value="f0d68464-e985-4a14-bf0f-d702a97f3703">
+      <input type="hidden" name="subject" value="KIT ORDER — Cash Flow Dashboard Kit ($249)">
+      <input type="hidden" name="from_name" value="Cash Flow Dashboard Kit page">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="field"><label for="name">Name</label><input type="text" id="name" name="name" required></div>
+      <div class="field"><label for="practice">Practice / firm name</label><input type="text" id="practice" name="practice"></div>
+      <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+      <div class="field"><label for="message">Anything you want me to know? <span style="color:#6B7280;font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label><textarea id="message" name="message" placeholder="e.g. how many clients you have in mind for this"></textarea></div>
+      <button type="submit" class="btn">Request my payment link</button>
+      <p class="form-note" id="formNote">You&rsquo;ll hear back within one business day. Questions first? <a href="mailto:jake.felstow@gmail.com" style="color:var(--navy);">jake.felstow@gmail.com</a></p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><span class="f-brand">Felstow Bookkeeping &amp; Consulting</span><span class="dot">&bull;</span>Simplifying your numbers so you can focus on the business.</div>
+    <div><a href="index.html">Main site</a><span class="dot">&bull;</span><a href="privacy.html">Privacy Policy</a><span class="dot">&bull;</span><a href="terms.html">Terms of Use</a><span class="dot">&bull;</span>&copy; <span id="year"></span> Felstow Bookkeeping and Consulting LLC</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var form = document.getElementById('kitForm');
+  var note = document.getElementById('formNote');
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var btn = form.querySelector('button[type=submit]');
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      var res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: new FormData(form)
+      });
+      var data = await res.json();
+      if (data.success) {
+        form.reset();
+        note.textContent = 'Got it — watch your inbox for the payment link and the Kit.';
+        btn.textContent = 'Request received';
+      } else { throw new Error(data.message || 'failed'); }
+    } catch (err) {
+      note.textContent = 'Something went wrong — please email jake.felstow@gmail.com directly.';
+      btn.disabled = false; btn.textContent = 'Request my payment link';
+    }
+  });
+</script>
+
+</body>
+</html>
