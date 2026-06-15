@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Cash Flow Dashboard Kit — for Bookkeepers | Felstow Bookkeeping &amp; Consulting</title>
-<meta name="description" content="The exact system a working bookkeeping practice uses to sell $300–500/mo cash flow advisory: a weekly-updating, password-protected, client-branded dashboard on free infrastructure. Scripts, guides, demo, and pricing playbook included.">
+<meta name="description" content="The exact system a working bookkeeping practice uses to sell $300–500/mo cash flow advisory: a weekly-updating, password-protected, client-branded 18-week cash flow dashboard on free infrastructure. Scripts, guides, demo, and pricing playbook included.">
 <style>
   :root {
     --navy:#1F3A5F;
@@ -113,7 +113,7 @@
     <div class="eyebrow">For bookkeepers &amp; accountants</div>
     <h1>Sell $300&ndash;500/mo cash flow advisory &mdash; with a dashboard system that runs itself.</h1>
     <div class="accent-bar"></div>
-    <p class="lead">The Cash Flow Dashboard Kit is the exact system my bookkeeping practice uses with paying clients: a weekly-updating, password-protected, client-branded 13-week cash flow dashboard &mdash; built on free infrastructure, refreshed by a Monday cron job, and packaged with the pricing and sales playbook to land your first advisory client.</p>
+    <p class="lead">The Cash Flow Dashboard Kit is the exact system my bookkeeping practice uses with paying clients: a weekly-updating, password-protected, client-branded 18-week cash flow dashboard &mdash; built on free infrastructure, refreshed by a Monday cron job, and packaged with the pricing and sales playbook to land your first advisory client.</p>
     <div class="hero-cta">
       <a href="#buy" class="btn">Get the Kit</a>
       <a href="https://jfelstow.github.io/cashflowdemo/" target="_blank" rel="noopener" class="btn-ghost">See a live sample dashboard &rarr;</a>
@@ -125,7 +125,7 @@
   <div class="wrap">
     <div class="sec-label">Why this exists</div>
     <h2>Hourly bookkeeping doesn&rsquo;t scale. Advisory does.</h2>
-    <p style="max-width:68ch; font-size:17px;">Every bookkeeper is told to &ldquo;move upmarket into advisory&rdquo; &mdash; but nobody hands you the delivery system. This kit is that system. Your client opens one link every Monday morning and sees exactly where cash stands for the next 13 weeks: runway, burn, the week that gets tight, and whether they can afford the thing they&rsquo;re about to buy. You deliver it in about an hour a week per client.</p>
+    <p style="max-width:68ch; font-size:17px;">Every bookkeeper is told to &ldquo;move upmarket into advisory&rdquo; &mdash; but nobody hands you the delivery system. This kit is that system. Your client opens one link every Monday morning and sees exactly where cash stands for the next 18 weeks: runway, burn, the week that gets tight, and whether they can afford the thing they&rsquo;re about to buy. You deliver it in about an hour a week per client.</p>
     <div class="grid3">
       <div class="card"><h3>Recurring revenue</h3><p>Ten advisory clients at $450/mo is $54K/yr of predictable income on roughly ten focused hours a week.</p></div>
       <div class="card"><h3>$0 infrastructure</h3><p>GitHub Pages hosting, open-source AES-256 password protection, Python, and a Mac you already own. No SaaS fees eating your margin.</p></div>
@@ -142,10 +142,11 @@
       <li><strong>The Blueprint</strong> &mdash; full system architecture plus the ten design rules learned the hard way on live client work (the Excel formula-cache trap, the encryption mojibake bug, the 3-part iOS mobile fix&hellip;).</li>
       <li><strong>Setup Guide</strong> &mdash; zero to live client dashboard in an afternoon, including copy-paste AI prompts for the two genuinely custom files. You don&rsquo;t need to be a programmer.</li>
       <li><strong>The deploy pipeline</strong> &mdash; production Python scripts: one-command deploy (compute &rarr; inject &rarr; encrypt &rarr; publish), weekly window-roll with automatic archiving, cron wrapper, and the macOS scheduler config.</li>
+      <li><strong>Projections scenario model</strong> &mdash; a working template for the 12-month Projections view: revenue cases, cost modes, owner-pay and financing toggles, every combination precomputed in Python. The premium tier you upsell once the weekly cadence is sticky.</li>
       <li><strong>A complete working demo dashboard</strong> &mdash; fictional client, realistic data, fully responsive. Your reference implementation <em>and</em> your sales demo.</li>
       <li><strong>Pricing &amp; Selling Guide</strong> &mdash; packages and price points that work, the 15-minute demo-first sales motion, discovery questions, objection handling, and the &ldquo;can I afford X?&rdquo; decision-check framework that makes advisory sticky.</li>
       <li><strong>Weekly Workflow</strong> &mdash; the Monday routine, the 3-sentence client email template that drives retention, and a troubleshooting table for every failure mode I&rsquo;ve hit.</li>
-      <li><strong>Client-facing materials</strong> &mdash; a rebrandable &ldquo;Understanding Your Cash Flow&rdquo; explainer to hand every new dashboard client.</li>
+      <li><strong>Client-facing materials</strong> &mdash; a rebrandable &ldquo;Understanding Your Cash Flow&rdquo; explainer, a <strong>Decision Log</strong> template (with two worked examples) for &ldquo;can I afford X?&rdquo; calls, and a one-page <strong>Action Plan</strong> template. The deliverables that turn a dashboard into advisory.</li>
     </ul>
   </div>
 </section>
@@ -156,7 +157,7 @@
     <h2>Your Monday, per client: about 15 minutes.</h2>
     <div class="grid3">
       <div class="card"><h3>1. Bank balance in</h3><p>The client texts you their Monday bank balance. You drop it in a one-line text file (or pre-stage it and let the 8 AM cron handle everything).</p></div>
-      <div class="card"><h3>2. The system publishes</h3><p>The pipeline rolls the 13-week window, recomputes every total in Python, encrypts the dashboard, and pushes it live &mdash; in about 60 seconds.</p></div>
+      <div class="card"><h3>2. The system publishes</h3><p>The pipeline rolls the 18-week window, recomputes every total in Python, encrypts the dashboard, and pushes it live &mdash; in about 60 seconds.</p></div>
       <div class="card"><h3>3. You advise</h3><p>You read the dashboard before they do and send three sentences: the verdict, the number that matters, the thing you&rsquo;re watching. That email is the retention engine.</p></div>
     </div>
   </div>
@@ -190,8 +191,10 @@
       <dd>No. It&rsquo;s a working system &mdash; the same scripts and playbook running for real clients today &mdash; with documentation written so you can run it too.</dd>
       <dt>Why is the hosting free if the data is sensitive?</dt>
       <dd>The published file is AES-256 encrypted ciphertext; the password your client enters decrypts it in their browser. Nothing readable ever sits on the host.</dd>
+      <dt>Is the scenario / Projections view included?</dt>
+      <dd>Yes &mdash; the demo dashboard includes the full working Projections view, and the kit ships a compute template (revenue cases, cost modes, owner pay, financing) you adapt per client. The guides position it as your premium pricing tier.</dd>
       <dt>Does it work with QuickBooks?</dt>
-      <dd>The system runs from a 13-week cash flow spreadsheet (included structure), which you update from any source &mdash; QBO, bank feeds, or the client&rsquo;s Monday text. The bank balance, not the book balance, drives it: that&rsquo;s rule #7 in the Blueprint.</dd>
+      <dd>The system runs from an 18-week cash flow spreadsheet (included structure), which you update from any source &mdash; QBO, bank feeds, or the client&rsquo;s Monday text. The bank balance, not the book balance, drives it: that&rsquo;s rule #7 in the Blueprint.</dd>
     </dl>
   </div>
 </section>
