@@ -14,13 +14,22 @@ Built on OpenAI's open-source **Whisper** speech model via
 
 ## Setup
 
-Requires Python 3.9+.
+Requires Python 3.9+. On Mac/Linux, one command does everything (first run
+installs dependencies, later runs start instantly):
+
+```bash
+cd whisper-flow-clone
+./run.sh
+```
+
+Or set up manually (Windows, or if you prefer):
 
 ```bash
 cd whisper-flow-clone
 python3 -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+python dictate.py
 ```
 
 ### macOS permissions
