@@ -59,8 +59,11 @@ Skip it entirely for healthy months.
 
 1. Save to `reports/client-emails/YYYY-MM-<client-slug>.md` (subject line + body, plus any
    internal draft-note banner above the email).
-2. Create a Gmail draft (`create_draft`): subject `<Client> — <Month> books + <hook>`,
-   plain-text body only (no HTML — personal beats polished). Leave `to` empty unless the
-   client's email is on file or provided; Jake fills it in when he reviews.
+2. Create a Gmail draft (`create_draft`) **on the bookkeeping connector — the one
+   authenticated as jake.felstow@gmail.com** (see the email-routing rules in CLAUDE.md;
+   never draft client mail from the Provision and Company account). Subject
+   `<Client> — <Month> books + <hook>`, plain-text body only (no HTML — personal beats
+   polished). Leave `to` empty unless the client's email is on file or provided; Jake
+   fills it in when he reviews.
 3. In chat: give the one-line story chosen, and note anything Jake should verify before
    sending.
