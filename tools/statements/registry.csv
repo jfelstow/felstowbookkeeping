@@ -1,0 +1,9 @@
+client,account,institution,type,available_day,method,notes
+Fresh Dry Snacks,BankVista Main Checking,BankVista,bank,1,TBD,statement cycle assumed month-end; confirm availability lag
+Fresh Dry Snacks,BankVista Reserves Account,BankVista,bank,1,TBD,low activity; confirm cycle
+Fresh Dry Snacks,Choice Trailblazer Main,Choice,bank,1,TBD,zero balance in QBO — confirm account still open
+Fresh Dry Snacks,Freeze Dried Foods (4069),TBD,bank,1,TBD,zero balance in QBO — confirm account still open
+Fresh Dry Snacks,PayPal - TBF,PayPal,processor,1,portal,monthly statement in PayPal Reports; available ~1st
+Fresh Dry Snacks,AMEX Business Platinum x1004,American Express,card,TBD,TBD,cycle date varies — read closing date off last statement
+Fresh Dry Snacks,AMEX x1007 (Jeremy personal),American Express,card,TBD,client-sends,owner's personal card used for business — client must send
+Fresh Dry Snacks,SCHEELS SIGNATURE,Scheels/First National,card,TBD,TBD,zero balance in QBO — confirm card still active

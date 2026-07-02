@@ -1,0 +1,58 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Felstow Bookkeeping//Statement Calendar//EN
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Client Statements
+BEGIN:VEVENT
+UID:fresh-dry-snacks-bankvista-d1@felstowbookkeeping
+DTSTAMP:20260101T000000Z
+DTSTART;VALUE=DATE:20260101
+RRULE:FREQ=MONTHLY;BYMONTHDAY=1
+SUMMARY:📄 Statements: Fresh Dry Snacks — BankVista
+DESCRIPTION:Grab statements for Fresh Dry Snacks / BankVista:\n- BankVista Main Checking (TBD)\n- BankVista Reserves Account (TBD)\n\nNotes:\n- BankVista Main Checking: statement cycle assumed month-end; confirm availability lag\n- BankVista Reserves Account: low activity; confirm cycle
+BEGIN:VALARM
+TRIGGER:PT9H
+ACTION:DISPLAY
+DESCRIPTION:Grab BankVista statements for Fresh Dry Snacks
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fresh-dry-snacks-choice-d1@felstowbookkeeping
+DTSTAMP:20260101T000000Z
+DTSTART;VALUE=DATE:20260101
+RRULE:FREQ=MONTHLY;BYMONTHDAY=1
+SUMMARY:📄 Statements: Fresh Dry Snacks — Choice
+DESCRIPTION:Grab statements for Fresh Dry Snacks / Choice:\n- Choice Trailblazer Main (TBD)\n\nNotes:\n- Choice Trailblazer Main: zero balance in QBO — confirm account still open
+BEGIN:VALARM
+TRIGGER:PT9H
+ACTION:DISPLAY
+DESCRIPTION:Grab Choice statements for Fresh Dry Snacks
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fresh-dry-snacks-paypal-d1@felstowbookkeeping
+DTSTAMP:20260101T000000Z
+DTSTART;VALUE=DATE:20260101
+RRULE:FREQ=MONTHLY;BYMONTHDAY=1
+SUMMARY:📄 Statements: Fresh Dry Snacks — PayPal
+DESCRIPTION:Grab statements for Fresh Dry Snacks / PayPal:\n- PayPal - TBF (portal)\n\nNotes:\n- PayPal - TBF: monthly statement in PayPal Reports; available ~1st
+BEGIN:VALARM
+TRIGGER:PT9H
+ACTION:DISPLAY
+DESCRIPTION:Grab PayPal statements for Fresh Dry Snacks
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fresh-dry-snacks-tbd-d1@felstowbookkeeping
+DTSTAMP:20260101T000000Z
+DTSTART;VALUE=DATE:20260101
+RRULE:FREQ=MONTHLY;BYMONTHDAY=1
+SUMMARY:📄 Statements: Fresh Dry Snacks — TBD
+DESCRIPTION:Grab statements for Fresh Dry Snacks / TBD:\n- Freeze Dried Foods (4069) (TBD)\n\nNotes:\n- Freeze Dried Foods (4069): zero balance in QBO — confirm account still open
+BEGIN:VALARM
+TRIGGER:PT9H
+ACTION:DISPLAY
+DESCRIPTION:Grab TBD statements for Fresh Dry Snacks
+END:VALARM
+END:VEVENT
+END:VCALENDAR
