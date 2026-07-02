@@ -1,0 +1,15 @@
+ticker,company,target_pct,per_10000_usd,sector,as_of
+NOW,ServiceNow,10,1000,Enterprise software / agentic AI,2026-07-02
+AVGO,Broadcom,9,900,Semiconductors / custom AI ASICs,2026-07-02
+VST,Vistra,9,900,Power / AI datacenter energy,2026-07-02
+LLY,Eli Lilly,9,900,Healthcare / GLP-1,2026-07-02
+NVDA,NVIDIA,8,800,Semiconductors / AI compute,2026-07-02
+RDDT,Reddit,8,800,Internet / AI data licensing,2026-07-02
+MSFT,Microsoft,7,700,Mega-cap tech / cloud AI,2026-07-02
+ZETA,Zeta Global,7,700,AI marketing cloud,2026-07-02
+MGNI,Magnite,5,500,Programmatic advertising,2026-07-02
+PGY,Pagaya Technologies,5,500,Fintech / AI credit,2026-07-02
+ARDX,Ardelyx,5,500,Biotech,2026-07-02
+INTR,Inter & Co,5,500,LatAm digital banking,2026-07-02
+AU,AngloGold Ashanti,5,500,Gold miner / hedge,2026-07-02
+CASH,Money market or sweep,8,800,Cash buffer,2026-07-02
