@@ -12,10 +12,12 @@ Jake has two email identities. Route by business, never mix them:
   the Kit, the Subscription Audit) → draft from **jake.felstow@gmail.com**
 - **Provision and Company** → draft from **jake@provisionandcompany.com**
 
-Each identity is its own Gmail connector; the connector authenticated as
-jake.felstow@gmail.com is the bookkeeping one. If the Provision and Company
-connector is not attached to the session and a Provision email is needed, say so
-and stop — do not draft Provision mail from the bookkeeping account (or vice versa).
+Each identity is its own Gmail connector. **Verify which account a connector is
+before drafting** (search `in:sent` and check the sender — as of July 2026 the
+attached Gmail connector is jake@provisionandcompany.com, the Provision one; the
+bookkeeping account jake.felstow@gmail.com is NOT yet connected). If the right
+connector for an email is not attached to the session, say so and stop — never
+draft bookkeeping mail from the Provision account or vice versa.
 
 ## Email ground rules
 
