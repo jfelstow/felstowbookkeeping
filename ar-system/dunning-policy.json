@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "description": "Escalation ladder for AR collections. days are relative to the invoice due date (negative = before due). The /ar-review skill classifies every open invoice into the highest stage whose trigger has passed and that hasn't been actioned yet (per the collections log).",
+  "global_rules": {
+    "never_auto_send": true,
+    "one_touch_per_invoice_per_run": true,
+    "broken_promise": "If a logged promise-to-pay date passes without payment, advance immediately to the next stage and flag for a phone call regardless of days_past_due.",
+    "partial_payment": "Restart the clock from the remaining balance's original due date; note the partial in all subsequent touches.",
+    "dispute": "If the customer disputes the invoice, freeze dunning, flag as DISPUTE in the digest, and track resolution separately.",
+    "small_balance_floor": 25.0,
+    "small_balance_action": "Below the floor, skip stages 3-5; roll into a monthly statement instead."
+  },
+  "profiles": {
+    "standard": {
+      "description": "Commercial wholesale accounts (retail stores, cafes, distributors).",
+      "stages": [
+        { "stage": 0, "name": "sent", "trigger_days": null, "action": "invoice_cover", "channel": "email", "template": "stage-0-invoice-cover.md" },
+        { "stage": 1, "name": "courtesy", "trigger_days": -5, "action": "reminder", "channel": "email", "template": "stage-1-courtesy.md" },
+        { "stage": 2, "name": "past_due", "trigger_days": 3, "action": "reminder", "channel": "email", "template": "stage-2-past-due.md" },
+        { "stage": 3, "name": "firm", "trigger_days": 14, "action": "firm_notice", "channel": "email", "template": "stage-3-firm.md", "goal": "Obtain a specific promise-to-pay date and log it." },
+        { "stage": 4, "name": "escalate", "trigger_days": 30, "action": "call_plus_email", "channel": "phone+email", "template": "stage-4-escalation.md", "goal": "Reach a decision-maker. Email is the paper trail; the call is the collection." },
+        { "stage": 5, "name": "final", "trigger_days": 45, "action": "final_notice", "channel": "phone+email", "template": "stage-5-final.md", "consequence": "credit_hold", "note": "Owner decides: hold future orders, payment plan, or write-off/collections agency." }
+      ]
+    },
+    "school_district": {
+      "description": "K-12 districts and other public institutions. Slower by process, not by intent: PO-driven, shared AP inboxes, scheduled check runs, sometimes board approval. Longer fuse, but escalation targets a named human sooner.",
+      "stages": [
+        { "stage": 0, "name": "sent", "trigger_days": null, "action": "invoice_cover", "channel": "per_client_submission_method", "template": "stage-0-invoice-cover-district.md", "requirements": ["PO number on invoice", "submit via the district's required channel", "confirm receipt if portal gives no acknowledgment"] },
+        { "stage": 1, "name": "courtesy", "trigger_days": -7, "action": "reminder", "channel": "email", "template": "stage-1-courtesy-district.md", "note": "Ask which check run the invoice is scheduled on — this converts a reminder into a promise-to-pay date." },
+        { "stage": 2, "name": "past_due", "trigger_days": 7, "action": "reminder", "channel": "email", "template": "stage-2-past-due-district.md" },
+        { "stage": 3, "name": "firm", "trigger_days": 21, "action": "firm_notice", "channel": "email", "template": "stage-3-firm-district.md", "goal": "Confirm the invoice is approved and scheduled; if not approved, find out what is blocking it (missing PO match, receiving not confirmed, wrong remit address)." },
+        { "stage": 4, "name": "escalate", "trigger_days": 35, "action": "call_plus_email", "channel": "phone+email", "template": "stage-4-escalation-district.md", "escalate_to": "AP supervisor or district business manager", "note": "Districts almost never refuse to pay; stuck invoices are process failures. The call finds the failure." },
+        { "stage": 5, "name": "final", "trigger_days": 60, "action": "final_notice", "channel": "phone+email", "template": "stage-5-final.md", "consequence": "credit_hold", "note": "Before any hold on a district: owner call. Fall food service is a relationship business." }
+      ]
+    }
+  }
+}

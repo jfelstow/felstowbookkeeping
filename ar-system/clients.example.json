@@ -1,0 +1,30 @@
+{
+  "_comment": "Copy to clients.json (gitignored) and fill in real data. One entry per bookkeeping client whose AR you manage. Customer overrides map QBO customer display names to profiles and AP contact details.",
+  "clients": [
+    {
+      "id": "example-client",
+      "business_name": "Example Foods LLC",
+      "owner_name": "Alex Example",
+      "owner_email": "alex@example.com",
+      "qbo_connected": true,
+      "default_profile": "standard",
+      "remit_to": "Example Foods LLC, 123 Main St, Anytown ST 00000",
+      "payment_methods": "ACH via QuickBooks pay link (preferred), or check to remit address",
+      "signature": "Alex Example\nExample Foods LLC\n(555) 555-0100",
+      "collections_sender": "bookkeeper",
+      "_collections_sender_options": "bookkeeper = emails come from you on the client's behalf; owner = you draft, owner sends from their inbox",
+      "customer_overrides": {
+        "Anytown Unified School District": {
+          "profile": "school_district",
+          "ap_contact_name": "Pat Clerk",
+          "ap_contact_email": "ap@anytownusd.example",
+          "ap_phone": "(555) 555-0199",
+          "po_required": true,
+          "invoice_submission": "email to ap@anytownusd.example with PO# in subject line",
+          "check_run_schedule": "15th and last business day of month",
+          "notes": "Requires W-9 on file before first payment; vendor registration completed 2026-08."
+        }
+      }
+    }
+  ]
+}

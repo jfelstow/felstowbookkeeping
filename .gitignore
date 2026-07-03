@@ -1,0 +1,4 @@
+# AR Command Center — real client data never gets committed (public repo)
+ar-system/clients.json
+ar-system/log/
+ar-system/reports/
