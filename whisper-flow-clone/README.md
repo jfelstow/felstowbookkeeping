@@ -78,6 +78,30 @@ input sources while you dictate.
 If you have a fast machine (Apple Silicon, or any recent GPU), try
 `--model small.en` or `medium` for noticeably better accuracy.
 
+## Start automatically at login
+
+Two options, pick one:
+
+**Option A — easiest (recommended):** add the included `Dictation.command`
+to your login items: **System Settings → General → Login Items → Open at
+Login → +** and pick `Dictation.command` from this folder. At login a small
+Terminal window opens running dictation — minimize it and forget it. This
+reuses the permissions you already granted to Terminal, so nothing else to
+set up. (First time only: if macOS blocks the double-click, right-click →
+Open.)
+
+**Option B — invisible background service:**
+
+```bash
+./autostart.sh install
+```
+
+This registers a LaunchAgent so dictation runs with no window at all and
+restarts if it crashes. Because it no longer runs inside Terminal, macOS
+needs you to grant Microphone/Accessibility/Input Monitoring to the Python
+interpreter itself — the installer prints the exact path to add. Manage it
+with `./autostart.sh status` and `./autostart.sh uninstall`.
+
 ## Teaching it your words
 
 Two plain-text files next to `dictate.py` act as your personal dictionary
