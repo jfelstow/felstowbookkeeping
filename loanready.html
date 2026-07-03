@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoanReady — Lender-Ready Financials in Minutes | Felstow Bookkeeping &amp; Consulting</title>
+<meta name="description" content="Turn your QuickBooks P&L into the polished financial package your bank asks for — DSCR, cash flow, trends and charts — in minutes, right in your browser. Nothing is uploaded.">
+<style>
+  :root {
+    --navy:#1F3A5F;
+    --amber:#E0922F;
+    --ink:#23262B;
+    --grey:#6B7280;
+    --faded:#C3CCDA;
+    --hair:#DDE1E7;
+    --bg:#FFFFFF;
+    --bg-soft:#F7F8FA;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:"Helvetica Neue", Arial, system-ui, sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a { color:inherit; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 32px; }
+  section { padding:88px 0; border-top:1px solid var(--hair); }
+  section:first-of-type { border-top:0; }
+
+  header {
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.96);
+    backdrop-filter:saturate(180%) blur(8px);
+    border-bottom:1px solid var(--hair);
+  }
+  .nav { display:flex; align-items:center; justify-content:space-between; height:72px; }
+  .brand { font-size:18px; font-weight:700; color:var(--navy); letter-spacing:-0.2px;
+    text-decoration:none; line-height:1.15; }
+  .brand span { display:block; font-size:10px; font-weight:400; letter-spacing:1.4px;
+    text-transform:uppercase; color:var(--grey); margin-top:2px; }
+  .nav-links { display:flex; align-items:center; gap:30px; }
+  .nav-links a { font-size:13px; letter-spacing:0.6px; text-transform:uppercase;
+    color:var(--grey); text-decoration:none; font-weight:600; transition:color .15s; }
+  .nav-links a:hover { color:var(--navy); }
+  .btn {
+    display:inline-block; background:var(--amber); color:#fff;
+    font-size:13px; font-weight:700; letter-spacing:0.4px;
+    padding:12px 22px; border-radius:4px; text-decoration:none;
+    border:none; cursor:pointer; transition:background .15s, transform .05s;
+  }
+  .btn:hover { background:#c97f23; }
+  .btn:active { transform:translateY(1px); }
+  .btn-nav { padding:10px 18px; }
+  .btn.big { font-size:15px; padding:15px 32px; }
+  .btn-ghost {
+    font-size:14px; font-weight:700; color:var(--navy);
+    text-decoration:none; letter-spacing:0.3px;
+    border-bottom:2px solid var(--amber); padding-bottom:3px;
+  }
+
+  .hero { padding:110px 0 96px; border-top:0; }
+  .hero .eyebrow { font-size:12px; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; color:var(--amber); margin-bottom:20px; }
+  .hero h1 { font-size:48px; line-height:1.12; color:var(--navy);
+    font-weight:700; letter-spacing:-0.8px; max-width:22ch; }
+  .hero h1 em { font-style:normal; color:var(--amber); }
+  .accent-bar { width:78px; height:5px; background:var(--amber); margin:26px 0; }
+  .hero p.lead { font-size:19px; color:var(--grey); max-width:58ch; }
+  .hero-cta { margin-top:36px; display:flex; gap:22px; flex-wrap:wrap; align-items:center; }
+  .hero .privacy-note { margin-top:22px; font-size:13.5px; color:var(--grey); }
+  .hero .privacy-note strong { color:var(--navy); }
+
+  .sec-head { margin-bottom:34px; }
+  .sec-label { font-size:13px; font-weight:700; color:var(--navy);
+    letter-spacing:2px; text-transform:uppercase; display:inline-block;
+    padding-bottom:6px; border-bottom:2px solid var(--amber); }
+  .sec-title { font-size:32px; color:var(--navy); letter-spacing:-0.4px; margin-top:16px;
+    font-weight:700; line-height:1.2; }
+  .sec-sub { font-size:17px; color:var(--grey); margin-top:10px; max-width:62ch; }
+
+  .pain-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .pain-card { background:var(--bg-soft); border:1px solid var(--hair); border-radius:8px; padding:26px; }
+  .pain-card h3 { font-size:16px; color:var(--navy); margin-bottom:8px; }
+  .pain-card p { font-size:14.5px; color:var(--grey); }
+
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; counter-reset:step; }
+  .step-card { border:1px solid var(--hair); border-radius:8px; padding:28px; position:relative; }
+  .step-card::before {
+    counter-increment:step; content:counter(step);
+    display:inline-flex; width:34px; height:34px; border-radius:50%;
+    background:var(--amber); color:#fff; font-weight:700; font-size:16px;
+    align-items:center; justify-content:center; margin-bottom:14px;
+  }
+  .step-card h3 { font-size:17px; color:var(--navy); margin-bottom:8px; }
+  .step-card p { font-size:14.5px; color:var(--grey); }
+
+  .inside-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px 28px; }
+  .inside-item { display:flex; gap:12px; align-items:flex-start; padding:14px 0;
+    border-bottom:1px solid var(--hair); }
+  .inside-item .tick { color:var(--amber); font-weight:700; flex:none; }
+  .inside-item strong { color:var(--navy); }
+  .inside-item span.desc { display:block; font-size:14px; color:var(--grey); }
+
+  .price-grid { display:grid; grid-template-columns:1fr 1fr; gap:26px; max-width:760px; }
+  .price-card { border:1px solid var(--hair); border-radius:10px; padding:34px 32px; text-align:center; }
+  .price-card.featured { border:2px solid var(--amber); position:relative; }
+  .price-card.featured .flag { position:absolute; top:-13px; left:50%; transform:translateX(-50%);
+    background:var(--amber); color:#fff; font-size:11px; font-weight:700; letter-spacing:1.2px;
+    text-transform:uppercase; padding:4px 14px; border-radius:99px; }
+  .price-card .plan { font-size:13px; font-weight:700; letter-spacing:1.6px;
+    text-transform:uppercase; color:var(--navy); }
+  .price-card .amount { font-size:52px; font-weight:700; color:var(--navy); margin:14px 0 2px;
+    letter-spacing:-1px; }
+  .price-card .amount small { font-size:16px; font-weight:400; color:var(--grey); letter-spacing:0; }
+  .price-card .per { font-size:13.5px; color:var(--grey); margin-bottom:20px; }
+  .price-card ul { list-style:none; text-align:left; margin:0 auto 26px; max-width:270px;
+    font-size:14.5px; color:var(--grey); }
+  .price-card ul li { padding:6px 0 6px 24px; position:relative; }
+  .price-card ul li::before { content:"\2713"; position:absolute; left:0; color:var(--amber); font-weight:700; }
+
+  .faq { max-width:760px; }
+  .faq details { border-bottom:1px solid var(--hair); padding:18px 0; }
+  .faq summary { cursor:pointer; font-size:16.5px; font-weight:600; color:var(--navy); list-style:none; }
+  .faq summary::-webkit-details-marker { display:none; }
+  .faq summary::after { content:"+"; float:right; color:var(--amber); font-weight:700; font-size:20px; }
+  .faq details[open] summary::after { content:"\2212"; }
+  .faq details p { margin-top:10px; font-size:15px; color:var(--grey); max-width:66ch; }
+
+  .cta-final { text-align:center; background:var(--navy); border-top:0; }
+  .cta-final .sec-title { color:#fff; }
+  .cta-final p { color:var(--faded); font-size:17px; max-width:54ch; margin:14px auto 30px; }
+
+  footer { padding:36px 0; border-top:1px solid var(--hair); }
+  .foot { display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;
+    font-size:13px; color:var(--grey); }
+  .foot a { text-decoration:none; margin-left:18px; }
+  .foot a:hover { color:var(--navy); }
+
+  @media (max-width:860px) {
+    .hero h1 { font-size:36px; }
+    .pain-grid, .steps { grid-template-columns:1fr; }
+    .inside-grid, .price-grid { grid-template-columns:1fr; }
+    .nav-links { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html">Felstow <span>Bookkeeping &amp; Consulting</span></a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#inside">What's inside</a>
+      <a href="#pricing">Pricing</a>
+      <a class="btn btn-nav" href="loanready-app.html">Try it free</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">LoanReady &mdash; by Felstow Bookkeeping</div>
+    <h1>The financial package your bank asks for — <em>in minutes, not weeks.</em></h1>
+    <div class="accent-bar"></div>
+    <p class="lead">Applying for a business loan or line of credit? Paste your QuickBooks
+    profit &amp; loss export and LoanReady builds the polished, lender-ready report banks expect:
+    debt-service coverage, cash flow, margins, trends and clean charts — ready to print or PDF.</p>
+    <div class="hero-cta">
+      <a class="btn big" href="loanready-app.html">Build my report — free preview</a>
+      <a class="btn-ghost" href="#how">See how it works</a>
+    </div>
+    <p class="privacy-note"><strong>Private by design:</strong> everything runs in your browser.
+    Your financials are never uploaded, stored, or seen by anyone — including us.</p>
+  </div>
+</section>
+
+<section id="pain">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-label">The problem</span>
+      <h2 class="sec-title">"Just send us your financials" is where loan applications stall.</h2>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <h3>Lenders want more than a P&amp;L</h3>
+        <p>Banks and SBA lenders ask for debt-service coverage, cash flow trends and margin
+        analysis — numbers QuickBooks doesn't hand you in one report.</p>
+      </div>
+      <div class="pain-card">
+        <h3>Accountants charge $500&ndash;$1,500 for it</h3>
+        <p>A CPA-prepared loan package is billed by the hour and takes days or weeks —
+        painful when the lender is waiting on you.</p>
+      </div>
+      <div class="pain-card">
+        <h3>Sloppy numbers kill applications</h3>
+        <p>A loan officer who has to dig through raw exports says "no" more often.
+        A clean, organized package answers their questions before they ask.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-label">How it works</span>
+      <h2 class="sec-title">Three steps. No signup. Nothing uploaded.</h2>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <h3>Describe the loan</h3>
+        <p>Business name, requested amount, term and rate, existing debt payments and cash on
+        hand. Thirty seconds of typing.</p>
+      </div>
+      <div class="step-card">
+        <h3>Paste your P&amp;L</h3>
+        <p>Export "Profit and Loss by Month" from QuickBooks Online and paste it in — or use a
+        simple Month / Revenue / Expenses sheet from any system.</p>
+      </div>
+      <div class="step-card">
+        <h3>Print your package</h3>
+        <p>A complete lender-ready report renders instantly: DSCR verdict, charts, ratio tables
+        and a written summary. Save as PDF and send it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="inside">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-label">What's inside</span>
+      <h2 class="sec-title">Everything a loan officer looks for, on one clean document.</h2>
+    </div>
+    <div class="inside-grid">
+      <div class="inside-item"><span class="tick">&#10003;</span>
+        <div><strong>Debt-Service Coverage Ratio (DSCR)</strong>
+        <span class="desc">Projected coverage with your requested loan, judged against the 1.25&times; bar lenders use.</span></div></div>
+      <div class="inside-item"><span class="tick">&#10003;</span>
+        <div><strong>Proposed payment calculation</strong>
+        <span class="desc">Fully amortized monthly payment at your amount, rate and term.</span></div></div>
+      <div class="inside-item"><span class="tick">&#10003;</span>
+        <div><strong>Revenue &amp; expense trends</strong>
+        <span class="desc">Twelve months of revenue vs. expenses, charted and trend-lined.</span></div></div>
+      <div class="inside-item"><span class="tick">&#10003;</span>
+        <div><strong>Profitability by month</strong>
+        <span class="desc">Net income month by month, with profitable and loss months called out.</span></div></div>
+      <div class="inside-item"><span class="tick">&#10003;</span>
+        <div><strong>Cash cushion analysis</strong>
+        <span class="desc">Months of operating expenses covered by cash on hand.</span></div></div>
+      <div class="inside-item"><span class="tick">&#10003;</span>
+        <div><strong>Written executive summary</strong>
+        <span class="desc">A plain-English narrative of the numbers, generated from your data.</span></div></div>
+      <div class="inside-item"><span class="tick">&#10003;</span>
+        <div><strong>Monthly figures table</strong>
+        <span class="desc">Revenue, expenses, net income and margin for every month, totaled.</span></div></div>
+      <div class="inside-item"><span class="tick">&#10003;</span>
+        <div><strong>Print-perfect PDF output</strong>
+        <span class="desc">One click to a clean document you can email to your lender.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-label">Pricing</span>
+      <h2 class="sec-title">Preview free. Pay only when you need the clean copy.</h2>
+      <p class="sec-sub">The full report renders free with a watermark, so you can check every
+      number first. Buying gets you an unlock code that removes the watermark instantly.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="plan">Single report</div>
+        <div class="amount">$99</div>
+        <div class="per">one-time &middot; one business</div>
+        <ul>
+          <li>Full watermark-free package</li>
+          <li>Unlimited edits &amp; re-prints for 30 days</li>
+          <li>Instant unlock code by email</li>
+        </ul>
+        <a class="btn" href="PRODUCT_URL_SINGLE">Buy a report</a>
+      </div>
+      <div class="price-card featured">
+        <span class="flag">For repeat borrowers &amp; advisors</span>
+        <div class="plan">Unlimited</div>
+        <div class="amount">$49<small>/mo</small></div>
+        <div class="per">cancel anytime</div>
+        <ul>
+          <li>Unlimited reports, any business</li>
+          <li>Perfect for bookkeepers &amp; loan brokers</li>
+          <li>Use it with every client application</li>
+          <li>Priority email support</li>
+        </ul>
+        <a class="btn" href="PRODUCT_URL_UNLIMITED">Start unlimited</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-label">FAQ</span>
+      <h2 class="sec-title">Questions, answered.</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Is my financial data safe?</summary>
+        <p>Yes — in the strongest possible sense. LoanReady is a browser-side tool: your numbers
+        are processed on your own computer and never transmitted, uploaded or stored anywhere.
+        Close the tab and they're gone.</p>
+      </details>
+      <details>
+        <summary>Do I need QuickBooks?</summary>
+        <p>No. QuickBooks Online's "Profit and Loss by Month" export works out of the box, but a
+        simple spreadsheet with Month, Revenue and Expenses columns from any accounting system
+        (Xero, Wave, FreshBooks, or a plain spreadsheet) works too.</p>
+      </details>
+      <details>
+        <summary>Will my lender accept this?</summary>
+        <p>LoanReady organizes your own accounting data into the format lenders ask for — it
+        isn't audited financials or a guarantee of approval. Loan officers routinely accept
+        borrower-prepared packages like this; many prefer them to raw exports.</p>
+      </details>
+      <details>
+        <summary>What if my numbers change during the application?</summary>
+        <p>Re-paste and regenerate as many times as you like. Single-report buyers can re-print
+        for 30 days; Unlimited subscribers, forever.</p>
+      </details>
+      <details>
+        <summary>I'm a bookkeeper or loan broker — can I use this for clients?</summary>
+        <p>That's exactly what the Unlimited plan is for. Generate a package for every client
+        application and deliver it under your own engagement.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="wrap">
+    <h2 class="sec-title">Your lender is waiting on paperwork. Don't be the delay.</h2>
+    <p>Build the full report right now, free — you only pay when you want the watermark off.</p>
+    <a class="btn big" href="loanready-app.html">Build my report</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>&copy; 2026 Felstow Bookkeeping &amp; Consulting. LoanReady is an organizational tool,
+    not financial or lending advice.</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="mailto:jake.felstow@gmail.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
