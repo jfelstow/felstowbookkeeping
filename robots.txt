@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jfelstow.github.io/felstowbookkeeping/sitemap.xml

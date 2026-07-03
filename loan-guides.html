@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Loan Guides &amp; Tools | Felstow Bookkeeping &amp; Consulting</title>
+<meta name="description" content="Free guides and tools for small-business loan applications: DSCR calculator, document checklists, SBA 7(a) requirements, and how to prepare lender-ready financial statements.">
+<link rel="canonical" href="https://jfelstow.github.io/felstowbookkeeping/loan-guides.html">
+<style>
+  :root { --navy:#1F3A5F; --amber:#E0922F; --ink:#23262B; --grey:#6B7280;
+    --faded:#C3CCDA; --hair:#DDE1E7; --bg:#FFFFFF; --bg-soft:#F7F8FA; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:"Helvetica Neue", Arial, system-ui, sans-serif; color:var(--ink);
+    background:var(--bg); line-height:1.65; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 32px; }
+  header { position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.96);
+    backdrop-filter:saturate(180%) blur(8px); border-bottom:1px solid var(--hair); }
+  .nav { display:flex; align-items:center; justify-content:space-between; height:72px; }
+  .brand { font-size:18px; font-weight:700; color:var(--navy); letter-spacing:-0.2px;
+    text-decoration:none; line-height:1.15; }
+  .brand span { display:block; font-size:10px; font-weight:400; letter-spacing:1.4px;
+    text-transform:uppercase; color:var(--grey); margin-top:2px; }
+  .nav-links { display:flex; align-items:center; gap:26px; }
+  .nav-links a { font-size:13px; letter-spacing:0.6px; text-transform:uppercase;
+    color:var(--grey); text-decoration:none; font-weight:600; }
+  .nav-links a:hover { color:var(--navy); }
+  .btn { display:inline-block; background:var(--amber); color:#fff; font-size:13px;
+    font-weight:700; letter-spacing:0.4px; padding:12px 22px; border-radius:4px;
+    text-decoration:none; border:none; cursor:pointer; }
+  .btn:hover { background:#c97f23; }
+  .btn-nav { padding:10px 18px; }
+  main { padding:56px 0 80px; }
+  article { max-width:720px; }
+  .crumb { font-size:12.5px; color:var(--grey); margin-bottom:18px; }
+  .crumb a { color:var(--grey); }
+  .crumb a:hover { color:var(--navy); }
+  .eyebrow { font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    color:var(--amber); margin-bottom:14px; }
+  h1 { font-size:38px; line-height:1.15; color:var(--navy); font-weight:700;
+    letter-spacing:-0.6px; margin-bottom:14px; }
+  .byline { font-size:13.5px; color:var(--grey); margin-bottom:8px; }
+  .accent-bar { width:78px; height:5px; background:var(--amber); margin:22px 0 30px; }
+  article p { margin-bottom:16px; font-size:16.5px; }
+  article p.lead { font-size:18.5px; color:var(--grey); }
+  article h2 { font-size:24px; color:var(--navy); letter-spacing:-0.2px; margin:38px 0 14px;
+    padding-bottom:8px; border-bottom:2px solid var(--hair); }
+  article h3 { font-size:18px; color:var(--navy); margin:26px 0 8px; }
+  article ul, article ol { margin:0 0 16px 24px; font-size:16.5px; }
+  article li { margin-bottom:8px; }
+  article li strong { color:var(--navy); }
+  article table { width:100%; border-collapse:collapse; font-size:15px; margin:6px 0 20px; }
+  article th { text-align:left; font-size:12px; letter-spacing:1px; text-transform:uppercase;
+    color:var(--grey); padding:9px 12px; border-bottom:2px solid var(--navy); }
+  article td { padding:9px 12px; border-bottom:1px solid var(--hair); vertical-align:top; }
+  article td:first-child { font-weight:600; color:var(--navy); white-space:nowrap; }
+  .cta-box { background:var(--bg-soft); border:1px solid var(--hair); border-left:4px solid var(--amber);
+    border-radius:6px; padding:22px 24px; margin:30px 0; }
+  .cta-box p { margin-bottom:14px; font-size:15.5px; }
+  .cta-box p:last-of-type { margin-bottom:16px; }
+  .cta-box .btn { font-size:14px; }
+  .faq { margin-top:8px; }
+  .faq details { border-bottom:1px solid var(--hair); padding:16px 0; }
+  .faq summary { cursor:pointer; font-size:16.5px; font-weight:600; color:var(--navy); list-style:none; }
+  .faq summary::-webkit-details-marker { display:none; }
+  .faq summary::after { content:"+"; float:right; color:var(--amber); font-weight:700; font-size:20px; }
+  .faq details[open] summary::after { content:"\2212"; }
+  .faq details p { margin-top:10px; font-size:15px; color:var(--grey); }
+  .related { margin-top:44px; padding-top:26px; border-top:1px solid var(--hair); }
+  .related h2 { border:0; margin:0 0 14px; font-size:15px; letter-spacing:1.6px;
+    text-transform:uppercase; }
+  .related ul { list-style:none; margin:0; }
+  .related li { padding:7px 0; margin:0; }
+  .related a { font-weight:600; color:var(--navy); text-decoration:none;
+    border-bottom:2px solid var(--amber); padding-bottom:1px; }
+  footer { padding:36px 0; border-top:1px solid var(--hair); }
+  .foot { display:flex; justify-content:space-between; align-items:center; gap:20px;
+    flex-wrap:wrap; font-size:13px; color:var(--grey); }
+  .foot a { text-decoration:none; margin-left:18px; }
+  .foot a:hover { color:var(--navy); }
+  @media (max-width:760px) { h1 { font-size:29px; } .nav-links { gap:14px; }
+    .nav-links a.hide-m { display:none; } }
+
+  .hub-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:36px; }
+  .hub-card { border:1px solid var(--hair); border-radius:8px; padding:26px;
+    text-decoration:none; display:block; transition:border-color .15s; }
+  .hub-card:hover { border-color:var(--amber); }
+  .hub-card .tag { font-size:11px; font-weight:700; letter-spacing:1.4px;
+    text-transform:uppercase; color:var(--amber); }
+  .hub-card h2 { font-size:19px; color:var(--navy); margin:8px 0 8px; border:0; padding:0; }
+  .hub-card p { font-size:14.5px; color:var(--grey); margin:0; }
+  @media (max-width:760px) { .hub-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html">Felstow <span>Bookkeeping &amp; Consulting</span></a>
+    <nav class="nav-links">
+      <a href="dscr-calculator.html" class="hide-m">DSCR Calculator</a>
+      <a href="loanready.html">LoanReady</a>
+      <a class="btn btn-nav" href="loanready-app.html">Free report</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <article style="max-width:none">
+    <div class="eyebrow">Free guides &amp; tools</div>
+    <h1>Getting a business loan, without the guesswork</h1>
+    <div class="accent-bar"></div>
+    <p class="lead" style="max-width:62ch">Everything here exists to answer one question: <em>will a lender say yes to your numbers?</em> Written by a working bookkeeper, not a content farm. Free, no signup.</p>
+    <div class="hub-grid">
+      <a class="hub-card" href="dscr-calculator.html"><span class="tag">Tool</span><h2>DSCR Calculator</h2><p>Enter your cash flow and debt payments; get your debt-service coverage ratio — before and after the loan you want — judged against the 1.25× bar lenders use.</p></a>
+      <a class="hub-card" href="business-loan-documents.html"><span class="tag">Checklist</span><h2>Documents you need for a business loan</h2><p>The complete list lenders ask for, what the loan officer checks in each, and how to package it so the answer is yes.</p></a>
+      <a class="hub-card" href="good-dscr-for-business-loan.html"><span class="tag">Guide</span><h2>What is a good DSCR?</h2><p>The benchmarks lenders actually use, the add-backs borrowers forget to claim, and five ways to raise a short ratio.</p></a>
+      <a class="hub-card" href="sba-loan-requirements.html"><span class="tag">Guide</span><h2>SBA 7(a) requirements</h2><p>Eligibility, credit scores, coverage minimums, the document stack, and the disqualifiers that surprise applicants.</p></a>
+      <a class="hub-card" href="business-loan-denied.html"><span class="tag">Guide</span><h2>Why loans get denied</h2><p>The nine predictable reasons applications fail underwriting — each with its specific fix before you reapply.</p></a>
+      <a class="hub-card" href="prepare-financials-for-loan-application.html"><span class="tag">Guide</span><h2>Prepare loan-ready financials</h2><p>From reconciliation to the analysis layer: build a CPA-grade package yourself from QuickBooks in an afternoon.</p></a>
+    </div>
+    <div class="cta-box" style="margin-top:40px">
+      <p><strong>Ready to apply?</strong> LoanReady turns your QuickBooks P&amp;L export into the complete lender-ready package — DSCR analysis, charts, monthly figures, written summary — in about three minutes. Free preview; nothing is uploaded.</p>
+      <a class="btn" href="loanready-app.html">Build my free report &rarr;</a>
+    </div>
+  </article>
+</main>
+<footer>
+  <div class="wrap foot">
+    <div>&copy; 2026 Felstow Bookkeeping &amp; Consulting. Educational content, not financial or lending advice.</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="loanready.html">LoanReady</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

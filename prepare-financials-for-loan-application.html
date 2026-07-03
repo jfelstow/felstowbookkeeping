@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to Prepare Financial Statements for a Loan Application (DIY Guide)</title>
+<meta name="description" content="Step-by-step guide to preparing loan-ready financial statements from QuickBooks — reconciliation, cleanup, the red flags loan officers scan for, and how to package it all without paying a CPA $1,500.">
+<link rel="canonical" href="https://jfelstow.github.io/felstowbookkeeping/prepare-financials-for-loan-application.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to prepare financial statements for a loan application","description":"Step-by-step guide to preparing loan-ready financial statements from QuickBooks — reconciliation, cleanup, the red flags loan officers scan for, and how to package it all without paying a CPA $1,500.","datePublished":"2026-07-03","dateModified":"2026-07-03","author":{"@type":"Organization","name":"Felstow Bookkeeping & Consulting"},"publisher":{"@type":"Organization","name":"Felstow Bookkeeping & Consulting"},"mainEntityOfPage":"https://jfelstow.github.io/felstowbookkeeping/prepare-financials-for-loan-application.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do lenders accept QuickBooks-generated financial statements?","acceptedAnswer":{"@type":"Answer","text":"Yes — borrower-prepared statements from QuickBooks or similar software are standard for small-business lending, provided they reconcile with your tax returns and bank statements. Reviewed or audited statements are typically only required for larger commercial loans."}},{"@type":"Question","name":"Cash or accrual basis for a loan application?","acceptedAnswer":{"@type":"Answer","text":"Match your tax returns — consistency is what underwriters check. If you keep books on accrual but file on cash, export the P&L on the same basis as the returns, or provide both with a note."}},{"@type":"Question","name":"What if my last 12 months include a bad stretch?","acceptedAnswer":{"@type":"Answer","text":"Don't hide it — explain it. A short written note (\"Q1 dip: lost anchor client in January, replaced by March; see recovery in monthly figures\") converts a red flag into evidence of resilience. Officers decline what they can't explain to committee, not necessarily what dipped."}}]}</script>
+<style>
+  :root { --navy:#1F3A5F; --amber:#E0922F; --ink:#23262B; --grey:#6B7280;
+    --faded:#C3CCDA; --hair:#DDE1E7; --bg:#FFFFFF; --bg-soft:#F7F8FA; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:"Helvetica Neue", Arial, system-ui, sans-serif; color:var(--ink);
+    background:var(--bg); line-height:1.65; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 32px; }
+  header { position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.96);
+    backdrop-filter:saturate(180%) blur(8px); border-bottom:1px solid var(--hair); }
+  .nav { display:flex; align-items:center; justify-content:space-between; height:72px; }
+  .brand { font-size:18px; font-weight:700; color:var(--navy); letter-spacing:-0.2px;
+    text-decoration:none; line-height:1.15; }
+  .brand span { display:block; font-size:10px; font-weight:400; letter-spacing:1.4px;
+    text-transform:uppercase; color:var(--grey); margin-top:2px; }
+  .nav-links { display:flex; align-items:center; gap:26px; }
+  .nav-links a { font-size:13px; letter-spacing:0.6px; text-transform:uppercase;
+    color:var(--grey); text-decoration:none; font-weight:600; }
+  .nav-links a:hover { color:var(--navy); }
+  .btn { display:inline-block; background:var(--amber); color:#fff; font-size:13px;
+    font-weight:700; letter-spacing:0.4px; padding:12px 22px; border-radius:4px;
+    text-decoration:none; border:none; cursor:pointer; }
+  .btn:hover { background:#c97f23; }
+  .btn-nav { padding:10px 18px; }
+  main { padding:56px 0 80px; }
+  article { max-width:720px; }
+  .crumb { font-size:12.5px; color:var(--grey); margin-bottom:18px; }
+  .crumb a { color:var(--grey); }
+  .crumb a:hover { color:var(--navy); }
+  .eyebrow { font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+    color:var(--amber); margin-bottom:14px; }
+  h1 { font-size:38px; line-height:1.15; color:var(--navy); font-weight:700;
+    letter-spacing:-0.6px; margin-bottom:14px; }
+  .byline { font-size:13.5px; color:var(--grey); margin-bottom:8px; }
+  .accent-bar { width:78px; height:5px; background:var(--amber); margin:22px 0 30px; }
+  article p { margin-bottom:16px; font-size:16.5px; }
+  article p.lead { font-size:18.5px; color:var(--grey); }
+  article h2 { font-size:24px; color:var(--navy); letter-spacing:-0.2px; margin:38px 0 14px;
+    padding-bottom:8px; border-bottom:2px solid var(--hair); }
+  article h3 { font-size:18px; color:var(--navy); margin:26px 0 8px; }
+  article ul, article ol { margin:0 0 16px 24px; font-size:16.5px; }
+  article li { margin-bottom:8px; }
+  article li strong { color:var(--navy); }
+  article table { width:100%; border-collapse:collapse; font-size:15px; margin:6px 0 20px; }
+  article th { text-align:left; font-size:12px; letter-spacing:1px; text-transform:uppercase;
+    color:var(--grey); padding:9px 12px; border-bottom:2px solid var(--navy); }
+  article td { padding:9px 12px; border-bottom:1px solid var(--hair); vertical-align:top; }
+  article td:first-child { font-weight:600; color:var(--navy); white-space:nowrap; }
+  .cta-box { background:var(--bg-soft); border:1px solid var(--hair); border-left:4px solid var(--amber);
+    border-radius:6px; padding:22px 24px; margin:30px 0; }
+  .cta-box p { margin-bottom:14px; font-size:15.5px; }
+  .cta-box p:last-of-type { margin-bottom:16px; }
+  .cta-box .btn { font-size:14px; }
+  .faq { margin-top:8px; }
+  .faq details { border-bottom:1px solid var(--hair); padding:16px 0; }
+  .faq summary { cursor:pointer; font-size:16.5px; font-weight:600; color:var(--navy); list-style:none; }
+  .faq summary::-webkit-details-marker { display:none; }
+  .faq summary::after { content:"+"; float:right; color:var(--amber); font-weight:700; font-size:20px; }
+  .faq details[open] summary::after { content:"\2212"; }
+  .faq details p { margin-top:10px; font-size:15px; color:var(--grey); }
+  .related { margin-top:44px; padding-top:26px; border-top:1px solid var(--hair); }
+  .related h2 { border:0; margin:0 0 14px; font-size:15px; letter-spacing:1.6px;
+    text-transform:uppercase; }
+  .related ul { list-style:none; margin:0; }
+  .related li { padding:7px 0; margin:0; }
+  .related a { font-weight:600; color:var(--navy); text-decoration:none;
+    border-bottom:2px solid var(--amber); padding-bottom:1px; }
+  footer { padding:36px 0; border-top:1px solid var(--hair); }
+  .foot { display:flex; justify-content:space-between; align-items:center; gap:20px;
+    flex-wrap:wrap; font-size:13px; color:var(--grey); }
+  .foot a { text-decoration:none; margin-left:18px; }
+  .foot a:hover { color:var(--navy); }
+  @media (max-width:760px) { h1 { font-size:29px; } .nav-links { gap:14px; }
+    .nav-links a.hide-m { display:none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html">Felstow <span>Bookkeeping &amp; Consulting</span></a>
+    <nav class="nav-links">
+      <a href="loan-guides.html">Guides</a>
+      <a href="dscr-calculator.html" class="hide-m">DSCR Calculator</a>
+      <a href="loanready.html" class="hide-m">LoanReady</a>
+      <a class="btn btn-nav" href="loanready-app.html">Free report</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article>
+    <div class="crumb"><a href="loan-guides.html">Business loan guides</a> / How to prepare financial statements for a loan application</div>
+    <div class="eyebrow">From QuickBooks to loan-ready</div>
+    <h1>How to prepare financial statements for a loan application</h1>
+    <div class="byline">By Felstow Bookkeeping &amp; Consulting &middot; Updated July 2026</div>
+    <div class="accent-bar"></div>
+    <p class="lead">A CPA will build your loan package for $500–$1,500 and a two-week turnaround. For most small-business applications you can produce the same thing yourself in an afternoon — if you know what loan officers scan for. This is the walkthrough.</p>
+    
+<h2>Step 1: Reconcile before you export</h2>
+<p>Every account — checking, savings, credit cards, loans — reconciled to its statement through the most recent complete month. This is non-negotiable: an underwriter's first verification is your P&amp;L against your bank statements, and un-reconciled books fail it. In QuickBooks Online: <em>Settings &rarr; Reconcile</em>, work each account to a zero difference.</p>
+
+<h2>Step 2: Clean the five things officers notice</h2>
+<ol>
+  <li><strong>Miscategorized owner spending.</strong> Personal expenses in business categories overstate costs (hurting your ratio) and undermine trust when spotted. Reclassify to draws/distributions.</li>
+  <li><strong>"Uncategorized" and "Ask My Accountant" balances.</strong> These lines scream unfinished books. Zero them out.</li>
+  <li><strong>Negative expense months or weird spikes.</strong> Usually a refund or a misposted journal entry — find it and fix or footnote it, because the officer <em>will</em> ask.</li>
+  <li><strong>Loan payments booked as expenses.</strong> Principal belongs on the balance sheet, only interest on the P&amp;L. Getting this wrong misstates income in both directions.</li>
+  <li><strong>Revenue timing games.</strong> If December is mysteriously double, be ready to explain it. Consistency matters more than any single month.</li>
+</ol>
+
+<h2>Step 3: Export the right reports</h2>
+<ul>
+  <li><strong>Profit &amp; Loss</strong>, last 12–24 months, <em>Display columns by: Months</em> — the monthly view is what shows trend and seasonality.</li>
+  <li><strong>Balance Sheet</strong> as of the most recent month-end.</li>
+  <li><strong>A/R and A/P aging summaries</strong> if requested.</li>
+</ul>
+
+<h2>Step 4: Build the analysis layer</h2>
+<p>This is the part borrowers skip and CPAs charge for: the summary that turns statements into an argument. Lenders want to see your <a href="good-dscr-for-business-loan.html">debt-service coverage ratio</a> with the proposed loan included, revenue trend, margins, and cash position — computed, charted, and stated in plain English, with add-backs (depreciation, amortization, one-time costs) explicitly claimed.</p>
+
+<div class="cta-box">
+    <p>This layer is exactly what LoanReady automates: paste the P&amp;L export from Step 3 and it produces the DSCR analysis, charts, monthly table, and written summary — free to preview, computed entirely in your browser, nothing uploaded.</p>
+    <a class="btn" href="loanready-app.html">Build my free report &rarr;</a>
+  </div>
+
+<h2>Step 5: Package and label</h2>
+<ul>
+  <li>One PDF per document, clearly named: <em>BusinessName-PL-Jul25-Jun26.pdf</em>.</li>
+  <li>A one-page cover summary: what you're requesting, what it's for, the key numbers (revenue, net income, DSCR with the new loan), and a sentence on trend.</li>
+  <li>The <a href="business-loan-documents.html">full checklist</a> in one email or portal upload — complete files move through underwriting; drip-fed ones stall.</li>
+</ul>
+
+<h2>When you genuinely do need a CPA</h2>
+<p>Three cases: the lender explicitly requires <em>reviewed</em> or <em>audited</em> statements (common only on larger commercial credits), your books have structural problems you can't untangle (years un-reconciled, inventory chaos, cash/accrual confusion), or the loan is large enough that professional polish materially affects pricing. For a routine small-business term loan or line of credit, borrower-prepared statements from clean QuickBooks data are accepted every day.</p>
+    
+      <h2>Frequently asked questions</h2>
+      <div class="faq">
+        <details><summary>Do lenders accept QuickBooks-generated financial statements?</summary><p>Yes — borrower-prepared statements from QuickBooks or similar software are standard for small-business lending, provided they reconcile with your tax returns and bank statements. Reviewed or audited statements are typically only required for larger commercial loans.</p></details>
+        <details><summary>Cash or accrual basis for a loan application?</summary><p>Match your tax returns — consistency is what underwriters check. If you keep books on accrual but file on cash, export the P&L on the same basis as the returns, or provide both with a note.</p></details>
+        <details><summary>What if my last 12 months include a bad stretch?</summary><p>Don't hide it — explain it. A short written note ("Q1 dip: lost anchor client in January, replaced by March; see recovery in monthly figures") converts a red flag into evidence of resilience. Officers decline what they can't explain to committee, not necessarily what dipped.</p></details>
+      </div>
+    
+      <div class="related">
+        <h2>Keep reading</h2>
+        <ul>
+          <li><a href="business-loan-documents.html">What documents do you need for a business loan?</a></li>
+          <li><a href="dscr-calculator.html">DSCR Calculator — check your ratio in 30 seconds</a></li>
+          <li><a href="business-loan-denied.html">Why business loans get denied — and the fixes</a></li>
+        </ul>
+      </div>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>&copy; 2026 Felstow Bookkeeping &amp; Consulting. Educational content, not financial or lending advice.</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="loanready.html">LoanReady</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

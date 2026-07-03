@@ -58,12 +58,15 @@ for financials.
 
 Ranked by effort-to-impact:
 
-1. **SEO content (compounding, near-zero marginal effort).** Pages targeting
-   "what documents do I need for a business loan", "what is a good DSCR for an
-   SBA loan", "DSCR calculator" — each ending in the free report builder. The
-   free preview is the growth engine: it costs nothing to give away and does the
-   selling itself. (Ask Claude to generate this article cluster as a follow-up —
-   it's the obvious next session.)
+1. **SEO content (compounding, near-zero marginal effort). ✅ Built.** The
+   cluster lives at `loan-guides.html`: an interactive DSCR calculator
+   (`dscr-calculator.html`) plus five guides (loan documents checklist, what is
+   a good DSCR, SBA 7(a) requirements, why loans get denied, how to prepare
+   financials), all interlinked with Article/FAQ structured data and funneling
+   into the free report builder. `sitemap.xml` and `robots.txt` are in place —
+   after merging, submit the sitemap in Google Search Console (free, 5 minutes)
+   to start indexing. The free preview is the growth engine: it costs nothing
+   to give away and does the selling itself.
 2. **Loan brokers and bookkeepers are the $49/mo whales.** One broker processes
    dozens of applications a year. A single post in bookkeeper/broker communities
    (r/loanoriginators, bookkeeping Facebook groups, your own kit.html audience)
