@@ -1,0 +1,5 @@
+# Forced spelling corrections, applied to every transcript.
+# Format: what Whisper writes => what you want (case-insensitive match).
+# Lines starting with # are ignored. Examples (delete the # to activate):
+# fell stow => Felstow
+# quick books => QuickBooks
