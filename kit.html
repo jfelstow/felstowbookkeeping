@@ -5,9 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Cash Flow Dashboard Kit — for Bookkeepers | Felstow Bookkeeping &amp; Consulting</title>
 <meta name="description" content="The exact system a working bookkeeping practice uses to sell $300–500/mo cash flow advisory: a weekly-updating, password-protected, client-branded 18-week cash flow dashboard on free infrastructure. Scripts, guides, demo, and pricing playbook included.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Cash Flow Dashboard Kit — for Bookkeepers">
+<meta property="og:description" content="Sell $300–500/mo cash flow advisory with a weekly-updating, client-branded 18-week dashboard system on $0/mo infrastructure. Scripts, guides, demo, and pricing playbook — $249 one-time.">
+<meta name="twitter:card" content="summary">
 <style>
   :root {
     --navy:#1F3A5F;
+    --navy-soft:#3E5C85;
     --amber:#E0922F;
     --ink:#23262B;
     --grey:#6B7280;
@@ -22,7 +27,9 @@
     background:var(--bg); line-height:1.6; -webkit-font-smoothing:antialiased; }
   a { color:inherit; }
   .wrap { max-width:1080px; margin:0 auto; padding:0 32px; }
-  section { padding:72px 0; border-top:1px solid var(--hair); }
+  section { padding:76px 0; border-top:1px solid var(--hair); }
+
+  /* ---- nav ---- */
   header { position:sticky; top:0; z-index:50; background:rgba(255,255,255,0.96);
     backdrop-filter:saturate(180%) blur(8px); border-bottom:1px solid var(--hair); }
   .nav { display:flex; align-items:center; justify-content:space-between; height:72px; }
@@ -36,18 +43,54 @@
   .nav-cta a.plain:hover { color:var(--navy); }
   .btn { display:inline-block; background:var(--amber); color:#fff; font-size:13px;
     font-weight:700; letter-spacing:0.4px; padding:12px 22px; border-radius:4px;
-    text-decoration:none; border:none; cursor:pointer; transition:background .15s; }
+    text-decoration:none; border:none; cursor:pointer; transition:background .15s, transform .05s; }
   .btn:hover { background:#c97f23; }
+  .btn:active { transform:translateY(1px); }
+  .btn:focus-visible, a:focus-visible { outline:3px solid var(--amber); outline-offset:2px; }
   .btn-ghost { font-size:14px; font-weight:700; color:var(--navy); text-decoration:none;
     letter-spacing:0.3px; border-bottom:2px solid var(--amber); padding-bottom:3px; }
-  .hero { padding:96px 0 84px; border-top:0; }
+  .nav-cta .btn { white-space:nowrap; }
+
+  /* ---- hero ---- */
+  .hero { padding:84px 0 80px; border-top:0; }
+  .hero-grid { display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center; }
   .eyebrow { font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
     color:var(--amber); margin-bottom:20px; }
-  .hero h1 { font-size:46px; line-height:1.12; color:var(--navy); font-weight:700;
-    letter-spacing:-0.8px; max-width:22ch; }
-  .accent-bar { width:78px; height:5px; background:var(--amber); margin:26px 0; }
-  .hero p.lead { font-size:19px; color:var(--grey); max-width:58ch; }
-  .hero-cta { margin-top:36px; display:flex; gap:18px; flex-wrap:wrap; align-items:center; }
+  .hero h1 { font-size:42px; line-height:1.12; color:var(--navy); font-weight:700;
+    letter-spacing:-0.8px; }
+  .accent-bar { width:78px; height:5px; background:var(--amber); margin:24px 0; }
+  .hero p.lead { font-size:18px; color:var(--grey); max-width:56ch; }
+  .hero-cta { margin-top:32px; display:flex; gap:18px; flex-wrap:wrap; align-items:center; }
+
+  /* ---- dashboard preview ---- */
+  .demo-card { background:#fff; border:1px solid var(--hair); border-radius:10px;
+    box-shadow:0 24px 60px -30px rgba(31,58,95,0.45); padding:22px 22px 18px; }
+  .dc-top { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700;
+    color:var(--navy); padding-bottom:14px; border-bottom:1px solid var(--hair); }
+  .dc-top svg { flex:none; }
+  .dc-updated { margin-left:auto; font-size:10.5px; font-weight:600; letter-spacing:0.8px;
+    text-transform:uppercase; color:var(--grey); }
+  .dc-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:16px 0 18px; }
+  .dc-kpi { background:var(--bg-soft); border:1px solid var(--hair); border-radius:6px; padding:10px 12px; }
+  .dc-kpi small { display:block; font-size:9.5px; font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; color:var(--grey); margin-bottom:3px; }
+  .dc-kpi b { font-size:17px; color:var(--navy); letter-spacing:-0.3px; line-height:1.2; }
+  .dc-kpi.watch b { color:#B26708; }
+  .dc-chart { display:flex; align-items:flex-end; gap:3px; height:96px; padding-top:16px; position:relative; }
+  .dc-bar { flex:1; background:var(--navy-soft); border-radius:3px 3px 0 0; min-width:4px; opacity:0.85; }
+  .dc-bar.tight { background:var(--amber); opacity:1; position:relative; }
+  .dc-bar.tight::after { content:"tight week"; position:absolute; bottom:100%; left:50%;
+    transform:translateX(-50%); margin-bottom:5px; font-size:9px; font-weight:700;
+    letter-spacing:0.6px; text-transform:uppercase; color:#B26708; white-space:nowrap; }
+  .dc-foot { display:flex; justify-content:space-between; font-size:10.5px; color:var(--grey);
+    margin-top:8px; padding-top:8px; border-top:1px solid var(--hair); }
+
+  /* ---- requirements strip ---- */
+  .req-strip { margin-top:34px; padding:13px 18px; background:var(--bg-soft);
+    border:1px solid var(--hair); border-radius:6px; font-size:13.5px; color:var(--grey); }
+  .req-strip strong { color:var(--navy); font-weight:700; }
+
+  /* ---- sections ---- */
   .sec-label { font-size:13px; font-weight:700; color:var(--navy); letter-spacing:2px;
     text-transform:uppercase; display:inline-block; padding-bottom:6px;
     border-bottom:2px solid var(--amber); margin-bottom:28px; }
@@ -56,38 +99,67 @@
   .card { background:var(--bg-soft); border:1px solid var(--hair); border-radius:6px; padding:26px; }
   .card h3 { font-size:16px; color:var(--navy); margin-bottom:8px; }
   .card p { font-size:14.5px; color:var(--grey); }
-  .list-tight { list-style:none; margin-top:14px; }
-  .list-tight li { padding:9px 0 9px 28px; position:relative; font-size:15.5px; border-bottom:1px solid var(--hair); }
-  .list-tight li:last-child { border-bottom:0; }
-  .list-tight li::before { content:""; position:absolute; left:2px; top:16px; width:9px; height:9px;
-    background:var(--amber); border-radius:2px; }
+
+  /* ---- what's inside ---- */
+  .inside-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:30px; }
+  .inside { background:#fff; border:1px solid var(--hair); border-radius:6px; padding:22px 24px; }
+  .inside .tag { display:inline-block; font-size:9.5px; font-weight:700; letter-spacing:1.2px;
+    text-transform:uppercase; color:var(--navy); background:var(--bg-soft);
+    border:1px solid var(--hair); border-radius:3px; padding:3px 8px; margin-bottom:10px; }
+  .inside h3 { font-size:16.5px; color:var(--navy); margin-bottom:6px; }
+  .inside p { font-size:14.5px; color:var(--grey); }
+
+  /* ---- how it works ---- */
+  .step-num { font-size:34px; font-weight:700; color:var(--faded); line-height:1; margin-bottom:10px; }
+
+  /* ---- pricing ---- */
   .price-box { background:var(--navy); color:#fff; border-radius:8px; padding:44px;
     display:grid; grid-template-columns:1.2fr 1fr; gap:40px; align-items:center; }
   .price-box h2 { color:#fff; }
   .price-box .big { font-size:54px; font-weight:700; letter-spacing:-1px; }
   .price-box .big small { font-size:16px; font-weight:400; color:var(--faded); letter-spacing:0; }
   .price-box p { color:var(--faded); font-size:15px; }
+  .included { list-style:none; margin-top:20px; }
+  .included li { font-size:14.5px; color:#DCE4EF; padding:7px 0 7px 26px; position:relative; }
+  .included li::before { content:""; position:absolute; left:0; top:13px; width:14px; height:8px;
+    border-left:2.5px solid var(--amber); border-bottom:2.5px solid var(--amber);
+    transform:rotate(-45deg); }
+
+  /* ---- faq ---- */
   .faq dt { font-weight:700; color:var(--navy); margin-top:22px; font-size:16.5px; }
   .faq dd { margin-top:6px; color:var(--grey); font-size:15.5px; max-width:72ch; }
+
+  /* ---- buy ---- */
+  .next-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin:26px 0 34px; max-width:820px; }
+  .next-steps .card h3 { font-size:14.5px; }
+  .next-steps .card p { font-size:13.5px; }
   form { background:var(--bg-soft); border:1px solid var(--hair); border-radius:6px; padding:30px; max-width:560px; }
   .field { margin-bottom:16px; }
   .field label { display:block; font-size:12px; font-weight:700; letter-spacing:1px;
     text-transform:uppercase; color:var(--navy); margin-bottom:6px; }
   .field input, .field textarea { width:100%; padding:11px 12px; font-size:15px;
-    font-family:inherit; border:1px solid var(--hair); border-radius:4px; background:#fff; }
+    font-family:inherit; border:1px solid var(--hair); border-radius:4px; background:#fff;
+    transition:border-color .15s; }
+  .field input:focus, .field textarea:focus { outline:none; border-color:var(--amber); }
   .field textarea { min-height:90px; resize:vertical; }
   .form-note { font-size:13px; color:var(--grey); margin-top:12px; }
-  footer { padding:34px 0; border-top:1px solid var(--hair); font-size:13px; color:var(--grey); }
+
+  /* ---- footer ---- */
+  footer { background:var(--ink); color:#9aa1ab; padding:30px 0; font-size:13px; }
   footer .wrap { display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; }
-  .f-brand { font-weight:700; color:var(--navy); }
-  .dot { margin:0 8px; color:var(--faded); }
+  .f-brand { font-weight:700; color:#fff; }
+  .dot { margin:0 8px; color:var(--amber); }
   footer a { text-decoration:none; }
-  footer a:hover { color:var(--navy); }
-  .nav-cta .btn { white-space:nowrap; }
+  footer a:hover { color:#fff; }
+
+  @media (max-width:960px) {
+    .hero-grid { grid-template-columns:1fr; gap:44px; }
+    .demo-card { max-width:560px; }
+  }
   @media (max-width:860px) {
     .nav-cta a.plain { display:none; }
     .hero h1 { font-size:34px; }
-    .grid3 { grid-template-columns:1fr; }
+    .grid3, .inside-grid, .next-steps { grid-template-columns:1fr; }
     .price-box { grid-template-columns:1fr; padding:32px; }
     section { padding:56px 0; }
   }
@@ -102,7 +174,9 @@
     </a>
     <nav class="nav-cta">
       <a class="plain" href="#whats-inside">What&rsquo;s Inside</a>
+      <a class="plain" href="#how">How It Works</a>
       <a class="plain" href="#pricing">Pricing</a>
+      <a class="plain" href="#faq">FAQ</a>
       <a href="#buy" class="btn">Get the Kit</a>
     </nav>
   </div>
@@ -110,14 +184,52 @@
 
 <section class="hero">
   <div class="wrap">
-    <div class="eyebrow">For bookkeepers &amp; accountants</div>
-    <h1>Sell $300&ndash;500/mo cash flow advisory &mdash; with a dashboard system that runs itself.</h1>
-    <div class="accent-bar"></div>
-    <p class="lead">The Cash Flow Dashboard Kit is the exact system my bookkeeping practice uses with paying clients: a weekly-updating, password-protected, client-branded 18-week cash flow dashboard &mdash; built on free infrastructure, refreshed by a Monday cron job, and packaged with the pricing and sales playbook to land your first advisory client.</p>
-    <div class="hero-cta">
-      <a href="#buy" class="btn">Get the Kit</a>
-      <a href="https://jfelstow.github.io/cashflowdemo/" target="_blank" rel="noopener" class="btn-ghost">See a live sample dashboard &rarr;</a>
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">For bookkeepers &amp; accountants</div>
+        <h1>Sell $300&ndash;500/mo cash flow advisory &mdash; with a dashboard system that runs itself.</h1>
+        <div class="accent-bar"></div>
+        <p class="lead">The Cash Flow Dashboard Kit is the exact system my bookkeeping practice uses with paying clients: a weekly-updating, password-protected, client-branded 18-week cash flow dashboard &mdash; built on free infrastructure, refreshed by a Monday cron job, and packaged with the pricing and sales playbook to land your first advisory client.</p>
+        <div class="hero-cta">
+          <a href="#buy" class="btn">Get the Kit &mdash; $249</a>
+          <a href="https://jfelstow.github.io/cashflowdemo/" target="_blank" rel="noopener" class="btn-ghost">See a live sample dashboard &rarr;</a>
+        </div>
+      </div>
+      <div class="demo-card" role="img" aria-label="Preview of the client dashboard: cash today, runway, and tightest week, above an 18-week ending-cash chart with the tight week highlighted.">
+        <div class="dc-top">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F3A5F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Harbor &amp; Main Coffee Co. &mdash; Cash Flow
+          <span class="dc-updated">Updated Mon 8 AM</span>
+        </div>
+        <div class="dc-kpis">
+          <div class="dc-kpi"><small>Cash today</small><b>$48,210</b></div>
+          <div class="dc-kpi"><small>Runway</small><b>21 weeks</b></div>
+          <div class="dc-kpi watch"><small>Tightest week</small><b>Sep 8</b></div>
+        </div>
+        <div class="dc-chart" aria-hidden="true">
+          <div class="dc-bar" style="height:62%"></div>
+          <div class="dc-bar" style="height:57%"></div>
+          <div class="dc-bar" style="height:64%"></div>
+          <div class="dc-bar" style="height:54%"></div>
+          <div class="dc-bar" style="height:49%"></div>
+          <div class="dc-bar" style="height:43%"></div>
+          <div class="dc-bar" style="height:37%"></div>
+          <div class="dc-bar" style="height:29%"></div>
+          <div class="dc-bar" style="height:23%"></div>
+          <div class="dc-bar tight" style="height:15%"></div>
+          <div class="dc-bar" style="height:22%"></div>
+          <div class="dc-bar" style="height:30%"></div>
+          <div class="dc-bar" style="height:36%"></div>
+          <div class="dc-bar" style="height:43%"></div>
+          <div class="dc-bar" style="height:49%"></div>
+          <div class="dc-bar" style="height:55%"></div>
+          <div class="dc-bar" style="height:61%"></div>
+          <div class="dc-bar" style="height:66%"></div>
+        </div>
+        <div class="dc-foot"><span>Ending cash by week</span><span>Next 18 weeks</span></div>
+      </div>
     </div>
+    <div class="req-strip"><strong>What you need:</strong> a Mac, Python 3, Node.js, and a free GitHub account &mdash; total infrastructure cost <strong>$0/month</strong>. No coding background required. <a href="#faq" style="color:var(--navy);">On Windows? Read this first.</a></div>
   </div>
 </section>
 
@@ -138,16 +250,40 @@
   <div class="wrap">
     <div class="sec-label">What&rsquo;s inside</div>
     <h2>Everything from first install to first invoice.</h2>
-    <ul class="list-tight" style="max-width:760px;">
-      <li><strong>The Blueprint</strong> &mdash; full system architecture plus the ten design rules learned the hard way on live client work (the Excel formula-cache trap, the encryption mojibake bug, the 3-part iOS mobile fix&hellip;).</li>
-      <li><strong>Setup Guide</strong> &mdash; zero to live client dashboard in an afternoon, including copy-paste AI prompts for the two genuinely custom files. You don&rsquo;t need to be a programmer.</li>
-      <li><strong>The deploy pipeline</strong> &mdash; production Python scripts: one-command deploy (compute &rarr; inject &rarr; encrypt &rarr; publish), weekly window-roll with automatic archiving, cron wrapper, and the macOS scheduler config.</li>
-      <li><strong>Projections scenario model</strong> &mdash; a working template for the 12-month Projections view: revenue cases, cost modes, owner-pay and financing toggles, every combination precomputed in Python. The premium tier you upsell once the weekly cadence is sticky.</li>
-      <li><strong>A complete working demo dashboard</strong> &mdash; fictional client, realistic data, fully responsive. Your reference implementation <em>and</em> your sales demo.</li>
-      <li><strong>Pricing &amp; Selling Guide</strong> &mdash; packages and price points that work, the 15-minute demo-first sales motion, discovery questions, objection handling, and the &ldquo;can I afford X?&rdquo; decision-check framework that makes advisory sticky.</li>
-      <li><strong>Weekly Workflow</strong> &mdash; the Monday routine, the 3-sentence client email template that drives retention, and a troubleshooting table for every failure mode I&rsquo;ve hit.</li>
-      <li><strong>Client-facing materials</strong> &mdash; a rebrandable &ldquo;Understanding Your Cash Flow&rdquo; explainer, a <strong>Decision Log</strong> template (with two worked examples) for &ldquo;can I afford X?&rdquo; calls, and a one-page <strong>Action Plan</strong> template. The deliverables that turn a dashboard into advisory.</li>
-    </ul>
+    <div class="inside-grid">
+      <div class="inside"><span class="tag">Guide</span>
+        <h3>The Blueprint</h3>
+        <p>Full system architecture plus the ten design rules learned the hard way on live client work &mdash; the Excel formula-cache trap, the encryption mojibake bug, the 3-part iOS mobile fix, and more.</p>
+      </div>
+      <div class="inside"><span class="tag">Guide</span>
+        <h3>Setup Guide</h3>
+        <p>Zero to live client dashboard in an afternoon, including copy-paste AI prompts for the two genuinely custom files. You don&rsquo;t need to be a programmer.</p>
+      </div>
+      <div class="inside"><span class="tag">Scripts</span>
+        <h3>The deploy pipeline</h3>
+        <p>Production Python scripts: one-command deploy (compute &rarr; inject &rarr; encrypt &rarr; publish), weekly window-roll with automatic archiving, cron wrapper, and the macOS scheduler config.</p>
+      </div>
+      <div class="inside"><span class="tag">Template</span>
+        <h3>Projections scenario model</h3>
+        <p>A working template for the 12-month Projections view: revenue cases, cost modes, owner-pay and financing toggles, every combination precomputed in Python. The premium tier you upsell once the weekly cadence is sticky.</p>
+      </div>
+      <div class="inside"><span class="tag">Demo</span>
+        <h3>A complete working demo dashboard</h3>
+        <p>Fictional client, realistic data, fully responsive. Your reference implementation <em>and</em> your sales demo.</p>
+      </div>
+      <div class="inside"><span class="tag">Playbook</span>
+        <h3>Pricing &amp; Selling Guide</h3>
+        <p>Packages and price points that work, the 15-minute demo-first sales motion, discovery questions, objection handling, and the &ldquo;can I afford X?&rdquo; decision-check framework that makes advisory sticky.</p>
+      </div>
+      <div class="inside"><span class="tag">Playbook</span>
+        <h3>Weekly Workflow</h3>
+        <p>The Monday routine, the 3-sentence client email template that drives retention, and a troubleshooting table for every failure mode I&rsquo;ve hit.</p>
+      </div>
+      <div class="inside"><span class="tag">Client materials</span>
+        <h3>Client-facing materials</h3>
+        <p>A rebrandable &ldquo;Understanding Your Cash Flow&rdquo; explainer, a <strong>Decision Log</strong> template (with two worked examples) for &ldquo;can I afford X?&rdquo; calls, and a one-page <strong>Action Plan</strong> template. The deliverables that turn a dashboard into advisory.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -156,9 +292,9 @@
     <div class="sec-label">How it works</div>
     <h2>Your Monday, per client: about 15 minutes.</h2>
     <div class="grid3">
-      <div class="card"><h3>1. Bank balance in</h3><p>The client texts you their Monday bank balance. You drop it in a one-line text file (or pre-stage it and let the 8 AM cron handle everything).</p></div>
-      <div class="card"><h3>2. The system publishes</h3><p>The pipeline rolls the 18-week window, recomputes every total in Python, encrypts the dashboard, and pushes it live &mdash; in about 60 seconds.</p></div>
-      <div class="card"><h3>3. You advise</h3><p>You read the dashboard before they do and send three sentences: the verdict, the number that matters, the thing you&rsquo;re watching. That email is the retention engine.</p></div>
+      <div class="card"><div class="step-num">01</div><h3>Bank balance in</h3><p>The client texts you their Monday bank balance. You drop it in a one-line text file (or pre-stage it and let the 8&nbsp;AM cron handle everything).</p></div>
+      <div class="card"><div class="step-num">02</div><h3>The system publishes</h3><p>The pipeline rolls the 18-week window, recomputes every total in Python, encrypts the dashboard, and pushes it live &mdash; in about 60 seconds.</p></div>
+      <div class="card"><div class="step-num">03</div><h3>You advise</h3><p>You read the dashboard before they do and send three sentences: the verdict, the number that matters, the thing you&rsquo;re watching. That email is the retention engine.</p></div>
     </div>
   </div>
 </section>
@@ -168,11 +304,20 @@
     <div class="price-box">
       <div>
         <h2>The Cash Flow Dashboard Kit</h2>
-        <p>Guides, production scripts, working demo dashboard, client materials, and the pricing playbook. Single-practice license &mdash; use it with unlimited clients of your own. Email support from me, a working bookkeeper, not a course-seller.</p>
+        <p>The same scripts and playbook running for real clients today &mdash; with email support from me, a working bookkeeper, not a course-seller.</p>
+        <ul class="included">
+          <li>The Blueprint + Setup Guide</li>
+          <li>Production deploy pipeline (Python)</li>
+          <li>Projections scenario model template</li>
+          <li>Complete working demo dashboard</li>
+          <li>Pricing &amp; Selling Guide + Weekly Workflow</li>
+          <li>Rebrandable client-facing materials</li>
+          <li>Single-practice license &mdash; unlimited clients of your own</li>
+        </ul>
       </div>
       <div>
         <div class="big">$249 <small>one-time</small></div>
-        <p style="margin:10px 0 20px;">Pays for itself in week one of your first advisory client.</p>
+        <p style="margin:10px 0 20px;">No subscription. Pays for itself in week one of your first advisory client.</p>
         <a href="#buy" class="btn">Get the Kit</a>
       </div>
     </div>
@@ -187,6 +332,12 @@
       <dd>No. The pipeline scripts work as-is after filling in a clearly marked config block. The two files that are custom per client (the spreadsheet math and the dashboard branding) come with copy-paste AI prompts that do the translation for you &mdash; plus a verification step so you know the math is right.</dd>
       <dt>What do I need?</dt>
       <dd>A Mac, Python 3, Node.js, and a free GitHub account. Total infrastructure cost: $0/month.</dd>
+      <dt>I&rsquo;m on Windows &mdash; can I use this?</dt>
+      <dd>The kit is built and documented on a Mac &mdash; the scheduler config in particular is macOS-specific. The Python and Node pieces are cross-platform, but I haven&rsquo;t tested the full pipeline on Windows. If you&rsquo;re on Windows, <a href="mailto:jake.felstow@gmail.com" style="color:var(--navy);">email me first</a> and we&rsquo;ll figure out whether it fits your setup before you pay.</dd>
+      <dt>What exactly do I get, and how is it delivered?</dt>
+      <dd>The guides, the production scripts, the Projections template, the full demo dashboard source, and the client-facing materials &mdash; delivered to your inbox after payment. Everything is yours to keep and rebrand for your own practice.</dd>
+      <dt>How long does setup take?</dt>
+      <dd>Plan for an afternoon to go from nothing to your first live dashboard, following the Setup Guide step by step. After that, adding a client is much faster &mdash; and Mondays run about 15 minutes per client.</dd>
       <dt>Is this a course?</dt>
       <dd>No. It&rsquo;s a working system &mdash; the same scripts and playbook running for real clients today &mdash; with documentation written so you can run it too.</dd>
       <dt>Why is the hosting free if the data is sensitive?</dt>
@@ -195,6 +346,8 @@
       <dd>Yes &mdash; the demo dashboard includes the full working Projections view, and the kit ships a compute template (revenue cases, cost modes, owner pay, financing) you adapt per client. The guides position it as your premium pricing tier.</dd>
       <dt>Does it work with QuickBooks?</dt>
       <dd>The system runs from an 18-week cash flow spreadsheet (included structure), which you update from any source &mdash; QBO, bank feeds, or the client&rsquo;s Monday text. The bank balance, not the book balance, drives it: that&rsquo;s rule #7 in the Blueprint.</dd>
+      <dt>What if I get stuck?</dt>
+      <dd>Every kit comes with email support from me directly. The Weekly Workflow guide also includes a troubleshooting table for every failure mode I&rsquo;ve hit running this with real clients.</dd>
     </dl>
   </div>
 </section>
@@ -203,7 +356,12 @@
   <div class="wrap">
     <div class="sec-label">Get the Kit</div>
     <h2>Order the Kit &mdash; $249</h2>
-    <p style="max-width:62ch; margin-bottom:26px;">Launch period: orders are handled personally. Send this form and within one business day you&rsquo;ll get a secure card payment link and the Kit delivered to your inbox.</p>
+    <p style="max-width:62ch;">Launch period: orders are handled personally. Here&rsquo;s exactly what happens:</p>
+    <div class="next-steps">
+      <div class="card"><div class="step-num">01</div><h3>Send the form</h3><p>Name and email is all it takes. No payment details on this site.</p></div>
+      <div class="card"><div class="step-num">02</div><h3>Get your payment link</h3><p>Within one business day you&rsquo;ll get a secure card payment link by email.</p></div>
+      <div class="card"><div class="step-num">03</div><h3>Kit in your inbox</h3><p>Once payment clears, the complete Kit is delivered to your inbox.</p></div>
+    </div>
     <!-- SWAP-POINT: when the Gumroad/Lemon Squeezy product is live, replace this form
          with a single <a class="btn" href="PRODUCT_URL">Buy now — instant download</a> -->
     <form id="kitForm">
@@ -211,9 +369,9 @@
       <input type="hidden" name="subject" value="KIT ORDER — Cash Flow Dashboard Kit ($249)">
       <input type="hidden" name="from_name" value="Cash Flow Dashboard Kit page">
       <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
-      <div class="field"><label for="name">Name</label><input type="text" id="name" name="name" required></div>
-      <div class="field"><label for="practice">Practice / firm name</label><input type="text" id="practice" name="practice"></div>
-      <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+      <div class="field"><label for="name">Name</label><input type="text" id="name" name="name" autocomplete="name" required></div>
+      <div class="field"><label for="practice">Practice / firm name</label><input type="text" id="practice" name="practice" autocomplete="organization"></div>
+      <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email" required></div>
       <div class="field"><label for="message">Anything you want me to know? <span style="color:#6B7280;font-weight:400;text-transform:none;letter-spacing:0;">(optional)</span></label><textarea id="message" name="message" placeholder="e.g. how many clients you have in mind for this"></textarea></div>
       <button type="submit" class="btn">Request my payment link</button>
       <p class="form-note" id="formNote">You&rsquo;ll hear back within one business day. Questions first? <a href="mailto:jake.felstow@gmail.com" style="color:var(--navy);">jake.felstow@gmail.com</a></p>
