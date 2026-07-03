@@ -78,6 +78,37 @@ input sources while you dictate.
 If you have a fast machine (Apple Silicon, or any recent GPU), try
 `--model small.en` or `medium` for noticeably better accuracy.
 
+## Teaching it your words
+
+Two plain-text files next to `dictate.py` act as your personal dictionary
+(edit them any time; restart the app to pick up changes):
+
+- **`vocabulary.txt`** — one word or phrase per line. The recognizer is
+  biased toward these spellings, so names, businesses, and jargon come out
+  right the first time (e.g. `Felstow`, `QuickBooks`).
+- **`replacements.txt`** — forced corrections in the form
+  `what whisper writes => what you want`. Applied to every transcript, so
+  if a word keeps coming out wrong you can pin the exact spelling
+  (e.g. `fell stow => Felstow`).
+
+Unlike Wispr Flow, it doesn't learn automatically from your edits — you add
+words yourself — but nothing you say is stored anywhere to make that work.
+
+## Privacy & security
+
+- Audio is processed in memory and never written to disk; transcription
+  happens on-device and the app makes no network requests after the
+  one-time model download (from the official Systran repos on Hugging Face).
+- Transcripts are printed to your terminal for feedback but not logged to
+  any file.
+- Text is inserted via the clipboard. If you run a clipboard-history
+  manager, your dictations will appear in its history; use
+  `--type-instead-of-paste` to bypass the clipboard entirely.
+- The macOS permissions you granted (Microphone, Accessibility, Input
+  Monitoring) apply to your whole terminal app — anything else you run in
+  that terminal inherits them. Keep that in mind before piping untrusted
+  scripts through the same terminal.
+
 ## Tips
 
 - First run downloads the model (~75 MB for base.en) — after that it's fully

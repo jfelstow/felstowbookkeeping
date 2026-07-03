@@ -18,6 +18,7 @@ import re
 import sys
 import threading
 import time
+from pathlib import Path
 
 import numpy as np
 import pyperclip
@@ -80,6 +81,39 @@ def clean_text(text: str) -> str:
     return text
 
 
+def load_custom_words(base_dir: Path):
+    """Read the user's personal dictionary.
+
+    vocabulary.txt   — one word/phrase per line; biases the recognizer
+                       toward these spellings (names, jargon, brands).
+    replacements.txt — lines of the form `wrong => right`; applied to the
+                       transcript afterwards to force exact spellings.
+    """
+    vocab, replacements = [], []
+    vocab_file = base_dir / "vocabulary.txt"
+    if vocab_file.exists():
+        vocab = [
+            line.strip()
+            for line in vocab_file.read_text().splitlines()
+            if line.strip() and not line.lstrip().startswith("#")
+        ]
+    repl_file = base_dir / "replacements.txt"
+    if repl_file.exists():
+        for line in repl_file.read_text().splitlines():
+            if line.lstrip().startswith("#") or "=>" not in line:
+                continue
+            wrong, right = line.split("=>", 1)
+            if wrong.strip():
+                replacements.append((wrong.strip(), right.strip()))
+    return vocab, replacements
+
+
+def apply_replacements(text: str, replacements) -> str:
+    for wrong, right in replacements:
+        text = re.sub(rf"\b{re.escape(wrong)}\b", right, text, flags=re.IGNORECASE)
+    return text
+
+
 def paste_text(text: str, kbd: Controller):
     """Insert text into the focused app via clipboard paste, then restore
     whatever was on the clipboard before."""
@@ -98,19 +132,28 @@ def paste_text(text: str, kbd: Controller):
         threading.Timer(0.6, pyperclip.copy, args=[previous]).start()
 
 
-def listen_fn_key(on_press, on_release):
+def listen_fn_key(on_press, on_release, debug=False):
     """macOS-only: watch the fn/globe key via a Quartz event tap. fn never
     arrives as a normal key event, only as a modifier-flags change."""
     import Quartz
 
-    is_down = [False]
+    state = {"down": False, "tap": None}
 
-    def callback(_proxy, _type, event, _refcon):
-        down = bool(
-            Quartz.CGEventGetFlags(event) & Quartz.kCGEventFlagMaskSecondaryFn
-        )
-        if down != is_down[0]:
-            is_down[0] = down
+    def callback(_proxy, type_, event, _refcon):
+        # macOS disables taps it thinks are slow or during secure input;
+        # re-enable instead of going silently deaf.
+        if type_ in (
+            Quartz.kCGEventTapDisabledByTimeout,
+            Quartz.kCGEventTapDisabledByUserInput,
+        ):
+            Quartz.CGEventTapEnable(state["tap"], True)
+            return event
+        flags = Quartz.CGEventGetFlags(event)
+        down = bool(flags & Quartz.kCGEventFlagMaskSecondaryFn)
+        if debug:
+            print(f"[keys] flags={flags:#010x} fn {'DOWN' if down else 'up'}")
+        if down != state["down"]:
+            state["down"] = down
             (on_press if down else on_release)()
         return event
 
@@ -128,6 +171,7 @@ def listen_fn_key(on_press, on_release):
             "enabled under System Settings > Privacy & Security > Input "
             "Monitoring, then fully quit and reopen it."
         )
+    state["tap"] = tap
     source = Quartz.CFMachPortCreateRunLoopSource(None, tap, 0)
     Quartz.CFRunLoopAddSource(
         Quartz.CFRunLoopGetCurrent(), source, Quartz.kCFRunLoopCommonModes
@@ -189,6 +233,11 @@ def main():
         action="store_true",
         help="simulate keystrokes instead of pasting (for apps that block paste)",
     )
+    parser.add_argument(
+        "--debug-keys",
+        action="store_true",
+        help="print every fn-key flag change (for troubleshooting the hotkey)",
+    )
     args = parser.parse_args()
 
     use_fn = args.key.lower() in ("fn", "globe")
@@ -206,6 +255,14 @@ def main():
     model = WhisperModel(args.model, device="auto", compute_type="auto")
 
     check_macos_permissions()
+
+    vocab, replacements = load_custom_words(Path(__file__).resolve().parent)
+    if vocab or replacements:
+        print(
+            f"Personal dictionary: {len(vocab)} vocabulary words, "
+            f"{len(replacements)} replacements."
+        )
+    hotwords = ", ".join(vocab) if vocab else None
 
     recorder = Recorder()
     kbd = Controller()
@@ -230,8 +287,9 @@ def main():
             print("(too short, ignored)")
             return
         print("transcribing... ", end="", flush=True)
-        segments, _ = model.transcribe(audio, vad_filter=True)
+        segments, _ = model.transcribe(audio, vad_filter=True, hotwords=hotwords)
         text = clean_text("".join(s.text for s in segments))
+        text = apply_replacements(text, replacements)
         if not text:
             print("(no speech detected)")
             return
@@ -261,7 +319,7 @@ def main():
             "Tip: set System Settings > Keyboard > 'Press \U0001f310 key to' = "
             "'Do Nothing' so tapping fn doesn't also open the emoji picker."
         )
-        listen_fn_key(handle_press, handle_release)
+        listen_fn_key(handle_press, handle_release, debug=args.debug_keys)
         return
 
     def on_press(key):

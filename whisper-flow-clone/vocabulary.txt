@@ -1,0 +1,7 @@
+# Personal vocabulary — one word or phrase per line.
+# These bias the recognizer toward your spellings: names, businesses,
+# jargon, product names. Lines starting with # are ignored.
+# Examples (delete the # to activate):
+# Felstow
+# QuickBooks
+# Gusto
