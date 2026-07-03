@@ -98,6 +98,32 @@ def paste_text(text: str, kbd: Controller):
         threading.Timer(0.6, pyperclip.copy, args=[previous]).start()
 
 
+def check_macos_permissions():
+    """Warn loudly at startup if macOS Accessibility trust is missing —
+    without it the simulated Cmd+V never reaches other apps."""
+    if sys.platform != "darwin":
+        return
+    try:
+        import ctypes
+        import ctypes.util
+
+        appserv = ctypes.cdll.LoadLibrary(
+            ctypes.util.find_library("ApplicationServices")
+        )
+        if appserv.AXIsProcessTrusted():
+            return
+    except Exception:
+        return  # can't check; let macOS report it
+    print(
+        "\n"
+        "*** MISSING PERMISSION: text will NOT paste into other apps. ***\n"
+        "Fix: System Settings > Privacy & Security > Accessibility ->\n"
+        "     enable your terminal app (add it with '+' if not listed).\n"
+        "     Also enable it under Input Monitoring.\n"
+        "Then FULLY QUIT the terminal (Cmd+Q), reopen it, and rerun this.\n"
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description="Local push-to-talk dictation")
     parser.add_argument(
@@ -132,6 +158,8 @@ def main():
     from faster_whisper import WhisperModel
 
     model = WhisperModel(args.model, device="auto", compute_type="auto")
+
+    check_macos_permissions()
 
     recorder = Recorder()
     kbd = Controller()
