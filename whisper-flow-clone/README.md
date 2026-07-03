@@ -55,16 +55,21 @@ sudo apt install portaudio19-dev xclip
 python dictate.py
 ```
 
-Then, in any app: **hold the right Alt/Option key, speak, and release.**
+Then, in any app: **hold the fn/globe key (bottom-left on Mac keyboards),
+speak, and release.** On Windows/Linux the default is the right Alt key.
 About a second later your words are pasted at the cursor.
 
 Say **"new line"** or **"new paragraph"** while dictating to insert breaks.
+
+**macOS tip:** set System Settings → Keyboard → "Press 🌐 key to" →
+**Do Nothing**, so tapping fn doesn't also open the emoji picker or switch
+input sources while you dictate.
 
 ### Options
 
 | Flag | What it does |
 |---|---|
-| `--key f8` | Use a different hotkey (right_alt, right_cmd, right_ctrl, right_shift, caps_lock, f1–f12) |
+| `--key f8` | Use a different hotkey (fn, right_alt, right_cmd, right_ctrl, right_shift, caps_lock, f1–f12) |
 | `--toggle` | Tap to start recording, tap again to stop (instead of holding) |
 | `--model small.en` | Better accuracy, slower. Sizes: `tiny.en` → `base.en` → `small.en` → `medium` → `large-v3` |
 | `--type-instead-of-paste` | Simulate real keystrokes for apps that block pasting |

@@ -6,7 +6,7 @@ open-source Whisper model (via faster-whisper) and pasted into whichever app
 has keyboard focus. No account, no subscription, no audio sent anywhere.
 
 Usage:
-    python dictate.py                 # hold right Alt/Option to dictate
+    python dictate.py                 # hold fn/globe (macOS) or right Alt
     python dictate.py --key f8        # hold F8 instead
     python dictate.py --toggle        # tap to start, tap again to stop
     python dictate.py --model small   # bigger model = better accuracy
@@ -98,6 +98,47 @@ def paste_text(text: str, kbd: Controller):
         threading.Timer(0.6, pyperclip.copy, args=[previous]).start()
 
 
+def listen_fn_key(on_press, on_release):
+    """macOS-only: watch the fn/globe key via a Quartz event tap. fn never
+    arrives as a normal key event, only as a modifier-flags change."""
+    import Quartz
+
+    is_down = [False]
+
+    def callback(_proxy, _type, event, _refcon):
+        down = bool(
+            Quartz.CGEventGetFlags(event) & Quartz.kCGEventFlagMaskSecondaryFn
+        )
+        if down != is_down[0]:
+            is_down[0] = down
+            (on_press if down else on_release)()
+        return event
+
+    tap = Quartz.CGEventTapCreate(
+        Quartz.kCGSessionEventTap,
+        Quartz.kCGHeadInsertEventTap,
+        Quartz.kCGEventTapOptionListenOnly,
+        Quartz.CGEventMaskBit(Quartz.kCGEventFlagsChanged),
+        callback,
+        None,
+    )
+    if tap is None:
+        sys.exit(
+            "Could not listen for the fn key. Check that your terminal is "
+            "enabled under System Settings > Privacy & Security > Input "
+            "Monitoring, then fully quit and reopen it."
+        )
+    source = Quartz.CFMachPortCreateRunLoopSource(None, tap, 0)
+    Quartz.CFRunLoopAddSource(
+        Quartz.CFRunLoopGetCurrent(), source, Quartz.kCFRunLoopCommonModes
+    )
+    Quartz.CGEventTapEnable(tap, True)
+    try:
+        Quartz.CFRunLoopRun()
+    except KeyboardInterrupt:
+        print("\nBye.")
+
+
 def check_macos_permissions():
     """Warn loudly at startup if macOS Accessibility trust is missing —
     without it the simulated Cmd+V never reaches other apps."""
@@ -128,9 +169,9 @@ def main():
     parser = argparse.ArgumentParser(description="Local push-to-talk dictation")
     parser.add_argument(
         "--key",
-        default="right_alt",
-        help="hotkey to hold (default: right_alt). Options: "
-        + ", ".join(HOTKEY_ALIASES),
+        default="fn" if sys.platform == "darwin" else "right_alt",
+        help="hotkey to hold (default: fn/globe on macOS, right_alt elsewhere). "
+        "Options: fn, " + ", ".join(HOTKEY_ALIASES),
     )
     parser.add_argument(
         "--model",
@@ -150,9 +191,14 @@ def main():
     )
     args = parser.parse_args()
 
-    hotkey = HOTKEY_ALIASES.get(args.key.lower())
-    if hotkey is None:
-        sys.exit(f"Unknown key '{args.key}'. Choose from: {', '.join(HOTKEY_ALIASES)}")
+    use_fn = args.key.lower() in ("fn", "globe")
+    if use_fn and sys.platform != "darwin":
+        sys.exit("The fn/globe key is only supported on macOS. Pick another --key.")
+    hotkey = None if use_fn else HOTKEY_ALIASES.get(args.key.lower())
+    if hotkey is None and not use_fn:
+        sys.exit(
+            f"Unknown key '{args.key}'. Choose from: fn, {', '.join(HOTKEY_ALIASES)}"
+        )
 
     print(f"Loading Whisper model '{args.model}' (first run downloads it)...")
     from faster_whisper import WhisperModel
@@ -195,9 +241,7 @@ def main():
             paste_text(text, kbd)
         print(f"→ {text}")
 
-    def on_press(key):
-        if key != hotkey:
-            return
+    def handle_press():
         if args.toggle:
             if recording.is_set():
                 threading.Thread(target=stop_and_transcribe).start()
@@ -206,12 +250,28 @@ def main():
         else:
             start_recording()
 
-    def on_release(key):
-        if key == hotkey and not args.toggle:
+    def handle_release():
+        if not args.toggle:
             threading.Thread(target=stop_and_transcribe).start()
 
     mode = "tap to start/stop" if args.toggle else "hold to talk"
     print(f"Ready. {args.key} = {mode}. Focus any text field and speak. Ctrl+C quits.")
+    if use_fn:
+        print(
+            "Tip: set System Settings > Keyboard > 'Press \U0001f310 key to' = "
+            "'Do Nothing' so tapping fn doesn't also open the emoji picker."
+        )
+        listen_fn_key(handle_press, handle_release)
+        return
+
+    def on_press(key):
+        if key == hotkey:
+            handle_press()
+
+    def on_release(key):
+        if key == hotkey:
+            handle_release()
+
     with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
         try:
             listener.join()
