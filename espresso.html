@@ -197,6 +197,8 @@
     <input id="bf-roastdate" type="date">
     <label>Notes</label>
     <input id="bf-notes" placeholder="e.g. tasting notes on the bag">
+    <label>Dialed grind (optional — set it here if you already know this bean's number)</label>
+    <input id="bf-dialed" type="number" step="0.25" min="0" max="90" placeholder="leave blank to dial in with the shot log">
     <div class="btn-row">
       <button class="btn" value="save">Save bean</button>
       <button class="btn secondary" value="cancel" formnovalidate>Cancel</button>
@@ -517,6 +519,7 @@ function renderBeans() {
         <button class="btn small secondary" onclick="toggleBean('${bean.id}')">${isOpen ? 'Hide' : 'Shot history'} (${bean.shots.length})</button>
         ${!dialed && bean.shots.length ? `<button class="btn small secondary" onclick="markDialed('${bean.id}')">✓ Mark dialed at last grind</button>` : ''}
         ${dialed ? `<button class="btn small secondary" onclick="unmarkDialed('${bean.id}')">Re-dial</button>` : ''}
+        <button class="btn small secondary" onclick="openBeanDialog('${bean.id}')">Edit</button>
         <button class="btn small danger" onclick="deleteBean('${bean.id}')">Delete</button>
       </div>
       ${isOpen ? renderShots(bean) : ''}
@@ -538,12 +541,13 @@ function renderShots(bean) {
       <td>${esc(s.dose)}g → ${esc(s.yield)}g</td>
       <td>${esc(s.time)}s</td>
       <td>${esc(s.taste)}${s.notes ? ` <span class="sub">· ${esc(s.notes)}</span>` : ''}</td>
+      <td><button class="btn small danger" style="padding:2px 8px;" title="Delete this shot" onclick="deleteShot('${bean.id}', ${i})">✕</button></td>
     </tr>`;
   }
   return `
     <div class="advice ${adv.good ? 'good' : ''}"><b>Next shot:</b> ${adv.html}</div>
     <div class="table-scroll"><table>
-      <thead><tr><th>Date</th><th>Grind</th><th>Ratio</th><th>Time</th><th>Taste</th></tr></thead>
+      <thead><tr><th>Date</th><th>Grind</th><th>Ratio</th><th>Time</th><th>Taste</th><th></th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
 }
@@ -673,6 +677,13 @@ function unmarkDialed(id) {
   bean.dialedGrind = null;
   save(); render();
 }
+function deleteShot(beanId, index) {
+  const bean = state.beans.find(b => b.id === beanId);
+  if (!bean || !bean.shots[index]) return;
+  if (!confirm('Delete this shot entry?')) return;
+  bean.shots.splice(index, 1);
+  save(); render();
+}
 function saveZero() {
   const v = document.getElementById('zeroInput').value;
   if (v === '') { alert('Enter the dial number where your burrs touch.'); return; }
@@ -680,16 +691,32 @@ function saveZero() {
   save(); render();
 }
 
-/* ---------- bean dialog ---------- */
+/* ---------- bean dialog (add + edit) ---------- */
 const beanDialog = document.getElementById('beanDialog');
-function openBeanDialog() {
+let editingBeanId = null;
+function openBeanDialog(id) {
+  editingBeanId = id || null;
   document.getElementById('beanForm').reset();
+  document.getElementById('beanDialogTitle').textContent = id ? 'Edit bean' : 'Add a bean';
+  if (id) {
+    const b = state.beans.find(x => x.id === id);
+    if (b) {
+      document.getElementById('bf-name').value = b.name;
+      document.getElementById('bf-roaster').value = b.roaster || '';
+      document.getElementById('bf-origin').value = b.origin || '';
+      document.getElementById('bf-roast').value = b.roastLevel;
+      document.getElementById('bf-process').value = b.process;
+      document.getElementById('bf-roastdate').value = b.roastDate || '';
+      document.getElementById('bf-notes').value = b.notes || '';
+      document.getElementById('bf-dialed').value = b.dialedGrind == null ? '' : b.dialedGrind;
+    }
+  }
   beanDialog.showModal();
 }
 document.getElementById('beanForm').addEventListener('submit', (e) => {
   if (e.submitter && e.submitter.value === 'cancel') return;
-  const bean = {
-    id: uid(),
+  const dialedRaw = document.getElementById('bf-dialed').value;
+  const data = {
     name: document.getElementById('bf-name').value.trim(),
     roaster: document.getElementById('bf-roaster').value.trim(),
     origin: document.getElementById('bf-origin').value.trim(),
@@ -697,11 +724,15 @@ document.getElementById('beanForm').addEventListener('submit', (e) => {
     process: document.getElementById('bf-process').value,
     roastDate: document.getElementById('bf-roastdate').value,
     notes: document.getElementById('bf-notes').value.trim(),
-    dialedGrind: null,
-    shots: []
+    dialedGrind: dialedRaw === '' ? null : parseFloat(dialedRaw)
   };
-  if (!bean.name) return;
-  state.beans.unshift(bean);
+  if (!data.name) return;
+  if (editingBeanId) {
+    const b = state.beans.find(x => x.id === editingBeanId);
+    if (b) Object.assign(b, data);
+  } else {
+    state.beans.unshift({ id: uid(), shots: [], ...data });
+  }
   save(); render();
 });
 
