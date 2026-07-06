@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espresso Lab — Grind & Recipe Tracker</title>
+<style>
+  :root {
+    --bg: #17110d;
+    --surface: #221a14;
+    --surface-2: #2c211a;
+    --border: #3d2f24;
+    --text: #f0e6dc;
+    --muted: #a89583;
+    --crema: #d4a056;
+    --crema-dark: #b0812f;
+    --green: #7fb069;
+    --red: #e07a5f;
+    --blue: #81a4cd;
+    --radius: 14px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px 90px; }
+
+  header { text-align: center; padding: 28px 0 10px; }
+  header h1 { font-size: 1.55rem; letter-spacing: .3px; }
+  header h1 .cup { margin-right: 6px; }
+  header p { color: var(--muted); font-size: .88rem; margin-top: 2px; }
+  .gear-line { color: var(--crema); font-size: .8rem; margin-top: 6px; }
+
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; gap: 6px;
+    background: rgba(23,17,13,.92); backdrop-filter: blur(8px);
+    padding: 12px 0; margin-bottom: 14px;
+  }
+  nav button {
+    flex: 1; padding: 10px 4px;
+    background: var(--surface); color: var(--muted);
+    border: 1px solid var(--border); border-radius: 999px;
+    font-size: .92rem; font-weight: 600; cursor: pointer;
+  }
+  nav button.active { background: var(--crema); border-color: var(--crema); color: #1d1409; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px; margin-bottom: 14px;
+  }
+  .card h3 { font-size: 1.05rem; }
+  .sub { color: var(--muted); font-size: .85rem; }
+  .accent { color: var(--crema); }
+
+  .btn {
+    display: inline-block; border: none; border-radius: 10px;
+    padding: 10px 16px; font-size: .92rem; font-weight: 600; cursor: pointer;
+    background: var(--crema); color: #1d1409;
+  }
+  .btn.secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+  .btn.danger { background: transparent; color: var(--red); border: 1px solid var(--red); }
+  .btn.small { padding: 6px 12px; font-size: .82rem; border-radius: 8px; }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+  .badge {
+    display: inline-block; font-size: .72rem; font-weight: 700;
+    padding: 2px 9px; border-radius: 999px; letter-spacing: .3px;
+  }
+  .badge.dialed { background: rgba(127,176,105,.18); color: var(--green); }
+  .badge.dialing { background: rgba(212,160,86,.15); color: var(--crema); }
+  .badge.tag { background: rgba(129,164,205,.15); color: var(--blue); margin-right: 4px; }
+
+  .grind-hero {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--surface-2); border-radius: 10px; padding: 12px 14px; margin: 10px 0;
+  }
+  .grind-hero .num { font-size: 1.9rem; font-weight: 800; color: var(--crema); line-height: 1.1; white-space: nowrap; }
+  .grind-hero .lbl { font-size: .8rem; color: var(--muted); }
+
+  .kv { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 6px; font-size: .85rem; color: var(--muted); }
+  .kv b { color: var(--text); font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-size: .85rem; margin-top: 8px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .5px; }
+  .table-scroll { overflow-x: auto; }
+
+  .advice {
+    border-left: 3px solid var(--crema); background: var(--surface-2);
+    padding: 10px 12px; border-radius: 0 10px 10px 0; font-size: .88rem; margin-top: 10px;
+  }
+  .advice.good { border-color: var(--green); }
+
+  form label { display: block; font-size: .8rem; color: var(--muted); margin: 12px 0 4px; font-weight: 600; }
+  input, select, textarea {
+    width: 100%; padding: 10px 12px;
+    background: var(--surface-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px;
+    font-size: .95rem; font-family: inherit;
+  }
+  textarea { min-height: 90px; resize: vertical; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  dialog {
+    background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px; width: min(560px, calc(100vw - 32px));
+    max-height: 86vh; overflow-y: auto;
+  }
+  dialog::backdrop { background: rgba(0,0,0,.65); }
+  dialog h3 { margin-bottom: 4px; }
+
+  .recipe-steps { margin: 8px 0 0 20px; }
+  .recipe-steps li { margin-bottom: 8px; font-size: .92rem; }
+  .recipe-ing { margin: 8px 0 0 20px; }
+  .recipe-ing li { font-size: .9rem; margin-bottom: 3px; }
+  details summary { cursor: pointer; color: var(--crema); font-weight: 600; font-size: .9rem; margin-top: 10px; }
+  .tip-box {
+    background: var(--surface-2); border-radius: 10px; padding: 10px 12px;
+    font-size: .85rem; color: var(--muted); margin-top: 10px;
+  }
+  .tip-box b { color: var(--crema); }
+
+  .empty { text-align: center; color: var(--muted); padding: 30px 10px; font-size: .9rem; }
+  .warn-box {
+    background: rgba(224,122,95,.12); border: 1px solid rgba(224,122,95,.4);
+    border-radius: 10px; padding: 10px 12px; font-size: .86rem; margin-bottom: 12px;
+  }
+  h2.section { font-size: 1.15rem; margin: 6px 0 12px; }
+  .flex-between { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><span class="cup">☕</span>Espresso Lab</h1>
+    <p>Grind dial-in tracker &amp; recipe book</p>
+    <div class="gear-line">Fellow Espresso Series 1 · Turin DF64 Gen 2.5</div>
+  </header>
+
+  <nav>
+    <button id="tab-beans" onclick="showTab('beans')">Beans</button>
+    <button id="tab-recipes" onclick="showTab('recipes')">Recipes</button>
+    <button id="tab-guide" onclick="showTab('guide')">Setup &amp; Guide</button>
+  </nav>
+
+  <main id="view"></main>
+</div>
+
+<!-- ============ Dialogs ============ -->
+<dialog id="beanDialog">
+  <h3 id="beanDialogTitle">Add a bean</h3>
+  <p class="sub">The app suggests a DF64 starting point from roast level &amp; process.</p>
+  <form id="beanForm" method="dialog">
+    <label>Bean / blend name *</label>
+    <input id="bf-name" required placeholder="e.g. Ethiopia Yirgacheffe">
+    <div class="row2">
+      <div>
+        <label>Roaster</label>
+        <input id="bf-roaster" placeholder="e.g. Heart, Onyx…">
+      </div>
+      <div>
+        <label>Origin</label>
+        <input id="bf-origin" placeholder="e.g. Colombia">
+      </div>
+    </div>
+    <div class="row2">
+      <div>
+        <label>Roast level *</label>
+        <select id="bf-roast">
+          <option value="light">Light</option>
+          <option value="medium-light">Medium-light</option>
+          <option value="medium" selected>Medium</option>
+          <option value="medium-dark">Medium-dark</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div>
+        <label>Process</label>
+        <select id="bf-process">
+          <option value="washed" selected>Washed</option>
+          <option value="natural">Natural</option>
+          <option value="honey">Honey</option>
+          <option value="anaerobic">Anaerobic / co-ferment</option>
+          <option value="decaf">Decaf</option>
+          <option value="unknown">Not sure</option>
+        </select>
+      </div>
+    </div>
+    <label>Roast date (freshness advice)</label>
+    <input id="bf-roastdate" type="date">
+    <label>Notes</label>
+    <input id="bf-notes" placeholder="e.g. tasting notes on the bag">
+    <div class="btn-row">
+      <button class="btn" value="save">Save bean</button>
+      <button class="btn secondary" value="cancel" formnovalidate>Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="shotDialog">
+  <h3>Log a shot</h3>
+  <p class="sub" id="shotDialogBean"></p>
+  <form id="shotForm" method="dialog">
+    <div class="row3">
+      <div>
+        <label>Grind (dial #) *</label>
+        <input id="sf-grind" type="number" step="0.25" min="0" max="90" required>
+      </div>
+      <div>
+        <label>Dose (g)</label>
+        <input id="sf-dose" type="number" step="0.1" min="5" max="30" value="18">
+      </div>
+      <div>
+        <label>Yield (g)</label>
+        <input id="sf-yield" type="number" step="0.1" min="10" max="100" value="36">
+      </div>
+    </div>
+    <div class="row2">
+      <div>
+        <label>Shot time (seconds) *</label>
+        <input id="sf-time" type="number" step="1" min="5" max="90" required placeholder="e.g. 28">
+      </div>
+      <div>
+        <label>How did it taste?</label>
+        <select id="sf-taste">
+          <option value="balanced">Balanced / delicious</option>
+          <option value="sour">Sour / sharp</option>
+          <option value="bitter">Bitter / harsh</option>
+          <option value="weak">Weak / watery</option>
+          <option value="intense">Too intense / muddy</option>
+        </select>
+      </div>
+    </div>
+    <label>Notes</label>
+    <input id="sf-notes" placeholder="optional — e.g. channeling on the right side">
+    <div class="btn-row">
+      <button class="btn" value="save">Save shot &amp; get advice</button>
+      <button class="btn secondary" value="cancel" formnovalidate>Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="recipeDialog">
+  <h3 id="recipeDialogTitle">Add a recipe</h3>
+  <form id="recipeForm" method="dialog">
+    <label>Drink name *</label>
+    <input id="rf-name" required placeholder="e.g. Honey Lavender Latte">
+    <label>Tags (comma separated)</label>
+    <input id="rf-tags" placeholder="e.g. hot, milk drink">
+    <label>Ingredients (one per line) *</label>
+    <textarea id="rf-ingredients" required placeholder="18g coffee&#10;120ml oat milk&#10;…"></textarea>
+    <label>Steps (one per line) *</label>
+    <textarea id="rf-steps" required placeholder="Pull a double shot…&#10;Steam the milk…"></textarea>
+    <label>Pro tips (one per line, optional)</label>
+    <textarea id="rf-tips"></textarea>
+    <div class="btn-row">
+      <button class="btn" value="save">Save recipe</button>
+      <button class="btn secondary" value="cancel" formnovalidate>Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+'use strict';
+/* ============================================================
+   Espresso Lab — Fellow Series 1 + Turin DF64 Gen 2.5
+   All data stays in your browser (localStorage).
+   ============================================================ */
+
+const STORE_KEY = 'felstow-espresso-lab-v1';
+
+/* ---------- state ---------- */
+let state = load();
+
+function load() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) { /* corrupted store — start fresh */ }
+  return { zeroPoint: null, beans: [], recipes: seedRecipes(), seeded: true };
+}
+function save() { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+function uid() { return Math.random().toString(36).slice(2, 10) + Date.now().toString(36); }
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+/* ============================================================
+   GRIND SUGGESTION ENGINE — Turin DF64 Gen 2.5
+   ------------------------------------------------------------
+   The DF64's collar is marked 0–90 and each mark ≈ 12.5 µm.
+   The factory "0" is NOT where the burrs touch — every unit is
+   different — so recommendations are expressed as marks ABOVE
+   YOUR TRUE ZERO (burr touch point), found via calibration.
+   Espresso generally lives ~8–20 marks above true zero:
+   denser light roasts need finer, dark roasts coarser.
+   ============================================================ */
+const ROAST_BASE = {           // marks above true zero
+  'light':        9,
+  'medium-light': 11,
+  'medium':       13,
+  'medium-dark':  15,
+  'dark':         17
+};
+const PROCESS_MOD = {          // process density/solubility tweaks
+  'washed':    0,
+  'honey':     0.5,
+  'natural':   1,
+  'anaerobic': 1,
+  'decaf':     1.5,            // decaf is brittle: makes more fines, chokes easily
+  'unknown':   0
+};
+const ROAST_PROFILE = {        // matching Series 1 built-in profile
+  'light':        'Light Roast profile (hotter water pulls out brightness)',
+  'medium-light': 'Light or Medium Roast profile',
+  'medium':       'Medium Roast profile (the Series 1 default, 18g → 36g)',
+  'medium-dark':  'Medium or Dark Roast profile',
+  'dark':         'Dark Roast profile (cooler water tames bitterness)'
+};
+
+function suggestMarks(bean) {
+  const base = ROAST_BASE[bean.roastLevel] ?? 13;
+  const mod = PROCESS_MOD[bean.process] ?? 0;
+  return Math.min(22, Math.max(7, base + mod));
+}
+function suggestDial(bean) {
+  const marks = suggestMarks(bean);
+  return state.zeroPoint == null ? null : +(state.zeroPoint + marks).toFixed(1);
+}
+function freshnessNote(bean) {
+  if (!bean.roastDate) return null;
+  const days = Math.floor((Date.now() - new Date(bean.roastDate + 'T00:00:00')) / 86400000);
+  if (isNaN(days)) return null;
+  if (days < 0) return null;
+  if (days < 6) return `Only ${days} day${days === 1 ? '' : 's'} off roast — still degassing. Shots may run fast and fizzy; wait a few days or grind slightly finer, and expect to coarsen as it settles.`;
+  if (days <= 21) return `${days} days off roast — right in the sweet spot.`;
+  if (days <= 45) return `${days} days off roast — past peak. It will extract faster; nudge the grind ~0.5–1 mark finer than usual.`;
+  return `${days} days off roast — quite old. Grind finer and consider it a milk-drink bean.`;
+}
+
+/* ============================================================
+   DIAL-IN ADVICE ENGINE — reads the last shot and tells you
+   what to change next. Targets a Series 1 style 1:2 shot
+   (18g → 36g) in roughly 25–32 seconds.
+   ============================================================ */
+function shotAdvice(shot) {
+  const t = Number(shot.time);
+  const fast = t < 23, slow = t > 34, slightlyFast = t >= 23 && t < 25, slightlySlow = t > 32 && t <= 34;
+  const g = Number(shot.grind);
+  const finer = (n) => `Go finer: try <b>${(g - n).toFixed(2).replace(/\.?0+$/,'')}</b> on the dial (−${n} mark${n === 1 ? '' : 's'}).`;
+  const coarser = (n) => `Go coarser: try <b>${(g + n).toFixed(2).replace(/\.?0+$/,'')}</b> on the dial (+${n} mark${n === 1 ? '' : 's'}).`;
+
+  switch (shot.taste) {
+    case 'sour':
+      if (slow) return { good: false, html: `Sour <i>and</i> slow (${t}s) usually isn't grind — it's uneven extraction. Check your puck prep: WDT-stir the grounds, level, tamp flat. Also try the hotter <b>Light Roast profile</b> on the Series 1. Keep the grind at ${g} for the next shot.` };
+      if (fast) return { good: false, html: `Sour and fast (${t}s) = under-extracted. ${finer(2)}` };
+      return { good: false, html: `Time is in range (${t}s) but still sour → extract a little more. ${finer(1)} Or stretch the yield to 40g out, or step up to a hotter profile on the Series 1.` };
+    case 'bitter':
+      if (fast) return { good: false, html: `Bitter <i>and</i> fast (${t}s) suggests channeling — water is punching holes through the puck. Improve distribution (WDT, level tamp) before touching the grind.` };
+      if (slow) return { good: false, html: `Bitter and slow (${t}s) = over-extracted. ${coarser(2)}` };
+      return { good: false, html: `Time is fine (${t}s) but bitter → ${coarser(1)} Or cut the yield to ~32g out, or drop to the cooler <b>Dark Roast profile</b>.` };
+    case 'weak':
+      if (fast) return { good: false, html: `Weak and fast (${t}s) — the grind is too coarse to build pressure. ${finer(2)}` };
+      return { good: false, html: `Weak but decent time (${t}s) — tighten the ratio: aim for 36g out instead of a longer pull, or dose up 0.5g. Grind can stay at ${g}.` };
+    case 'intense':
+      if (slow) return { good: false, html: `Muddy/intense and slow (${t}s) — too fine, likely choking. ${coarser(2)}` };
+      return { good: false, html: `Too intense at ${t}s — lengthen the shot to ~40g out to open it up, or ${coarser(1).toLowerCase()}` };
+    default: // balanced
+      if (fast) return { good: false, html: `Tastes good but ${t}s is fast — you're leaving sweetness on the table. ${finer(1)}` };
+      if (slow) return { good: false, html: `Tastes good but ${t}s is slow — one nudge from bitter. ${coarser(1)}` };
+      if (slightlyFast) return { good: true, html: `Nice — ${t}s and balanced. If you want more sweetness, try just a quarter-mark finer. Otherwise <b>mark this bean as dialed at ${g}</b>.` };
+      if (slightlySlow) return { good: true, html: `Nice — ${t}s and balanced. Watch the next shot for bitterness; otherwise <b>mark this bean as dialed at ${g}</b>.` };
+      return { good: true, html: `🎯 ${t}s and balanced — that's the shot. <b>Mark this bean as dialed at ${g}</b> so the setting is saved for next time.` };
+  }
+}
+
+/* ============================================================
+   SEED RECIPES
+   ============================================================ */
+function seedRecipes() {
+  return [
+    {
+      id: 'seed-miel',
+      name: 'Oat Milk Miel Cappuccino',
+      tags: ['hot', 'milk drink', 'honey + cinnamon'],
+      ingredients: [
+        '18g coffee (a medium roast shines here)',
+        '1½ tsp (10g) good honey',
+        'Small pinch of ground cinnamon, plus extra for dusting',
+        '2 drops vanilla extract (optional)',
+        '120ml barista oat milk (Oatly Barista / Minor Figures)'
+      ],
+      steps: [
+        'Warm a 5–6oz cappuccino cup. Add the honey, pinch of cinnamon, and vanilla straight into the cup.',
+        'Grind 18g on the DF64 at this bean\'s dialed setting.',
+        'Pull a double shot, 18g in → 36g out (~25–32s) — the Series 1 Medium Roast profile is perfect — directly onto the honey. Stir immediately so the honey fully dissolves in the hot espresso.',
+        'Steam 120ml of oat milk: purge the wand, start with the tip just below the surface and stretch for only 2–3 seconds (oat milk foams fast), then submerge and spin into a whirlpool until the pitcher is hot to the touch (~55–60°C).',
+        'Swirl the pitcher, tap out big bubbles. You want glossy, paint-like microfoam about 1cm thick — true cappuccino texture, not dry foam.',
+        'Pour from a few inches up into the center, then finish low to land the foam.',
+        'Dust with cinnamon and serve.'
+      ],
+      tips: [
+        'Honey goes in the cup, never the steaming pitcher — it wrecks the foam.',
+        'Do not overheat oat milk: past ~65°C it tastes like porridge and the foam collapses.',
+        'Barista-edition oat milks have added fat and stabilizers — they stretch far better than regular oat milk.'
+      ]
+    },
+    {
+      id: 'seed-coconut',
+      name: 'Iced Coconut Americano with Coconut Cold Foam',
+      tags: ['iced', 'dairy-free', 'cold foam'],
+      ingredients: [
+        '18g coffee',
+        '100–120ml cold filtered water',
+        'Plenty of ice (big cubes melt slower)',
+        'Cold foam: 60ml chilled coconut cream or barista coconut milk',
+        'Cold foam: 10ml vanilla syrup (or simple syrup)',
+        'Cold foam: tiny pinch of salt',
+        'Toasted coconut flakes to garnish (optional)'
+      ],
+      steps: [
+        'Make the cold foam first: combine the chilled coconut cream, syrup, and salt. Froth cold for 20–30 seconds with a handheld frother (or pump in a small French press / shake hard in a jar) until roughly doubled — thick but still pourable.',
+        'Fill a 16oz glass with ice and add the cold water, leaving about an inch of headroom.',
+        'Grind 18g — a quarter-mark finer than your dialed setting holds up nicely against ice dilution.',
+        'Pull the double shot 18g in → 36g out straight into a small pitcher.',
+        'Pour the hot espresso over the ice water (pour over the back of a spoon if you want clean layers).',
+        'Spoon the coconut cold foam generously on top so it floats.',
+        'Finish with toasted coconut flakes. Stir as you drink, or sip through the foam.'
+      ],
+      tips: [
+        'Full-fat canned coconut cream whips thickest — if it\'s too stiff, loosen it with a splash of coconut milk until it pours.',
+        'The pinch of salt is the secret: it rounds off bitterness and makes coconut taste more like coconut.',
+        'Want it stronger? Pull a 1:1.8 ratio (18g → 32g) so the ice doesn\'t wash it out.'
+      ]
+    }
+  ];
+}
+
+/* ============================================================
+   RENDERING
+   ============================================================ */
+let activeTab = 'beans';
+let expandedBean = null;
+
+function showTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  render();
+}
+
+function render() {
+  const v = document.getElementById('view');
+  if (activeTab === 'beans') v.innerHTML = renderBeans();
+  else if (activeTab === 'recipes') v.innerHTML = renderRecipes();
+  else v.innerHTML = renderGuide();
+}
+
+/* ---------- Beans tab ---------- */
+function renderBeans() {
+  let html = '';
+  if (state.zeroPoint == null) {
+    html += `<div class="warn-box">⚠️ <b>Calibrate your DF64 first</b> so grind suggestions show real dial numbers. Takes 2 minutes — head to <a href="#" class="accent" onclick="showTab('guide');return false;">Setup &amp; Guide</a>. Until then, suggestions show as "marks above true zero."</div>`;
+  }
+  html += `<div class="flex-between" style="margin-bottom:12px;">
+    <h2 class="section" style="margin:0;">Your beans</h2>
+    <button class="btn" onclick="openBeanDialog()">+ Add bean</button>
+  </div>`;
+
+  if (!state.beans.length) {
+    html += `<div class="card empty">No beans yet.<br>Add the bag you're pulling shots with and get a DF64 starting point.</div>`;
+    return html;
+  }
+
+  for (const bean of state.beans) {
+    const marks = suggestMarks(bean);
+    const dial = suggestDial(bean);
+    const isOpen = expandedBean === bean.id;
+    const dialed = bean.dialedGrind != null;
+    const startTxt = dialed
+      ? `${bean.dialedGrind}`
+      : (dial != null ? `~${dial}` : `zero +${marks}`);
+    const startLbl = dialed
+      ? 'your dialed setting'
+      : (dial != null ? `suggested start (true zero ${state.zeroPoint} + ${marks} marks)` : `suggested start — ${marks} marks above your true zero`);
+
+    html += `<div class="card">
+      <div class="flex-between">
+        <div>
+          <h3>${esc(bean.name)}</h3>
+          <div class="sub">${esc([bean.roaster, bean.origin].filter(Boolean).join(' · '))}</div>
+        </div>
+        <span class="badge ${dialed ? 'dialed' : 'dialing'}">${dialed ? '✓ dialed in' : 'dialing in'}</span>
+      </div>
+      <div class="grind-hero">
+        <div class="num">${esc(startTxt)}</div>
+        <div class="lbl">DF64 dial · ${esc(startLbl)}<br>Series 1: ${ROAST_PROFILE[bean.roastLevel] || 'Medium Roast profile'}</div>
+      </div>
+      <div class="kv">
+        <span>Roast <b>${esc(bean.roastLevel)}</b></span>
+        <span>Process <b>${esc(bean.process)}</b></span>
+        <span>Recipe <b>18g → 36g · 25–32s</b></span>
+      </div>
+      ${freshnessNote(bean) ? `<div class="advice" style="margin-top:10px;">${freshnessNote(bean)}</div>` : ''}
+      ${bean.notes ? `<p class="sub" style="margin-top:8px;">📝 ${esc(bean.notes)}</p>` : ''}
+      <div class="btn-row">
+        <button class="btn small" onclick="openShotDialog('${bean.id}')">＋ Log shot</button>
+        <button class="btn small secondary" onclick="toggleBean('${bean.id}')">${isOpen ? 'Hide' : 'Shot history'} (${bean.shots.length})</button>
+        ${!dialed && bean.shots.length ? `<button class="btn small secondary" onclick="markDialed('${bean.id}')">✓ Mark dialed at last grind</button>` : ''}
+        ${dialed ? `<button class="btn small secondary" onclick="unmarkDialed('${bean.id}')">Re-dial</button>` : ''}
+        <button class="btn small danger" onclick="deleteBean('${bean.id}')">Delete</button>
+      </div>
+      ${isOpen ? renderShots(bean) : ''}
+    </div>`;
+  }
+  return html;
+}
+
+function renderShots(bean) {
+  if (!bean.shots.length) return `<div class="empty">No shots logged yet — pull one and log it to get dial-in advice.</div>`;
+  const last = bean.shots[bean.shots.length - 1];
+  const adv = shotAdvice(last);
+  let rows = '';
+  for (let i = bean.shots.length - 1; i >= 0; i--) {
+    const s = bean.shots[i];
+    rows += `<tr>
+      <td>${new Date(s.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</td>
+      <td><b>${esc(s.grind)}</b></td>
+      <td>${esc(s.dose)}g → ${esc(s.yield)}g</td>
+      <td>${esc(s.time)}s</td>
+      <td>${esc(s.taste)}${s.notes ? ` <span class="sub">· ${esc(s.notes)}</span>` : ''}</td>
+    </tr>`;
+  }
+  return `
+    <div class="advice ${adv.good ? 'good' : ''}"><b>Next shot:</b> ${adv.html}</div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Date</th><th>Grind</th><th>Ratio</th><th>Time</th><th>Taste</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`;
+}
+
+/* ---------- Recipes tab ---------- */
+function renderRecipes() {
+  let html = `<div class="flex-between" style="margin-bottom:12px;">
+    <h2 class="section" style="margin:0;">Recipe book</h2>
+    <button class="btn" onclick="openRecipeDialog()">+ Add recipe</button>
+  </div>`;
+  if (!state.recipes.length) {
+    html += `<div class="card empty">No recipes yet — add your first drink.</div>`;
+    return html;
+  }
+  for (const r of state.recipes) {
+    html += `<div class="card">
+      <div class="flex-between">
+        <h3>${esc(r.name)}</h3>
+        <div>
+          <button class="btn small secondary" onclick="openRecipeDialog('${r.id}')">Edit</button>
+          <button class="btn small danger" onclick="deleteRecipe('${r.id}')">Delete</button>
+        </div>
+      </div>
+      <div style="margin-top:6px;">${(r.tags || []).map(t => `<span class="badge tag">${esc(t)}</span>`).join('')}</div>
+      <details open>
+        <summary>Ingredients</summary>
+        <ul class="recipe-ing">${r.ingredients.map(i => `<li>${esc(i)}</li>`).join('')}</ul>
+      </details>
+      <details>
+        <summary>How to make it</summary>
+        <ol class="recipe-steps">${r.steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
+      </details>
+      ${r.tips && r.tips.length ? `<div class="tip-box"><b>Pro tips:</b><br>${r.tips.map(esc).join('<br>')}</div>` : ''}
+    </div>`;
+  }
+  return html;
+}
+
+/* ---------- Guide tab ---------- */
+function renderGuide() {
+  const zp = state.zeroPoint;
+  let tableRows = '';
+  for (const [roast, marks] of Object.entries(ROAST_BASE)) {
+    tableRows += `<tr>
+      <td style="text-transform:capitalize;">${roast.replace('-', '‑')}</td>
+      <td>zero +${marks}</td>
+      <td>${zp == null ? '—' : '~' + (zp + marks).toFixed(1)}</td>
+      <td>${ROAST_PROFILE[roast].split(' (')[0]}</td>
+    </tr>`;
+  }
+  return `
+  <div class="card">
+    <h3>1 · Calibrate your DF64 Gen 2.5 <span class="accent">(do this once)</span></h3>
+    <p class="sub" style="margin-top:6px;">The DF64's dial is marked 0–90 and each mark moves the burrs ~12.5 microns — but the printed "0" isn't where the burrs actually touch, and it varies unit to unit. Finding your <b>true zero</b> makes every suggestion in this app a real dial number.</p>
+    <ol class="recipe-steps">
+      <li>With the hopper <b>empty</b> (no beans!), turn the grinder on.</li>
+      <li>Slowly rotate the adjustment collar finer until you hear the burrs just start to chirp/touch.</li>
+      <li>Note the dial number where that happens — that's your true zero. Back off immediately.</li>
+      <li>Enter it below.</li>
+    </ol>
+    <label style="display:block;font-size:.8rem;color:var(--muted);font-weight:600;margin:12px 0 4px;">My true zero (dial number where burrs touch)</label>
+    <div class="row2">
+      <input id="zeroInput" type="number" step="0.5" min="-10" max="40" value="${zp == null ? '' : zp}" placeholder="e.g. 5">
+      <button class="btn" onclick="saveZero()">Save calibration</button>
+    </div>
+    ${zp != null ? `<p class="sub" style="margin-top:8px;">✓ Calibrated — true zero at <b class="accent">${zp}</b>. Espresso range on your dial ≈ <b class="accent">${(zp + 7).toFixed(1)}–${(zp + 20).toFixed(1)}</b>.</p>` : ''}
+  </div>
+
+  <div class="card">
+    <h3>2 · Starting points by roast</h3>
+    <p class="sub" style="margin-top:6px;">Denser light roasts need a finer grind; soft dark roasts need coarser. Naturals/anaerobics run ~1 mark coarser, decaf ~1.5. These are starting points — the shot log refines from there.</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Roast</th><th>Marks</th><th>Your dial</th><th>Series 1 profile</th></tr></thead>
+      <tbody>${tableRows}</tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h3>3 · The Series 1 shot standard</h3>
+    <div class="kv" style="margin-top:8px;">
+      <span>Dose <b>18g</b></span>
+      <span>Yield <b>36g (1:2)</b></span>
+      <span>Time <b>25–32s</b></span>
+      <span>Pressure <b>9 bar (machine handles it)</b></span>
+    </div>
+    <ul class="recipe-ing" style="margin-top:10px;">
+      <li><b>Fast + sour</b> → grind finer</li>
+      <li><b>Slow + bitter</b> → grind coarser</li>
+      <li><b>Right time, still sour</b> → hotter profile (Light Roast) or longer yield</li>
+      <li><b>Right time, still bitter</b> → cooler profile (Dark Roast) or shorter yield</li>
+      <li><b>Spraying / spritzing from the portafilter</b> → channeling: WDT the grounds, tamp level</li>
+    </ul>
+    <div class="tip-box"><b>Single-dosing tip:</b> the DF64 is a single-doser — weigh 18.0g of beans in, and give the bellows a few puffs so it all comes out. A quick RDT spritz (one mist of water on the beans) kills static and mess.</div>
+  </div>
+
+  <div class="card">
+    <h3>Backup &amp; restore</h3>
+    <p class="sub" style="margin-top:6px;">Data lives in this browser only. Export a backup if you switch phones.</p>
+    <div class="btn-row">
+      <button class="btn secondary" onclick="exportData()">⬇ Export JSON</button>
+      <button class="btn secondary" onclick="document.getElementById('importFile').click()">⬆ Import JSON</button>
+      <input id="importFile" type="file" accept="application/json" style="display:none" onchange="importData(this)">
+    </div>
+  </div>`;
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+function toggleBean(id) { expandedBean = expandedBean === id ? null : id; render(); }
+
+function deleteBean(id) {
+  const bean = state.beans.find(b => b.id === id);
+  if (!confirm(`Delete "${bean ? bean.name : 'this bean'}" and its shot history?`)) return;
+  state.beans = state.beans.filter(b => b.id !== id);
+  save(); render();
+}
+function markDialed(id) {
+  const bean = state.beans.find(b => b.id === id);
+  if (!bean || !bean.shots.length) return;
+  bean.dialedGrind = bean.shots[bean.shots.length - 1].grind;
+  save(); render();
+}
+function unmarkDialed(id) {
+  const bean = state.beans.find(b => b.id === id);
+  if (!bean) return;
+  bean.dialedGrind = null;
+  save(); render();
+}
+function saveZero() {
+  const v = document.getElementById('zeroInput').value;
+  if (v === '') { alert('Enter the dial number where your burrs touch.'); return; }
+  state.zeroPoint = parseFloat(v);
+  save(); render();
+}
+
+/* ---------- bean dialog ---------- */
+const beanDialog = document.getElementById('beanDialog');
+function openBeanDialog() {
+  document.getElementById('beanForm').reset();
+  beanDialog.showModal();
+}
+document.getElementById('beanForm').addEventListener('submit', (e) => {
+  if (e.submitter && e.submitter.value === 'cancel') return;
+  const bean = {
+    id: uid(),
+    name: document.getElementById('bf-name').value.trim(),
+    roaster: document.getElementById('bf-roaster').value.trim(),
+    origin: document.getElementById('bf-origin').value.trim(),
+    roastLevel: document.getElementById('bf-roast').value,
+    process: document.getElementById('bf-process').value,
+    roastDate: document.getElementById('bf-roastdate').value,
+    notes: document.getElementById('bf-notes').value.trim(),
+    dialedGrind: null,
+    shots: []
+  };
+  if (!bean.name) return;
+  state.beans.unshift(bean);
+  save(); render();
+});
+
+/* ---------- shot dialog ---------- */
+const shotDialog = document.getElementById('shotDialog');
+let shotBeanId = null;
+function openShotDialog(id) {
+  const bean = state.beans.find(b => b.id === id);
+  if (!bean) return;
+  shotBeanId = id;
+  document.getElementById('shotForm').reset();
+  document.getElementById('sf-dose').value = 18;
+  document.getElementById('sf-yield').value = 36;
+  // Prefill grind: last shot's grind, else dialed, else suggestion
+  const last = bean.shots[bean.shots.length - 1];
+  const prefill = last ? last.grind : (bean.dialedGrind != null ? bean.dialedGrind : suggestDial(bean));
+  if (prefill != null) document.getElementById('sf-grind').value = prefill;
+  document.getElementById('shotDialogBean').textContent = bean.name + ' — target 18g → 36g in 25–32s';
+  shotDialog.showModal();
+}
+document.getElementById('shotForm').addEventListener('submit', (e) => {
+  if (e.submitter && e.submitter.value === 'cancel') return;
+  const bean = state.beans.find(b => b.id === shotBeanId);
+  if (!bean) return;
+  const shot = {
+    date: new Date().toISOString(),
+    grind: parseFloat(document.getElementById('sf-grind').value),
+    dose: parseFloat(document.getElementById('sf-dose').value) || 18,
+    yield: parseFloat(document.getElementById('sf-yield').value) || 36,
+    time: parseFloat(document.getElementById('sf-time').value),
+    taste: document.getElementById('sf-taste').value,
+    notes: document.getElementById('sf-notes').value.trim()
+  };
+  if (isNaN(shot.grind) || isNaN(shot.time)) return;
+  bean.shots.push(shot);
+  expandedBean = bean.id;
+  save(); render();
+});
+
+/* ---------- recipe dialog ---------- */
+const recipeDialog = document.getElementById('recipeDialog');
+let editingRecipeId = null;
+function openRecipeDialog(id) {
+  editingRecipeId = id || null;
+  const f = document.getElementById('recipeForm');
+  f.reset();
+  document.getElementById('recipeDialogTitle').textContent = id ? 'Edit recipe' : 'Add a recipe';
+  if (id) {
+    const r = state.recipes.find(x => x.id === id);
+    if (r) {
+      document.getElementById('rf-name').value = r.name;
+      document.getElementById('rf-tags').value = (r.tags || []).join(', ');
+      document.getElementById('rf-ingredients').value = r.ingredients.join('\n');
+      document.getElementById('rf-steps').value = r.steps.join('\n');
+      document.getElementById('rf-tips').value = (r.tips || []).join('\n');
+    }
+  }
+  recipeDialog.showModal();
+}
+document.getElementById('recipeForm').addEventListener('submit', (e) => {
+  if (e.submitter && e.submitter.value === 'cancel') return;
+  const lines = (v) => v.split('\n').map(s => s.trim()).filter(Boolean);
+  const data = {
+    name: document.getElementById('rf-name').value.trim(),
+    tags: document.getElementById('rf-tags').value.split(',').map(s => s.trim()).filter(Boolean),
+    ingredients: lines(document.getElementById('rf-ingredients').value),
+    steps: lines(document.getElementById('rf-steps').value),
+    tips: lines(document.getElementById('rf-tips').value)
+  };
+  if (!data.name || !data.ingredients.length || !data.steps.length) return;
+  if (editingRecipeId) {
+    const r = state.recipes.find(x => x.id === editingRecipeId);
+    if (r) Object.assign(r, data);
+  } else {
+    state.recipes.unshift({ id: uid(), ...data });
+  }
+  save(); render();
+});
+function deleteRecipe(id) {
+  const r = state.recipes.find(x => x.id === id);
+  if (!confirm(`Delete "${r ? r.name : 'this recipe'}"?`)) return;
+  state.recipes = state.recipes.filter(x => x.id !== id);
+  save(); render();
+}
+
+/* ---------- backup ---------- */
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'espresso-lab-backup.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function importData(input) {
+  const file = input.files && input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      if (!data || !Array.isArray(data.beans) || !Array.isArray(data.recipes)) throw new Error('bad shape');
+      state = data;
+      save(); render();
+      alert('Backup restored.');
+    } catch (err) {
+      alert('That file doesn\'t look like an Espresso Lab backup.');
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+/* ---------- boot ---------- */
+showTab('beans');
+</script>
+</body>
+</html>
