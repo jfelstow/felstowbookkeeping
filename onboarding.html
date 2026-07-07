@@ -3,81 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231F3A5F'/%3E%3Crect x='12' y='34' width='10' height='18' rx='2' fill='%23E0922F'/%3E%3Crect x='27' y='24' width='10' height='28' rx='2' fill='%23FFFFFF' opacity='0.85'/%3E%3Crect x='42' y='14' width='10' height='38' rx='2' fill='%23E0922F'/%3E%3C/svg%3E">
-<title>New Client Onboarding — Felstow Bookkeeping &amp; Consulting</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B1322'/%3E%3Crect x='12' y='34' width='10' height='18' rx='2' fill='%23F2A83B'/%3E%3Crect x='27' y='24' width='10' height='28' rx='2' fill='%23E9EEF6' opacity='0.85'/%3E%3Crect x='42' y='14' width='10' height='38' rx='2' fill='%23F2A83B'/%3E%3C/svg%3E">
+<title>New Client Onboarding | Felstow Bookkeeping &amp; Consulting</title>
 <meta name="description" content="New client onboarding form for Felstow Bookkeeping &amp; Consulting clients.">
 <meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy:#1F3A5F;
-    --amber:#E0922F;
-    --ink:#23262B;
-    --grey:#6B7280;
-    --faded:#C3CCDA;
-    --hair:#DDE1E7;
-    --bg:#FFFFFF;
-    --bg-soft:#F7F8FA;
-    --green:#1f7a4d;
-    --warn:#a85b00;
+    --bg:#0B1322;
+    --bg-raise:#101B30;
+    --ink:#E9EEF6;
+    --muted:#8DA2BE;
+    --faint:#4E617D;
+    --amber:#F2A83B;
+    --amber-dim:rgba(242,168,59,0.14);
+    --hair:rgba(233,238,246,0.09);
+    --green:#5BC98C;
+    --mono:"IBM Plex Mono", ui-monospace, monospace;
+    color-scheme:dark;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
   body {
-    font-family:"Helvetica Neue", Arial, system-ui, sans-serif;
+    font-family:"Inter", system-ui, sans-serif;
     color:var(--ink);
-    background:var(--bg-soft);
-    line-height:1.55;
+    background:var(--bg);
+    line-height:1.6; overflow-x:hidden;
     -webkit-font-smoothing:antialiased;
   }
-  a { color:var(--navy); }
+  h1,h2,h3 { font-family:"Space Grotesk", sans-serif; font-weight:700; letter-spacing:-0.02em; }
+  a { color:inherit; }
   .wrap { max-width:880px; margin:0 auto; padding:0 28px; }
 
   /* ---- header ---- */
   header {
-    background:#fff;
+    position:sticky; top:0; z-index:60;
+    background:rgba(11,19,34,0.82); backdrop-filter:blur(12px);
     border-bottom:1px solid var(--hair);
   }
   .nav {
     display:flex; align-items:center; justify-content:space-between;
-    height:72px;
+    height:78px;
   }
-  .brand {
-    font-size:18px; font-weight:700; color:var(--navy);
-    letter-spacing:-0.2px; text-decoration:none; line-height:1.15;
-  }
-  .brand span { display:block; font-size:10px; font-weight:400;
-    letter-spacing:1.4px; text-transform:uppercase; color:var(--grey); margin-top:2px; }
+  .brand { font-family:"Space Grotesk",sans-serif; font-weight:700; font-size:17px;
+    text-decoration:none; letter-spacing:-0.01em; line-height:1.2; }
+  .brand em { font-style:normal; color:var(--amber); }
+  .brand span { display:block; font-family:var(--mono); font-size:10px; font-weight:400;
+    letter-spacing:0.18em; text-transform:uppercase; color:var(--muted); margin-top:3px; }
   .home-link {
-    font-size:13px; letter-spacing:0.6px; text-transform:uppercase;
-    color:var(--grey); text-decoration:none; font-weight:600;
+    font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--muted); text-decoration:none; font-weight:500; transition:color .15s;
   }
-  .home-link:hover { color:var(--navy); }
+  .home-link:hover { color:var(--amber); }
 
   /* ---- intro ---- */
-  .intro { padding:56px 0 28px; background:#fff; border-bottom:1px solid var(--hair); }
-  .eyebrow {
-    font-size:12px; font-weight:700; letter-spacing:2px;
-    text-transform:uppercase; color:var(--amber); margin-bottom:14px;
+  .intro { padding:64px 0 40px; border-bottom:1px solid var(--hair); position:relative; }
+  .intro::before {
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(700px 380px at 80% 0%, rgba(242,168,59,0.08), transparent 65%);
   }
+  .intro .wrap { position:relative; }
+  .kicker {
+    font-family:var(--mono); font-size:12px; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--amber);
+    display:flex; align-items:center; gap:12px; margin-bottom:22px;
+  }
+  .kicker::before { content:""; width:26px; height:1px; background:var(--amber); }
   .intro h1 {
-    font-size:36px; line-height:1.18; color:var(--navy);
-    font-weight:700; letter-spacing:-0.4px; max-width:22ch;
+    font-size:36px; line-height:1.15; max-width:24ch; margin-bottom:20px;
   }
-  .accent-bar { width:64px; height:4px; background:var(--amber); margin:20px 0; }
-  .intro p { font-size:16px; color:var(--ink); max-width:62ch; margin-bottom:10px; }
-  .intro p.note { color:var(--grey); font-size:14.5px; }
+  .intro p { font-size:16px; color:var(--muted); max-width:62ch; margin-bottom:10px; }
+  .intro p strong { color:var(--ink); font-weight:600; }
+  .intro p.note { color:var(--muted); font-size:14.5px; }
 
   /* ---- form ---- */
-  main { padding:36px 0 80px; }
+  main { padding:40px 0 90px; }
   form {
-    background:#fff; border:1px solid var(--hair); border-radius:8px;
+    background:var(--bg-raise); border:1px solid var(--hair); border-radius:12px;
     padding:14px 30px 30px;
   }
   fieldset { border:0; padding:26px 0; border-top:1px solid var(--hair); }
   fieldset:first-of-type { border-top:0; }
   legend {
-    font-size:11px; font-weight:700; letter-spacing:1.8px;
-    text-transform:uppercase; color:var(--navy);
+    font-family:var(--mono); font-size:11px; font-weight:500; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--ink);
     padding:6px 0 16px; display:block; width:100%;
   }
   legend .step {
@@ -92,7 +103,7 @@
     margin-bottom:6px;
   }
   .field .hint {
-    display:block; font-size:12.5px; color:var(--grey); font-weight:400;
+    display:block; font-size:12.5px; color:var(--faint); font-weight:400;
     margin-top:4px; line-height:1.45;
   }
   .field input[type=text],
@@ -103,10 +114,11 @@
   .field input[type=url],
   .field select,
   .field textarea {
-    width:100%; font-family:inherit; font-size:15px; color:var(--ink);
-    border:1px solid var(--hair); border-radius:4px; padding:10px 12px;
-    background:#fff; transition:border-color .15s, background .15s;
+    width:100%; font-family:"Inter",sans-serif; font-size:15px; color:var(--ink);
+    border:1px solid var(--hair); border-radius:6px; padding:11px 13px;
+    background:var(--bg); transition:border-color .15s;
   }
+  .field ::placeholder { color:var(--faint); opacity:1; }
   .field input:focus, .field textarea:focus, .field select:focus {
     outline:none; border-color:var(--amber);
   }
@@ -119,7 +131,7 @@
   }
   .check {
     display:flex; align-items:flex-start; gap:8px;
-    font-size:14.5px; color:var(--ink); cursor:pointer;
+    font-size:14.5px; color:var(--muted); cursor:pointer;
     padding:6px 0;
   }
   .check input { margin-top:3px; flex:none; accent-color:var(--amber); }
@@ -127,53 +139,57 @@
   .radio-row { display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:4px; }
   .radio-row label {
     display:inline-flex; align-items:center; gap:7px;
-    font-size:14.5px; font-weight:400; color:var(--ink); cursor:pointer;
+    font-size:14.5px; font-weight:400; color:var(--muted); cursor:pointer;
   }
   .radio-row input { accent-color:var(--amber); }
 
   /* ---- security callout ---- */
   .callout {
-    background:#fffaf2; border:1px solid #f3d6a6; border-left:4px solid var(--amber);
-    border-radius:4px; padding:16px 18px; margin-bottom:18px;
+    background:var(--amber-dim); border:1px solid rgba(242,168,59,0.35); border-left:3px solid var(--amber);
+    border-radius:6px; padding:16px 18px; margin-bottom:18px;
     font-size:14px; color:var(--ink); line-height:1.55;
   }
-  .callout strong { color:var(--warn); }
+  .callout strong { color:var(--amber); }
   .callout ul { margin:8px 0 0 20px; }
-  .callout li { margin-bottom:4px; }
+  .callout li { margin-bottom:4px; color:var(--muted); }
+  .callout li strong { color:var(--ink); }
+  .callout a { color:var(--amber); font-weight:600; }
 
   .secure-note {
-    background:#f1f8f3; border:1px solid #c7e2d0; border-left:4px solid var(--green);
-    border-radius:4px; padding:12px 16px; margin-top:10px;
-    font-size:13.5px; color:var(--ink);
+    background:rgba(91,201,140,0.08); border:1px solid rgba(91,201,140,0.3); border-left:3px solid var(--green);
+    border-radius:6px; padding:12px 16px; margin-top:10px;
+    font-size:13.5px; color:var(--muted);
   }
 
   /* ---- submit ---- */
   .btn {
-    display:inline-block; background:var(--amber); color:#fff;
-    font-size:14px; font-weight:700; letter-spacing:0.4px;
-    padding:14px 26px; border-radius:4px; text-decoration:none;
-    border:none; cursor:pointer; transition:background .15s, transform .05s;
+    display:inline-block; background:var(--amber); color:#0B1322;
+    font-family:"Space Grotesk",sans-serif; font-size:14.5px; font-weight:700;
+    padding:14px 26px; border-radius:6px; text-decoration:none;
+    border:0; cursor:pointer;
+    transition:transform .12s, box-shadow .2s;
+    box-shadow:0 0 0 0 rgba(242,168,59,0);
     width:100%;
   }
-  .btn:hover { background:#c97f23; }
-  .btn:active { transform:translateY(1px); }
-  .btn:disabled { opacity:0.6; cursor:wait; }
-  .form-note { font-size:12.5px; color:var(--grey); text-align:center; margin-top:14px; }
+  .btn:hover { transform:translateY(-1px); box-shadow:0 8px 30px -8px rgba(242,168,59,0.55); }
+  .btn:disabled { opacity:0.6; cursor:wait; transform:none; box-shadow:none; }
+  .form-note { font-size:12.5px; color:var(--faint); text-align:center; margin-top:14px; }
 
   /* ---- footer ---- */
   footer {
-    background:var(--ink); color:#9aa1ab; padding:24px 0; font-size:13px;
+    border-top:1px solid var(--hair); padding:28px 0; font-size:13px; color:var(--faint);
   }
   footer .wrap { display:flex; justify-content:space-between;
     align-items:center; flex-wrap:wrap; gap:10px; }
-  footer .f-brand { color:#fff; font-weight:700; }
+  footer .f-brand { color:var(--muted); font-weight:600; }
   footer .dot { color:var(--amber); padding:0 8px; }
-  footer a { color:#9aa1ab; }
+  footer a { color:var(--faint); text-decoration:none; }
+  footer a:hover { color:var(--muted); }
 
-  @media (max-width:680px) {
-    .wrap { padding:0 18px; }
-    .intro { padding:40px 0 24px; }
-    .intro h1 { font-size:26px; }
+  @media (max-width:840px) {
+    .wrap { padding:0 22px; }
+    .intro { padding:44px 0 28px; }
+    .intro h1 { font-size:27px; }
     form { padding:8px 18px 22px; }
     .row, .row.three, .check-grid { grid-template-columns:1fr; }
   }
@@ -184,8 +200,8 @@
 <!-- ================= NAV ================= -->
 <header>
   <div class="wrap nav">
-    <a href="index.html" class="brand">Felstow Bookkeeping &amp; Consulting
-      <span>QuickBooks Online Specialist</span>
+    <a href="index.html" class="brand">Felstow Bookkeeping <em>&amp;</em> Consulting
+      <span>QuickBooks Online trained</span>
     </a>
     <a href="index.html" class="home-link">&larr; Back to site</a>
   </div>
@@ -194,11 +210,10 @@
 <!-- ================= INTRO ================= -->
 <section class="intro">
   <div class="wrap">
-    <div class="eyebrow">New Client Onboarding</div>
-    <h1>Welcome aboard — let's get the basics on file.</h1>
-    <div class="accent-bar"></div>
-    <p>This form gathers everything I need to set up your books correctly from day one. It should take about 10&ndash;15 minutes. You don't have to fill it out in one sitting — anything you don't know offhand, just write "TBD" and we can grab it on our next call.</p>
-    <p class="note">Everything you enter is sent directly to me (Jake) and treated as confidential. <strong>Please do not enter any passwords on this form</strong> — the Access section below explains the secure way to share logins.</p>
+    <div class="kicker">New Client Onboarding</div>
+    <h1>Welcome aboard. Let's get the basics on file.</h1>
+    <p>This form gathers everything I need to set up your books correctly from day one. It should take about 10&ndash;15 minutes. You don't have to fill it out in one sitting. Anything you don't know offhand, just write "TBD" and we can grab it on our next call.</p>
+    <p class="note">Everything you enter is sent directly to me (Jake) and treated as confidential. <strong>Please do not enter any passwords on this form.</strong> The Access section below explains the secure way to share logins.</p>
   </div>
 </section>
 
@@ -243,7 +258,7 @@
             </select>
           </div>
           <div class="field">
-            <label for="ein">EIN <span style="color:var(--grey);font-weight:400;">(leave blank if sole prop using SSN)</span></label>
+            <label for="ein">EIN <span style="color:var(--faint);font-weight:400;">(leave blank if sole prop using SSN)</span></label>
             <input type="text" id="ein" name="ein" placeholder="XX-XXXXXXX">
             <span class="hint">Used only for tax-related reporting; never shared.</span>
           </div>
@@ -274,7 +289,7 @@
 
         <div class="field">
           <label for="industry">Industry / what the business does</label>
-          <textarea id="industry" name="industry" placeholder="Short description — e.g. residential construction, e-commerce supplements, coffee shop, IT consulting&hellip;"></textarea>
+          <textarea id="industry" name="industry" placeholder="Short description, e.g. residential construction, e-commerce supplements, coffee shop, IT consulting&hellip;"></textarea>
         </div>
       </fieldset>
 
@@ -284,7 +299,7 @@
 
         <div class="field">
           <label for="owners">Owner(s) and ownership %</label>
-          <textarea id="owners" name="owners" placeholder="e.g. Jane Doe — 100%&#10;John Smith — 50%, Mary Smith — 50%"></textarea>
+          <textarea id="owners" name="owners" placeholder="e.g. Jane Doe, 100%&#10;John Smith, 50% and Mary Smith, 50%"></textarea>
         </div>
 
         <div class="row">
@@ -366,19 +381,19 @@
 
         <div class="field">
           <label for="bank_accounts">Active business bank accounts</label>
-          <textarea id="bank_accounts" name="bank_accounts" class="tall" placeholder="One per line — Bank, account type, last 4 digits, what it's used for. Example:&#10;Chase Business Checking — ****1234 — primary operating&#10;Chase Business Savings — ****5678 — tax savings&#10;Bluevine Checking — ****9012 — secondary"></textarea>
-          <span class="hint">Last 4 digits only — never the full account number.</span>
+          <textarea id="bank_accounts" name="bank_accounts" class="tall" placeholder="One per line: bank, account type, last 4 digits, what it's used for. Example:&#10;Chase Business Checking, ****1234, primary operating&#10;Chase Business Savings, ****5678, tax savings&#10;Bluevine Checking, ****9012, secondary"></textarea>
+          <span class="hint">Last 4 digits only, never the full account number.</span>
         </div>
 
         <div class="field">
           <label for="credit_cards">Active business credit cards</label>
-          <textarea id="credit_cards" name="credit_cards" placeholder="One per line — Issuer / card name, last 4, what it's used for. Example:&#10;Amex Business Platinum — ****1001 — travel + software&#10;Capital One Spark — ****2002 — general expenses"></textarea>
+          <textarea id="credit_cards" name="credit_cards" placeholder="One per line: issuer / card name, last 4, what it's used for. Example:&#10;Amex Business Platinum, ****1001, travel + software&#10;Capital One Spark, ****2002, general expenses"></textarea>
         </div>
 
         <div class="field">
           <label for="personal_mixing">Are any personal accounts used for business expenses (or vice versa)?</label>
-          <textarea id="personal_mixing" name="personal_mixing" placeholder="Be honest — this is very common, especially early on. Tell me which accounts and roughly how often."></textarea>
-          <span class="hint">No judgment — I just need to know so I can categorize correctly and untangle anything mixed.</span>
+          <textarea id="personal_mixing" name="personal_mixing" placeholder="Be honest, this is very common, especially early on. Tell me which accounts and roughly how often."></textarea>
+          <span class="hint">No judgment. I just need to know so I can categorize correctly and untangle anything mixed.</span>
         </div>
       </fieldset>
 
@@ -388,7 +403,7 @@
 
         <div class="field">
           <label for="loans">Active loans &amp; lines of credit</label>
-          <textarea id="loans" name="loans" class="tall" placeholder="One per line — Lender, type, original amount, current balance, monthly payment, start date. Example:&#10;SBA EIDL — $150,000 original, ~$142,000 balance, $731/mo, started 6/2021&#10;Ford Credit (F-250) — $48,000 original, ~$31,000 balance, $720/mo, started 3/2023&#10;Amex Business LOC — $25,000 limit, ~$8,000 drawn"></textarea>
+          <textarea id="loans" name="loans" class="tall" placeholder="One per line: lender, type, original amount, current balance, monthly payment, start date. Example:&#10;SBA EIDL, $150,000 original, ~$142,000 balance, $731/mo, started 6/2021&#10;Ford Credit (F-250), $48,000 original, ~$31,000 balance, $720/mo, started 3/2023&#10;Amex Business LOC, $25,000 limit, ~$8,000 drawn"></textarea>
           <span class="hint">Include SBA loans, vehicle/equipment financing, lines of credit, SBA EIDL, owner loans to the business, etc.</span>
         </div>
       </fieldset>
@@ -399,13 +414,13 @@
 
         <div class="field">
           <label for="vehicles">Business vehicles</label>
-          <textarea id="vehicles" name="vehicles" placeholder="One per line — Year/Make/Model, purchase date, purchase price, financed or paid cash, % business use. Example:&#10;2022 Ford F-250 — bought 3/2023, $54,000, financed, 100% business use"></textarea>
+          <textarea id="vehicles" name="vehicles" placeholder="One per line: year/make/model, purchase date, purchase price, financed or paid cash, % business use. Example:&#10;2022 Ford F-250, bought 3/2023, $54,000, financed, 100% business use"></textarea>
         </div>
 
         <div class="field">
           <label for="other_assets">Other major assets purchased in the last ~3 years</label>
-          <textarea id="other_assets" name="other_assets" placeholder="Equipment, machinery, furniture, computers, real estate, leasehold improvements — anything &gt;$2,500. One per line with purchase date &amp; cost."></textarea>
-          <span class="hint">These affect depreciation on your tax return — important to capture.</span>
+          <textarea id="other_assets" name="other_assets" placeholder="Equipment, machinery, furniture, computers, real estate, leasehold improvements, anything &gt;$2,500. One per line with purchase date &amp; cost."></textarea>
+          <span class="hint">These affect depreciation on your tax return, so they're important to capture.</span>
         </div>
       </fieldset>
 
@@ -432,9 +447,9 @@
         </div>
 
         <div class="field">
-          <label for="venmo_paypal_detail">If you use Venmo or PayPal for business — personal account or business account?</label>
+          <label for="venmo_paypal_detail">If you use Venmo or PayPal for business, is it a personal account or a business account?</label>
           <textarea id="venmo_paypal_detail" name="venmo_paypal_detail" placeholder="e.g. Venmo: personal account @janedoe, occasional client payments. PayPal: dedicated business account."></textarea>
-          <span class="hint">Mixing personal Venmo with business is fixable — I just need to know.</span>
+          <span class="hint">Mixing personal Venmo with business is fixable. I just need to know.</span>
         </div>
       </fieldset>
 
@@ -447,8 +462,8 @@
             <label for="has_qbo">Do you already have QuickBooks Online?</label>
             <select id="has_qbo" name="has_qbo">
               <option>No / not sure</option>
-              <option>Yes — I have a subscription</option>
-              <option>Yes — but it's been unused</option>
+              <option>Yes, I have a subscription</option>
+              <option>Yes, but it's been unused</option>
               <option>I have QuickBooks Desktop (not Online)</option>
             </select>
           </div>
@@ -476,10 +491,10 @@
         <div class="callout">
           <strong>Please do not type passwords into this form.</strong> This form sends submissions via email, which is not safe for credentials. Here's how I handle access securely:
           <ul>
-            <li><strong>QuickBooks Online:</strong> Invite me as your Accountant User (no password needed) — I'll send simple instructions.</li>
+            <li><strong>QuickBooks Online:</strong> Invite me as your Accountant User (no password needed). I'll send simple instructions.</li>
             <li><strong>Banks &amp; credit cards:</strong> Most banks let you add me as a read-only user. Where that isn't possible, we'll handle credentials separately (see below).</li>
             <li><strong>Payroll &amp; other tools:</strong> Almost all have an "add accountant / bookkeeper" option that doesn't require sharing your password.</li>
-            <li><strong>When a password really is the only option:</strong> share it via Bitwarden Send (free, encrypted, self-destructing link) or by phone call. Never email it. <a href="secure-credentials.html" target="_blank" rel="noopener" style="color:var(--navy);font-weight:600;text-decoration:underline;">How does this work? &rarr;</a></li>
+            <li><strong>When a password really is the only option:</strong> share it via Bitwarden Send (free, encrypted, self-destructing link) or by phone call. Never email it. <a href="secure-credentials.html" target="_blank" rel="noopener">How does this work? &rarr;</a></li>
           </ul>
         </div>
 
@@ -504,7 +519,7 @@
             <label><input type="radio" name="cred_method" value="1Password Share"> 1Password share link</label>
             <label><input type="radio" name="cred_method" value="Phone call"> Phone call</label>
             <label><input type="radio" name="cred_method" value="In person"> In person</label>
-            <label><input type="radio" name="cred_method" value="Not sure"> Not sure — walk me through it</label>
+            <label><input type="radio" name="cred_method" value="Not sure"> Not sure, walk me through it</label>
           </div>
           <div class="secure-note">After you submit this form I'll follow up with the exact secure link / steps for whichever method you pick.</div>
         </div>
@@ -518,7 +533,7 @@
           <label for="books_status">How current are your books?</label>
           <select id="books_status" name="books_status">
             <option value="">Select one&hellip;</option>
-            <option>Up to date — closed through last month</option>
+            <option>Up to date, closed through last month</option>
             <option>1&ndash;3 months behind</option>
             <option>3&ndash;12 months behind</option>
             <option>More than a year behind</option>
@@ -544,7 +559,7 @@
         </div>
 
         <div class="field">
-          <label for="prior_bookkeeper">Previous bookkeeper (if any) — and what wasn't working?</label>
+          <label for="prior_bookkeeper">Previous bookkeeper (if any), and what wasn't working?</label>
           <textarea id="prior_bookkeeper" name="prior_bookkeeper" placeholder="Helps me avoid repeating the same friction. Be candid."></textarea>
         </div>
       </fieldset>
@@ -557,15 +572,15 @@
           <label for="sales_tax">Do you collect sales tax?</label>
           <select id="sales_tax" name="sales_tax">
             <option>No</option>
-            <option>Yes — one state</option>
-            <option>Yes — multiple states</option>
+            <option>Yes, one state</option>
+            <option>Yes, multiple states</option>
             <option>Not sure / probably should be</option>
           </select>
         </div>
 
         <div class="field">
-          <label for="sales_tax_detail">If yes — which states, and who currently files the returns?</label>
-          <textarea id="sales_tax_detail" name="sales_tax_detail" placeholder="e.g. Minnesota — I file monthly through MN DOR. Also Wisconsin via Avalara."></textarea>
+          <label for="sales_tax_detail">If yes, which states, and who currently files the returns?</label>
+          <textarea id="sales_tax_detail" name="sales_tax_detail" placeholder="e.g. Minnesota, I file monthly through MN DOR. Also Wisconsin via Avalara."></textarea>
         </div>
       </fieldset>
 
@@ -585,7 +600,7 @@
 
         <div class="field">
           <label for="anything_else">Anything else I should know?</label>
-          <textarea id="anything_else" name="anything_else" placeholder="Special situations, upcoming events, weird historical stuff, deadlines, partners I should know about — anything that would save us a back-and-forth later."></textarea>
+          <textarea id="anything_else" name="anything_else" placeholder="Special situations, upcoming events, weird historical stuff, deadlines, partners I should know about, anything that would save us a back-and-forth later."></textarea>
         </div>
       </fieldset>
 
@@ -598,7 +613,7 @@
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="wrap">
-    <div><span class="f-brand">Felstow Bookkeeping &amp; Consulting</span><span class="dot">&bull;</span>Simplifying your numbers so you can focus on the business.</div>
+    <div><span class="f-brand">Felstow Bookkeeping &amp; Consulting</span><span class="dot">&bull;</span>QuickBooks Online trained</div>
     <div><a href="privacy.html">Privacy</a><span class="dot">&bull;</span><a href="terms.html">Terms</a><span class="dot">&bull;</span>&copy; <span id="year"></span> Felstow Bookkeeping and Consulting LLC</div>
   </div>
 </footer>
@@ -620,20 +635,20 @@
       if (data.success) {
         form.innerHTML =
           '<div style="text-align:center;padding:40px 10px;">' +
-          '<p style="font-size:22px;color:#1F3A5F;font-weight:700;margin-bottom:14px;">Thanks &mdash; your info is on its way.</p>' +
-          '<p style="font-size:15.5px;color:#23262B;max-width:48ch;margin:0 auto 12px;">I&rsquo;ll review everything and reach out within one business day with next steps &mdash; including the secure way to share any logins.</p>' +
-          '<p style="font-size:14px;color:#6B7280;">Need to add something? Just email me at <a href="mailto:jake.felstow@gmail.com" style="color:#1F3A5F;">jake.felstow@gmail.com</a>.</p>' +
+          '<p style="font-family:\'Space Grotesk\',sans-serif;font-size:22px;color:#E9EEF6;font-weight:700;margin-bottom:14px;">Thanks, your info is on its way.</p>' +
+          '<p style="font-size:15.5px;color:#8DA2BE;max-width:48ch;margin:0 auto 12px;">I&rsquo;ll review everything and reach out within one business day with next steps, including the secure way to share any logins.</p>' +
+          '<p style="font-size:14px;color:#4E617D;">Need to add something? Just email me at <a href="mailto:jake.felstow@gmail.com" style="color:#F2A83B;">jake.felstow@gmail.com</a>.</p>' +
           '</div>';
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         btn.disabled = false; btn.textContent = 'Submit onboarding info';
-        note.textContent = 'Something went wrong — please email me directly at jake.felstow@gmail.com.';
-        note.style.color = '#c0392b';
+        note.textContent = 'Something went wrong. Please email me directly at jake.felstow@gmail.com.';
+        note.style.color = '#e07856';
       }
     }).catch(function () {
       btn.disabled = false; btn.textContent = 'Submit onboarding info';
-      note.textContent = 'Something went wrong — please email me directly at jake.felstow@gmail.com.';
-      note.style.color = '#c0392b';
+      note.textContent = 'Something went wrong. Please email me directly at jake.felstow@gmail.com.';
+      note.style.color = '#e07856';
     });
   });
 </script>
