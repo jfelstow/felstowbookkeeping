@@ -226,6 +226,11 @@
       <input type="hidden" name="from_name" value="Felstow Bookkeeping — Onboarding Form">
       <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
+      <div id="prefillBanner" style="display:none;background:#1c2b1c;border:1px solid #3f6b3f;border-left:4px solid #6fbf6f;border-radius:8px;padding:14px 16px;margin-bottom:22px;">
+        <p style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:15.5px;color:#cfe9cf;font-weight:700;">I've pre-filled what I already have<span data-who></span>.</p>
+        <p style="margin:6px 0 0;font-size:14px;color:#9fc39f;">Please look it over, fix anything that's off, and fill in the blanks. Nothing is submitted until you hit the button at the bottom.</p>
+      </div>
+
       <!-- ===== 1. BUSINESS BASICS ===== -->
       <fieldset>
         <legend><span class="step">01</span>Business basics</legend>
@@ -438,6 +443,8 @@
             <label class="check"><input type="checkbox" name="platforms" value="Cash App"> Cash App</label>
             <label class="check"><input type="checkbox" name="platforms" value="Zelle"> Zelle</label>
             <label class="check"><input type="checkbox" name="platforms" value="Shopify Payments"> Shopify Payments</label>
+            <label class="check"><input type="checkbox" name="platforms" value="WooCommerce"> WooCommerce</label>
+            <label class="check"><input type="checkbox" name="platforms" value="QuickBooks Payments"> QuickBooks Payments</label>
             <label class="check"><input type="checkbox" name="platforms" value="Apple Pay / Google Pay"> Apple Pay / Google Pay</label>
             <label class="check"><input type="checkbox" name="platforms" value="ACH (direct bank)"> ACH / direct bank</label>
             <label class="check"><input type="checkbox" name="platforms" value="Checks"> Paper checks</label>
@@ -623,6 +630,55 @@
 
   var form = document.getElementById('onboardForm');
   var note = document.getElementById('formNote');
+
+  // ---- Pre-fill from a Felstow-generated link ----
+  // Reads ?prefill=<base64url JSON> (preferred) or individual ?name=value params,
+  // and populates matching fields. A bad/missing param leaves the form blank & usable.
+  (function () {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var data = null;
+      if (params.get('prefill')) {
+        var b = params.get('prefill').replace(/-/g, '+').replace(/_/g, '/');
+        data = JSON.parse(decodeURIComponent(escape(atob(b))));
+      } else {
+        data = {};
+        params.forEach(function (v, k) {
+          if (data[k] === undefined) data[k] = v;
+          else if (Array.isArray(data[k])) data[k].push(v);
+          else data[k] = [data[k], v];
+        });
+        if (!Object.keys(data).length) return;
+      }
+      if (!data || typeof data !== 'object') return;
+      var filled = 0;
+      Object.keys(data).forEach(function (key) {
+        var val = data[key];
+        var els = form.querySelectorAll('[name="' + key + '"]');
+        if (!els.length) return;
+        var first = els[0];
+        var type = (first.type || '').toLowerCase();
+        if (els.length > 1 && (type === 'radio' || type === 'checkbox')) {
+          var vals = Array.isArray(val) ? val.map(String) : String(val).split('|');
+          els.forEach(function (el) { if (vals.indexOf(el.value) !== -1) { el.checked = true; filled++; } });
+        } else if (type === 'checkbox') {
+          first.checked = (val === true || val === 'true' || val === first.value);
+          if (first.checked) filled++;
+        } else {
+          first.value = Array.isArray(val) ? val.join(', ') : val;
+          if (first.value) filled++;
+        }
+      });
+      if (filled > 0) {
+        var banner = document.getElementById('prefillBanner');
+        if (banner) {
+          var who = banner.querySelector('[data-who]');
+          if (who && data.legal_name) who.textContent = ' for ' + data.legal_name;
+          banner.style.display = 'block';
+        }
+      }
+    } catch (e) { /* malformed prefill — ignore, blank form still works */ }
+  })();
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var btn = form.querySelector('button[type="submit"]');
