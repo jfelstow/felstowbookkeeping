@@ -53,6 +53,10 @@ class Recorder:
         self._stream = None
 
     def start(self):
+        if self._stream is not None:
+            # A stale stream survived (e.g. the Mac slept mid-recording) —
+            # release it before opening a fresh one so the mic isn't wedged.
+            self.stop()
         self._chunks = queue.Queue()
         self._stream = sd.InputStream(
             samplerate=SAMPLE_RATE,
@@ -63,9 +67,13 @@ class Recorder:
         self._stream.start()
 
     def stop(self) -> np.ndarray:
-        self._stream.stop()
-        self._stream.close()
-        self._stream = None
+        stream, self._stream = self._stream, None
+        if stream is not None:
+            try:
+                stream.stop()
+                stream.close()
+            except Exception:
+                pass  # the device may be gone after sleep; keep the audio
         chunks = []
         while not self._chunks.empty():
             chunks.append(self._chunks.get())
@@ -154,7 +162,11 @@ def listen_fn_key(on_press, on_release, debug=False):
             print(f"[keys] flags={flags:#010x} fn {'DOWN' if down else 'up'}")
         if down != state["down"]:
             state["down"] = down
-            (on_press if down else on_release)()
+            try:
+                (on_press if down else on_release)()
+            except Exception as exc:
+                # Never let a handler error kill the key listener.
+                print(f"(hotkey handler error: {exc})")
         return event
 
     tap = Quartz.CGEventTapCreate(
@@ -238,6 +250,13 @@ def main():
         action="store_true",
         help="print every fn-key flag change (for troubleshooting the hotkey)",
     )
+    parser.add_argument(
+        "--max-seconds",
+        type=float,
+        default=120,
+        help="safety cutoff: force-stop a recording after this many seconds "
+        "so a missed key release can't leave the mic stuck on (default 120)",
+    )
     args = parser.parse_args()
 
     use_fn = args.key.lower() in ("fn", "globe")
@@ -269,20 +288,41 @@ def main():
     recording = threading.Event()
     lock = threading.Lock()
 
+    watchdog = {"timer": None}
+
     def start_recording():
         with lock:
             if recording.is_set():
                 return
+            try:
+                recorder.start()
+            except Exception as exc:
+                print(f"(mic unavailable: {exc} — tap the key to retry)")
+                return
             recording.set()
-            recorder.start()
+            watchdog["timer"] = threading.Timer(args.max_seconds, safety_stop)
+            watchdog["timer"].daemon = True
+            watchdog["timer"].start()
             print("● recording... ", end="", flush=True)
+
+    def safety_stop():
+        if recording.is_set():
+            print("(safety cutoff) ", end="", flush=True)
+            stop_and_transcribe()
 
     def stop_and_transcribe():
         with lock:
             if not recording.is_set():
                 return
             recording.clear()
-            audio = recorder.stop()
+            if watchdog["timer"] is not None:
+                watchdog["timer"].cancel()
+                watchdog["timer"] = None
+            try:
+                audio = recorder.stop()
+            except Exception as exc:
+                print(f"(recording lost: {exc})")
+                return
         if audio.size < SAMPLE_RATE * 0.3:  # ignore accidental taps
             print("(too short, ignored)")
             return

@@ -73,6 +73,7 @@ input sources while you dictate.
 | `--toggle` | Tap to start recording, tap again to stop (instead of holding) |
 | `--model small.en` | Better accuracy, slower. Sizes: `tiny.en` → `base.en` → `small.en` → `medium` → `large-v3` |
 | `--type-instead-of-paste` | Simulate real keystrokes for apps that block pasting |
+| `--max-seconds 300` | Safety cutoff — a recording force-stops after this long (default 120s), so a missed key release can't leave the mic stuck on |
 
 `base.en` (the default) is a good speed/accuracy balance on a typical laptop.
 If you have a fast machine (Apple Silicon, or any recent GPU), try
